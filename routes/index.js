@@ -3,8 +3,7 @@ let router = express.Router();
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 // Connection URL
-const url = "mongodb://localhost:27017";
-
+var url = process.env.MONGOLAB_URI;
 // Database Name
 const dbName = "cupitips";
 
@@ -87,6 +86,7 @@ function findTipById (id, callback) {
 //Funcion encargada de buscar al usuario en la BD
 function addLike (id,likesAdd,callback) {
   conn.then(client => {
+
     client.db(dbName).collection(collCupitips).updateOne({tip_id: id},{$set:{ likes : likesAdd}}, (error, data) => {
       if (error) throw error;
       callback(data);
