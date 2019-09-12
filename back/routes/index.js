@@ -8,70 +8,90 @@ const url = "mongodb://localhost:27017";
 // Database Name
 const dbName = "cupitips";
 
-// Create a new MongoClient
-const client = new MongoClient(url);
+// Database collection
+const collCupitips ="tips";
 
-/* GET home page. */
+// Database collection
+const collUsers ="users";
+
+// Define una promesa de conexión.
+var conn = MongoClient.connect(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+//Ejemplo para conectar el front con el back borrar al final!!
 router.get("/data", function(req, res, next) {
 
   const tweets = [
-  {id:1, text: "Holi", user:{screen_name: "John"}},
-  {id:2, text: "Holi", user:{screen_name: "John"}},
-  {id:3, text: "Holi", user:{screen_name: "John"}},
+    {id:1, text: "Holi", user:{screen_name: "John"}},
+    {id:2, text: "Holi", user:{screen_name: "John"}},
+    {id:3, text: "Holi", user:{screen_name: "John"}},
   ];
 
-  res.json(tweets)
+  res.json(tweets);
 });
 
+//Retorna en el res los usuarios con el username dado en el body del req
+router.post("/auth", function(req, res,next) {
+  function callback(data){
+    res.json(data);
+  }
+  findUser(req.body.username,callback);
+});
 
-router.get("/prueba", function(req, res, next) {
-  client.connect(function(err) {
-    assert.equal(null, err);
-    console.log("Connected correctly to server");
-    const db = client.db(dbName);
-    findDocuments(db, function(data) {
-      res.json(data);
-      client.close();
+//Funcion encargada de buscar al usuario en la BD
+function findUser (username,callback) {
+  conn.then(client => {
+    client.db(dbName).collection(collUsers).find({"username": username}).toArray((error,data)=> {
+      callback(data);
     });
   });
+}
+
+//Router para obtener todos los tips disponibles en la coleccion tips
+router.get("/tips", function(req, res, next) {
+  function callback(data){
+    res.json(data);
+  }
+  findTips(callback);
 });
-const findDocuments = function(db, callback) {
-  // Get the documents collection
-  const collection = db.collection('documents');
-  // Find some documents
-  collection.find({}).toArray(function(err, docs) {
-    assert.equal(err, null);
-    console.log("Found the following records");
-    console.log(docs);
-    callback(docs);
+//Funcion encargada de encontrar los tips en la BD
+function findTips (callback) {
+  conn.then(client => {
+    client.db(dbName).collection(collCupitips).find().toArray((error,data)=> {
+      callback(data);
+    });
   });
 };
 
-// const insertDocuments = function(db, callback) {
-//   // Get the documents collection
-//   const collection = db.collection('documents');
-//   // Insert some documents
-//   collection.insertMany([
-//     {a : 1}, {a : 2}, {a : 3}
-//   ], function(err, result) {
-//     assert.equal(err, null);
-//     assert.equal(3, result.result.n);
-//     assert.equal(3, result.ops.length);
-//     console.log("Inserted 3 documents into the collection");
-//     callback(result);
-//   });
-// }
-
-// Use connect method to connect to the server
-// client.connect(function(err) {
-//   assert.equal(null, err);
-//   console.log("Connected successfully to server");
-
-//   const db = client.db(dbName);
-
-//   insertDocuments(db, function() {
-//     client.close();
-//   });
-// });
+//Router para actualizar los likes de un tip.
+router.put("/like", function(req, res,next) {
+  function callbackResp(data){
+    res.json(data);
+  }
+  function callbackSearch(data){
+    let likesAdd = data[0].likes +1;
+    addLike(req.body.tip_id,likesAdd,callbackResp);
+  }
+  findTipById(req.body.tip_id,callbackSearch);
+});
+//Funcion encargada de encontrar un tip por id en la BD
+function findTipById (id, callback) {
+  conn.then(client => {
+    client.db(dbName).collection(collCupitips).find({tip_id: id}).toArray((error,data)=> {
+      callback(data);
+    });
+  });
+};
+//Funcion encargada de buscar al usuario en la BD
+function addLike (id,likesAdd,callback) {
+  conn.then(client => {
+    client.db(dbName).collection(collCupitips).updateOne({tip_id: id},{$set:{ likes : likesAdd}}, (error, data) => {
+            if (error) throw error;
+            callback(data);
+        });
+    });
+}
 
 module.exports = router;
