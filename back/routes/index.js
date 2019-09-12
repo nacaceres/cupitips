@@ -63,7 +63,7 @@ function findTips (callback) {
       callback(data);
     });
   });
-};
+}
 
 //Router para actualizar los likes de un tip.
 router.put("/like", function(req, res,next) {
@@ -83,15 +83,15 @@ function findTipById (id, callback) {
       callback(data);
     });
   });
-};
+}
 //Funcion encargada de buscar al usuario en la BD
 function addLike (id,likesAdd,callback) {
   conn.then(client => {
     client.db(dbName).collection(collCupitips).updateOne({tip_id: id},{$set:{ likes : likesAdd}}, (error, data) => {
-            if (error) throw error;
-            callback(data);
-        });
+      if (error) throw error;
+      callback(data);
     });
+  });
 }
 
 module.exports = router;
