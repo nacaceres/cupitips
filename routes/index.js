@@ -85,7 +85,7 @@ function findTipById (mongoId, callback) {
     });
   });
 }
-//Funcion encargada de buscar al usuario en la BD
+//Funcion encargada de adiccionar un like en la BD
 function addLike (mongoId,likesAdd,callback) {
   conn.then(client => {
 
@@ -119,7 +119,7 @@ function addComment (mongoId,comments,callback) {
     });
   });
 }
-//Retorna en el res si se puede ingresar el comentario al tip correspondiente.
+//Retorna en el res si se puede agregar el comentario correspondiente.
 router.post("/addtip", function(req, res,next) {
   function callback(data){
     res.json(data);
@@ -131,7 +131,7 @@ router.post("/addtip", function(req, res,next) {
   addTip(tip,callback);
 });
 
-//Funcion encargada de adicionar un comentario a un tip
+//Funcion encargada de adicionar un tip en la BD.
 function addTip (tip,callback) {
   conn.then(client => {
         client.db(dbName).collection(collCupitips).insertOne(tip, (error, data) => {
