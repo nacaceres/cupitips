@@ -93,5 +93,28 @@ function addLike (id,likesAdd,callback) {
     });
   });
 }
+//Retorna en el res si se puede ingresar el comentario al tip correspondiente.
+router.post("/comment", function(req, res,next) {
+  function callbackResp(data){
+    res.json(data);
+  }
+  function callbackSearch(data){
+    let comments = data[0].comentarios;
+    comments.push(req.body.comentario);
+    console.log(comments);
+    insertComment(req.body.tip_id,comments,callbackResp);
+  }
+  findTipById(req.body.tip_id,callbackSearch);
+});
 
+//Funcion encargada de adicionar un comentario o cr
+function insertComment (id,comments,callback) {
+  conn.then(client => {
+
+    client.db(dbName).collection(collCupitips).updateOne({tip_id: id},{$set:{ comentarios : comments}}, (error, data) => {
+      if (error) throw error;
+      callback(data);
+    });
+  });
+}
 module.exports = router;
