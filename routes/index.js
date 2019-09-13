@@ -1,5 +1,6 @@
 let express = require("express");
 let router = express.Router();
+var ObjectId = require('mongodb').ObjectID;
 const MongoClient = require("mongodb").MongoClient;
 const assert = require("assert");
 // Connection URL
@@ -69,25 +70,26 @@ router.put("/like", function(req, res,next) {
   function callbackResp(data){
     res.json(data);
   }
+  mongoId = new ObjectId(req.body._id);
   function callbackSearch(data){
     let likesAdd = data[0].likes +1;
-    addLike(req.body.tip_id,likesAdd,callbackResp);
+    addLike(mongoId,likesAdd,callbackResp);
   }
-  findTipById(req.body.tip_id,callbackSearch);
+  findTipById(mongoId,callbackSearch);
 });
 //Funcion encargada de encontrar un tip por id en la BD
-function findTipById (id, callback) {
+function findTipById (mongoId, callback) {
   conn.then(client => {
-    client.db(dbName).collection(collCupitips).find({tip_id: id}).toArray((error,data)=> {
+    client.db(dbName).collection(collCupitips).find({_id:mongoId}).toArray((error,data)=> {
       callback(data);
     });
   });
 }
 //Funcion encargada de buscar al usuario en la BD
-function addLike (id,likesAdd,callback) {
+function addLike (mongoId,likesAdd,callback) {
   conn.then(client => {
 
-    client.db(dbName).collection(collCupitips).updateOne({tip_id: id},{$set:{ likes : likesAdd}}, (error, data) => {
+    client.db(dbName).collection(collCupitips).updateOne({_id: mongoId},{$set:{ likes : likesAdd}}, (error, data) => {
       if (error) throw error;
       callback(data);
     });
@@ -98,23 +100,44 @@ router.post("/comment", function(req, res,next) {
   function callbackResp(data){
     res.json(data);
   }
+  mongoId = new ObjectId(req.body._id);
   function callbackSearch(data){
     let comments = data[0].comentarios;
     comments.push(req.body.comentario);
-    console.log(comments);
-    insertComment(req.body.tip_id,comments,callbackResp);
+    addComment(mongoId,comments,callbackResp);
   }
-  findTipById(req.body.tip_id,callbackSearch);
+  findTipById(mongoId,callbackSearch);
 });
 
-//Funcion encargada de adicionar un comentario o cr
-function insertComment (id,comments,callback) {
+//Funcion encargada de adicionar un comentario a un tip
+function addComment (mongoId,comments,callback) {
   conn.then(client => {
 
-    client.db(dbName).collection(collCupitips).updateOne({tip_id: id},{$set:{ comentarios : comments}}, (error, data) => {
+    client.db(dbName).collection(collCupitips).updateOne({_id: mongoId},{$set:{ comentarios : comments}}, (error, data) => {
       if (error) throw error;
       callback(data);
     });
   });
 }
+//Retorna en el res si se puede ingresar el comentario al tip correspondiente.
+router.post("/addtip", function(req, res,next) {
+  function callback(data){
+    res.json(data);
+  }
+  tip = req.body;
+  tip.aprobado = false;
+  tip.comentarios = [];
+  tip.likes = 0;
+  addTip(tip,callback);
+});
+
+//Funcion encargada de adicionar un comentario a un tip
+function addTip (tip,callback) {
+  conn.then(client => {
+        client.db(dbName).collection(collCupitips).insertOne(tip, (error, data) => {
+            callback(data);
+        });
+    });
+}
+
 module.exports = router;
