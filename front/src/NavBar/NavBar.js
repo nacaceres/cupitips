@@ -58,7 +58,7 @@ class NavBar extends Component {
                 <a href="/" className="text-right">
                   <img
                     className="logo"
-                    src="./images/logo_disc.png"
+                    src="/images/logo_disc.png"
                     alt="disc"
                   ></img>
                 </a>

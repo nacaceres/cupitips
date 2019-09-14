@@ -30,7 +30,7 @@ class App extends React.Component {
       <NavBar
         show={this.state.showFilters}
         hideFilter={this.hideFilter}
-      ></NavBar>
+      />
     );
   }
 
@@ -46,9 +46,16 @@ class App extends React.Component {
         {this.renderNavBar()}
         <Switch>
           <Route
+            exact
             path="/"
             render={props => <TipList tips={this.state.tips} />}
           />
+          <Route
+            path="/cupitip/:id"
+            render={props => <NavBar tips={this.state.tips} />}
+          />
+
+
         </Switch>
       </div>
     );
