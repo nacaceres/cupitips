@@ -124,7 +124,7 @@ router.post("/addtip", function(req, res,next) {
   function callback(data){
     res.json(data);
   }
-  tip = req.body;
+  var tip = req.body;
   tip.aprobado = false;
   tip.comentarios = [];
   tip.likes = 0;
