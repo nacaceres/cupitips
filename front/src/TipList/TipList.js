@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 import "./TipList.css";
 import TipInList from "./TipInList/TipInList.js";
@@ -26,8 +27,8 @@ class TipList extends Component {
       <TipInList key={"TipInList" + elem._id} tip={elem}></TipInList>
     ));
   }
-
   render() {
+   // console.log(this.props)
     let width = window.screen.width;
     let n = 1;
     if (width >= 768) {
@@ -51,4 +52,4 @@ class TipList extends Component {
   }
 }
 
-export default TipList;
+export default withRouter(TipList);

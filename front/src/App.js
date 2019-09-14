@@ -11,30 +11,87 @@ class App extends React.Component {
     super(props);
     this.state = {
       tips: [],
+      filtros: [],
+      tipsFiltrados: [],
       showFilters: false
     };
   }
 
   componentDidMount() {
-
     fetch("/tips")
       .then(res => res.json())
-      .then(tips =>
+      .then(tips => {
+        let filtros = {
+          nivel: [],
+          nombre: null,
+          likes: 0,
+          tema: null
+        };
+        for (let i = 0; i < tips.length; i++) {
+          let encontrado = false;
+          for (let j = 0; j < filtros.nivel.length; j++) {
+            if (filtros.nivel[j].nombre === tips[i].nivel) {
+              encontrado = true;
+            }
+          }
+          if (!encontrado) {
+            filtros.nivel.push({ nombre: tips[i].nivel, estado: true });
+          }
+        }
         this.setState({
-          tips: tips
-        })
-      );
-      console.log("HMM");
+          tips: tips,
+          filtros: filtros,
+          tipsFiltrados: tips
+        });
+      });
   }
 
   renderNavBar() {
     return (
       <NavBar
         show={this.state.showFilters}
+        filtros={this.state.filtros}
+        actualizarFiltros={this.actualizarFiltros}
         hideFilter={this.hideFilter}
       />
     );
   }
+
+  actualizarFiltros = nuevosFiltros => {
+    let tipsFiltrados = [];
+    for (let i = 0; i < this.state.tips.length; i++) {
+      let aceptado = true;
+      for (let j = 0; j < nuevosFiltros.nivel.length; j++) {
+        if (nuevosFiltros.nivel[j].nombre === this.state.tips[i].nivel) {
+          aceptado = nuevosFiltros.nivel[j].estado;
+        }
+      }
+      if (
+        nuevosFiltros.nombre != null &&
+        this.state.tips[i].nombre.indexOf(nuevosFiltros.nombre) === -1
+      ) {
+        //Si no esta en el filtro de nombre
+        aceptado = false;
+      }
+      if (
+        nuevosFiltros.tema != null &&
+        this.state.tips[i].tema.indexOf(nuevosFiltros.tema) === -1
+      ) {
+        //Si no esta en el filtro de tema
+        aceptado = false;
+      }
+      if (this.state.tips[i].likes < nuevosFiltros.likes) {
+        aceptado = false;
+      }
+      if (aceptado) {
+        tipsFiltrados.push(this.state.tips[i]);
+      }
+    }
+    this.setState({
+      filtros: nuevosFiltros,
+      tipsFiltrados: tipsFiltrados
+    });
+  };
 
   hideFilter = () => {
     this.setState({
@@ -56,15 +113,25 @@ class App extends React.Component {
           <Route
             exact
             path="/"
-            render={props => <TipList tips={this.state.tips} showFilter={this.showFilter}/>}
+            render={props => (
+              <TipList
+                tips={this.state.tipsFiltrados}
+                showFilter={this.showFilter}
+              />
+            )}
           />
           <Route
             path="/Auth"
-            render={props => <Auth hideFilter={this.hideFilter} /> }
+            render={props => <Auth hideFilter={this.hideFilter} />}
           />
           <Route
             path="/cupitip/:id"
-            render={props => <CupiTip tips={this.state.tips} hideFilter={this.hideFilter}/> }
+            render={props => (
+              <CupiTip
+                tips={this.state.tipsFiltrados}
+                hideFilter={this.hideFilter}
+              />
+            )}
           />
         </Switch>
       </div>

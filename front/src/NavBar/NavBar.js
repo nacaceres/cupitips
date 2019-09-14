@@ -25,22 +25,40 @@ class NavBar extends Component {
     }
   }
 
+  renderNivel (){
+
+  }
+
+  renderNiveles(niveles,renderNivel){
+
+  }
+
+  actualizar=()=>{
+    let filtros = this.props.filtros;
+    filtros.nivel[0].estado =false;
+    this.props.actualizarFiltros(filtros);
+  }
+
   renderFilters(show) {
+    let niveles = [];
+    console.log(this.props);
     if (show) {
       return (
         <div className="collapse" id="collapseFilters">
           <div className="row">
             <div className="col-sm-4 text-center">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life
-              accusamus terry richardson ad squid. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente
-              ea proident.
+
+              <div className="row text-center">
+
+              </div>
+              {this.renderNiveles(niveles,this.renderNivel)}
             </div>
             <div className="col-sm-4 text-center">
               Anim pariatur cliche reprehenderit, enim eiusmod high life
               accusamus terry richardson ad squid. Nihil anim keffiyeh
               helvetica, craft beer labore wes anderson cred nesciunt sapiente
               ea proident.
+              <div className="btn btn-secondary" onClick={this.actualizar}>Submit</div>
             </div>
             <div className="col-sm-4 text-center">
               Anim pariatur cliche reprehenderit, enim eiusmod high life

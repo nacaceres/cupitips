@@ -9,7 +9,7 @@ class CupiTip extends Component {
   }
 
   componentDidMount() {
-    console.log("AHHH");
+
   }
 
   click =() => {
@@ -17,7 +17,7 @@ class CupiTip extends Component {
   }
 
   render() {
-    console.log(this.props);
+    //console.log(this.props);
     return (
       <div>
         <h1>{this.props.match.params.id}</h1>
