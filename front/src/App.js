@@ -1,40 +1,56 @@
 import React from "react";
+import TipList from "./TipList/TipList.js";
+import NavBar from "./NavBar/NavBar.js";
 
-import Tweet from "./Tweet.js";
+import "./App.css";
 
 class App extends React.Component {
-
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      tweets:[]
-    }
+      tips: [],
+      showFilters: false
+    };
   }
 
   componentDidMount() {
-    fetch("/data")
+    fetch("/tips")
       .then(res => res.json())
-      .then ( tweets => this.setState({
-        tweets: tweets
-      }));
+      .then(tips =>
+        this.setState({
+          tips: tips,
+          showFilters: true
+        })
+      );
   }
-  renderTweets (){
-     return this.state.tweets.map( t => <Tweet tweet={t}></Tweet>)
+
+  renderNavBar() {
+    return (
+      <NavBar
+        show={this.state.showFilters}
+        hideFilter={this.hideFilter}
+      ></NavBar>
+    );
+  }
+
+  hideFilter = () => {
+    this.setState({
+      showFilters: false
+    });
   };
-  render(){
-    return(
-      <div className="row">
-        <div className="col-8">
-         <h2> Tweets </h2>
-         {this.renderTweets()}
-        </div>
-        <div className="col-4">
-          <h2> Controls </h2>
-        </div>
+
+  renderList() {
+    return <TipList tips={this.state.tips}></TipList>;
+  }
+  render() {
+    return (
+      <div>
+        <div className="row">{this.renderNavBar()}</div>
+        {this.renderList()}
       </div>
     );
-  };
+  }
 }
 
 export default App;

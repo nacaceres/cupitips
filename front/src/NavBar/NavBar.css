@@ -1,0 +1,67 @@
+#navBar {
+  width: 100%;
+  background-color: #1b1c1d;
+  box-shadow: 5px 5px 5px grey;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #009c95;
+  border-color: #009c95;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #007872;
+  border-color: #005955;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 156, 149, 0.5);
+}
+
+.btn-primary.disabled,
+.btn-primary:disabled {
+  color: #fff;
+  background-color: #009c95;
+  border-color: #009c95;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #005955;
+  border-color: #005955;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active:focus,
+.btn-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 156, 149, 0.5);
+}
+
+.btn,
+.logo {
+  font-size: 1.5em;
+  margin: 2%;
+}
+
+#colCenter .btn {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+#collapseFilters{
+  background-color: #1b1c1d;
+  color: #fff;
+  width: 100%;
+}
+
+#collapseFilters .row{
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-left: 5%;
+  padding-right:5%;
+}
