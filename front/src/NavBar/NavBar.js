@@ -1,8 +1,13 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 import "./NavBar.css";
 class NavBar extends Component {
-  
+
+  clickAuth =() => {
+    this.props.history.push("/Auth");
+  }
+
   renderFiltrar(show) {
     if (show) {
       return (
@@ -71,7 +76,7 @@ class NavBar extends Component {
               <div className="col-sm-3 text-center my-auto">
                 <button
                   type="button"
-                  onClick={this.props.hideFilter}
+                  onClick={this.clickAuth}
                   className="btn btn-primary"
                 >
                   Ingresar
@@ -86,4 +91,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+export default withRouter(NavBar);

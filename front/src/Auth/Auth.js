@@ -1,15 +1,11 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
-import "./CupiTip.css";
-class CupiTip extends Component {
-  constructor(props) {
-    super(props);
-    this.props.hideFilter();
-  }
+import "./Auth.css";
+class Auth extends Component {
 
   componentDidMount() {
-    console.log("AHHH");
+    console.log("Auth");
   }
 
   click =() => {
@@ -20,11 +16,11 @@ class CupiTip extends Component {
     console.log(this.props);
     return (
       <div>
-        <h1>{this.props.match.params.id}</h1>
+        <h1>Auth</h1>
         <div className="btn btn-primary" onClick={this.click}>Back</div>
       </div>
     );
   }
 }
 
-export default withRouter(CupiTip);
+export default withRouter(Auth);
