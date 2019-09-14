@@ -22,6 +22,11 @@ class Auth extends Component {
     return (
       <div>
         <h1>Auth</h1>
+        <div>
+          <label><b>Username</b></label>
+          <input type="email" id="email" placeholder="Email"/>
+        </div>
+        <div className="btn btn-primary" onClick={this.click}>Login</div>
         <div className="btn btn-primary" onClick={this.click}>Back</div>
       </div>
     );
