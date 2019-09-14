@@ -23,9 +23,11 @@ class TipInList extends Component {
           </div>
           <div className="col-sm-10 text-left my-auto txtNombre">
             <div className="row">{this.props.tip.nombre}</div>
-            <div className="row"> <strong>Tema:</strong> {this.props.tip.tema}</div>
-            <div className="row"> {this.props.tip.likes}👍  </div>
           </div>
+        </div>
+        <div className="row container-fluid tags">
+          <label className = "tema col-sm-7"><strong>Tema:</strong> {this.props.tip.tema}</label>
+          <label className = "likes col-sm-2">{this.props.tip.likes} ☆ </label>
         </div>
       </div>
     );

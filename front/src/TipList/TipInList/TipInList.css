@@ -40,3 +40,20 @@
     color: #064789;
     font-size: 1em;
 }
+
+.likes{
+  border-radius: 0.5em;
+  background-color: #064789;
+  margin-left: 0.5em;
+  color: white;
+}
+
+.tema{
+  border-radius: 0.5em;
+  background-color: #064789;
+  color: white;
+}
+
+.tags{
+  margin-top: 0.5em;
+}
