@@ -22,11 +22,11 @@ class TipInList extends Component {
             </div>
           </div>
           <div className="col-sm-10 text-left my-auto txtNombre">
-            {this.props.tip.nombre}
+            <div className="row">{this.props.tip.nombre}</div>
+            <div className="row"> <strong>Tema:</strong> {this.props.tip.tema}</div>
+            <div className="row"> {this.props.tip.likes}👍  </div>
           </div>
         </div>
-        <div className="row">b</div>
-        <div className="row">c</div>
       </div>
     );
   }
