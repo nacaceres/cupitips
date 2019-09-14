@@ -60,7 +60,7 @@ class App extends React.Component {
           />
           <Route
             path="/Auth"
-            render={props => <Auth /> }
+            render={props => <Auth hideFilter={this.hideFilter} /> }
           />
           <Route
             path="/cupitip/:id"
