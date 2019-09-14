@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import "./NavBar.css";
 class NavBar extends Component {
+  
   renderFiltrar(show) {
     if (show) {
       return (

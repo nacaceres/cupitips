@@ -4,6 +4,10 @@ import "./TipList.css";
 import TipInList from "./TipInList/TipInList.js";
 
 class TipList extends Component {
+
+  componentDidMount(){
+    this.props.showFilter();
+  }
   renderCols(cols, renderElems) {
     let valClass = "col-sm-" + 12 / cols.length +  " text-center";
     let columns = [];

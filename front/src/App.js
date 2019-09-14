@@ -8,7 +8,6 @@ import "./App.css";
 class App extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       tips: [],
       showFilters: false
@@ -16,14 +15,15 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+
     fetch("/tips")
       .then(res => res.json())
       .then(tips =>
         this.setState({
-          tips: tips,
-          showFilters: true
+          tips: tips
         })
       );
+      console.log("HMM");
   }
 
   renderNavBar() {
@@ -41,6 +41,12 @@ class App extends React.Component {
     });
   };
 
+  showFilter = () => {
+    this.setState({
+      showFilters: true
+    });
+  };
+
   render() {
     return (
       <div>
@@ -49,11 +55,11 @@ class App extends React.Component {
           <Route
             exact
             path="/"
-            render={props => <TipList tips={this.state.tips} />}
+            render={props => <TipList tips={this.state.tips} showFilter={this.showFilter}/>}
           />
           <Route
             path="/cupitip/:id"
-            render={props => <CupiTip tips={this.state.tips} />}
+            render={props => <CupiTip tips={this.state.tips} hideFilter={this.hideFilter}/> }
           />
         </Switch>
       </div>

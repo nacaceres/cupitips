@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
 import "./TipInList.css";
 class TipInList extends Component {
+
   clicked = () => {
-    console.log(this.props.tip);
+    this.props.history.push("/cupitip/"+this.props.tip._id);
   };
 
   render() {
@@ -11,7 +13,7 @@ class TipInList extends Component {
     return (
       <div
         className="tipInList container-flex disable-select"
-        onClick={this.clicked}
+        onClick={this.clicked.bind(this)}
       >
         <div className="row tipTitle">
           <div className="col-sm-2">
@@ -30,4 +32,4 @@ class TipInList extends Component {
   }
 }
 
-export default TipInList;
+export default withRouter(TipInList);
