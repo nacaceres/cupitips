@@ -1,6 +1,7 @@
 import React from "react";
 import TipList from "./TipList/TipList.js";
 import NavBar from "./NavBar/NavBar.js";
+import CupiTip from "./CupiTip/CupiTip.js"
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
 
@@ -52,10 +53,8 @@ class App extends React.Component {
           />
           <Route
             path="/cupitip/:id"
-            render={props => <NavBar tips={this.state.tips} />}
+            render={props => <CupiTip tips={this.state.tips} />}
           />
-
-
         </Switch>
       </div>
     );
