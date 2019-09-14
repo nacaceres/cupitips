@@ -42,6 +42,38 @@
   box-shadow: 0 0 0 0.2rem rgba(0, 156, 149, 0.5);
 }
 
+.btn-outline-primary {
+  color: #009c95;
+  background-color: transparent;
+  border-color: #009c95;
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #009c95;
+  border-color: #009c95;
+}
+
+.btn-outline-primary:focus, .btn-outline-primary.focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 156, 149, 0.5);
+}
+
+.btn-outline-primary.disabled, .btn-outline-primary:disabled {
+  color: #009c95;
+  background-color: transparent;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active, .btn-outline-primary:not(:disabled):not(.disabled).active, .show > .btn-outline-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #009c95;
+  border-color: #009c95;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled):active:focus, .btn-outline-primary:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 156, 149, 0.5);
+}
+
+
 .btn,
 .logo {
   font-size: 1.5em;
@@ -53,15 +85,22 @@
   padding-right: 5%;
 }
 
-#collapseFilters{
+#collapseFilters {
   background-color: #1b1c1d;
   color: #fff;
   width: 100%;
+  padding-top: 2%; 
 }
 
-#collapseFilters .row{
-  padding-top: 2%;
+#collapseFilters .row {
   padding-bottom: 2%;
   padding-left: 5%;
-  padding-right:5%;
+  padding-right: 5%;
+}
+
+
+.btnnivel {
+  font-size: 1em;
+  padding-left: 10%;
+  padding-right: 10%;
 }
