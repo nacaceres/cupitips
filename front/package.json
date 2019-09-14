@@ -29,5 +29,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:3001"
+  "proxy": "http://localhost:3001",
+  "devDependencies": {
+    "babel-eslint": "8",
+    "eslint": "4.x"
+  }
 }
