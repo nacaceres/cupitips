@@ -7,6 +7,10 @@ class NavBar extends Component {
     this.props.history.push("/Auth");
   };
 
+  clickOut = () => {
+    this.props.handleAuthentication(false,undefined);
+  };
+
   renderFiltrar(show) {
     if (show) {
       return (
@@ -89,7 +93,28 @@ class NavBar extends Component {
       );
     }
   }
-
+  renderLoginButton(autenticado) {
+    if(!autenticado){
+      return(
+        <button
+          type="button"
+          onClick={this.clickAuth}
+          className="btn btn-primary"
+        >
+          Ingresar
+        </button>);
+    }
+    else{
+      return(
+        <button
+          type="button"
+          onClick={this.clickOut}
+          className="btn btn-primary"
+        >
+          {this.props.username+"|Salir"}
+        </button>);
+    }
+  }
   render() {
     return (
       <div className="row">
@@ -110,13 +135,7 @@ class NavBar extends Component {
               </div>
               <div className="col-sm-1"></div>
               <div className="col-sm-3 text-center my-auto">
-                <button
-                  type="button"
-                  onClick={this.clickAuth}
-                  className="btn btn-primary"
-                >
-                  Ingresar
-                </button>
+                {this.renderLoginButton(this.props.autenticado)}
               </div>
             </div>
             {this.renderFilters(this.props.show)}

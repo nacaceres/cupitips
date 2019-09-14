@@ -13,7 +13,9 @@ class App extends React.Component {
       tips: [],
       filtros: [],
       tipsFiltrados: [],
-      showFilters: false
+      showFilters: false,
+      autenticado: false,
+      username:  undefined
     };
   }
 
@@ -53,6 +55,9 @@ class App extends React.Component {
         filtros={this.state.filtros}
         actualizarFiltros={this.actualizarFiltros}
         hideFilter={this.hideFilter}
+        autenticado={this.state.autenticado}
+        username={this.state.username}
+        handleAuthentication={this.handleAuthentication}
       />
     );
   }
@@ -105,6 +110,11 @@ class App extends React.Component {
     });
   };
 
+  handleAuthentication = (auth, user ) => {
+    this.setState({ autenticado: auth });
+    this.setState({ username: user });
+  }
+
   render() {
     return (
       <div>
@@ -122,7 +132,7 @@ class App extends React.Component {
           />
           <Route
             path="/Auth"
-            render={props => <Auth hideFilter={this.hideFilter} />}
+            render={props => <Auth hideFilter={this.hideFilter} handleAuthentication={this.handleAuthentication}/>}
           />
           <Route
             path="/cupitip/:id"

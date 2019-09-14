@@ -6,6 +6,8 @@ class Auth extends Component {
   constructor(props) {
     super(props);
     this.props.hideFilter();
+    this.usuario = React.createRef();
+    this.clickLogin = this.clickLogin.bind(this);
   }
 
 
@@ -13,21 +15,44 @@ class Auth extends Component {
     console.log("Auth");
   }
 
-  click =() => {
+  clickBack =() => {
     this.props.history.push("/");
-  }
+  };
+  clickLogin = () => {
+    var req = {};
+    req.username = this.usuario.current.value;
+    console.log(req);
+    fetch("auth", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(req)
+    })
+      .then(response => response.json())
+      .then(resp => {
+        if(resp.length>0){
+          this.props.handleAuthentication(true,resp[0].username);
+          this.clickBack();
+        }
+        else{
+          alert("Usuario no registrado");
+        }
+      });
+  };
 
   render() {
     console.log(this.props);
     return (
       <div>
-        <h1>Auth</h1>
+        <br></br>
+        <label><b>Username</b></label>
         <div>
-          <label><b>Username</b></label>
-          <input type="email" id="email" placeholder="Email"/>
+          <input type="text" placeholder="Usuario" ref={this.usuario} />
         </div>
-        <div className="btn btn-primary" onClick={this.click}>Login</div>
-        <div className="btn btn-primary" onClick={this.click}>Back</div>
+        <div className="btn btn-primary" onClick={this.clickLogin}>Login</div>
+        <div className="btn btn-primary" onClick={this.clickBack}>Cancelar</div>
       </div>
     );
   }
