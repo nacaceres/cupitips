@@ -37,7 +37,7 @@ class App extends React.Component {
             }
           }
           if (!encontrado) {
-            filtros.nivel.push({ nombre: tips[i].nivel, estado: true });
+            filtros.nivel.push({ nombre: tips[i].nivel, estado: false });
           }
         }
         this.setState({
@@ -63,15 +63,23 @@ class App extends React.Component {
   }
 
   actualizarFiltros = nuevosFiltros => {
+    console.log("NUEVOS",nuevosFiltros);
     let tipsFiltrados = [];
+
+    let todosOff = true;
+    for(let i = 0; i < nuevosFiltros.nivel;i++){
+      if(nuevosFiltros.nivel[i].estado === true){
+        todosOff = false;
+      }
+    }
     for (let i = 0; i < this.state.tips.length; i++) {
       let aceptado = true;
       for (let j = 0; j < nuevosFiltros.nivel.length; j++) {
-        if (nuevosFiltros.nivel[j].nombre === this.state.tips[i].nivel) {
+        if ( !todosOff && nuevosFiltros.nivel[j].nombre === this.state.tips[i].nivel) {
           aceptado = nuevosFiltros.nivel[j].estado;
         }
       }
-      if (
+      if ( 
         nuevosFiltros.nombre != null &&
         this.state.tips[i].nombre.indexOf(nuevosFiltros.nombre) === -1
       ) {

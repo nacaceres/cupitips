@@ -57,6 +57,17 @@ class NavBar extends Component {
 
   renderNiveles(niveles) {
     if (niveles !== undefined) {
+      let col = []
+      let col2 = []
+  
+      for(let i = 0; i < niveles.length; i++){
+        if(i%2===0){
+          col.push(niveles[i]);
+        }
+        else{
+          col2.push(niveles[i]);
+        }
+      }
       return niveles.map(niv => (
         <div className="row text-center" key={"nivel" + niv.nombre}>
           <div className="col-sm-6 mx-auto">
