@@ -1,7 +1,7 @@
 import React from "react";
 import TipList from "./TipList/TipList.js";
 import NavBar from "./NavBar/NavBar.js";
-
+import { Switch, Route } from "react-router-dom";
 import "./App.css";
 
 class App extends React.Component {
@@ -40,14 +40,16 @@ class App extends React.Component {
     });
   };
 
-  renderList() {
-    return <TipList tips={this.state.tips}></TipList>;
-  }
   render() {
     return (
       <div>
-        <div className="row">{this.renderNavBar()}</div>
-        {this.renderList()}
+        {this.renderNavBar()}
+        <Switch>
+          <Route
+            path="/"
+            render={props => <TipList tips={this.state.tips} />}
+          />
+        </Switch>
       </div>
     );
   }

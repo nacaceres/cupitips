@@ -2,8 +2,6 @@ import React, { Component } from "react";
 
 import "./NavBar.css";
 class NavBar extends Component {
-
-  
   renderFiltrar(show) {
     if (show) {
       return (
@@ -52,33 +50,35 @@ class NavBar extends Component {
 
   render() {
     return (
-      <div className="topnav" id="navBar">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-sm-4 text-right">
-              <a href="/" className="text-right">
-                <img
-                  className="logo"
-                  src="./images/logo_disc.png"
-                  alt="disc"
-                ></img>
-              </a>
+      <div className="row">
+        <div className="topnav" id="navBar">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-sm-4 text-right">
+                <a href="/" className="text-right">
+                  <img
+                    className="logo"
+                    src="./images/logo_disc.png"
+                    alt="disc"
+                  ></img>
+                </a>
+              </div>
+              <div className="col-sm-4 text-center my-auto" id="colCenter">
+                {this.renderFiltrar(this.props.show)}
+              </div>
+              <div className="col-sm-1"></div>
+              <div className="col-sm-3 text-center my-auto">
+                <button
+                  type="button"
+                  onClick={this.props.hideFilter}
+                  className="btn btn-primary"
+                >
+                  Ingresar
+                </button>
+              </div>
             </div>
-            <div className="col-sm-4 text-center my-auto" id="colCenter">
-              {this.renderFiltrar(this.props.show)}
-            </div>
-            <div className="col-sm-1"></div>
-            <div className="col-sm-3 text-center my-auto">
-              <button
-                type="button"
-                onClick={this.props.hideFilter}
-                className="btn btn-primary"
-              >
-                Ingresar
-              </button>
-            </div>
+            {this.renderFilters(this.props.show)}
           </div>
-          {this.renderFilters(this.props.show)}
         </div>
       </div>
     );
