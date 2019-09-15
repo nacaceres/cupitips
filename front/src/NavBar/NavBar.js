@@ -8,7 +8,7 @@ class NavBar extends Component {
   };
 
   clickOut = () => {
-    this.props.handleAuthentication(false,undefined);
+    this.props.handleAuthentication(false, undefined);
   };
 
   renderFiltrar(show) {
@@ -28,72 +28,106 @@ class NavBar extends Component {
     }
   }
 
-  renderNivel(niv){ //El mierdero
-    if(niv.estado===true){
-        let act = () => {
+  renderNivel(niv) {
+    if (niv.estado === true) {
+      let act = () => {
         let filtros = this.props.filtros;
-        for(let i = 0; i< filtros.nivel.length;i++){
-          if(filtros.nivel[i].nombre === niv.nombre){
+        for (let i = 0; i < filtros.nivel.length; i++) {
+          if (filtros.nivel[i].nombre === niv.nombre) {
             filtros.nivel[i].estado = false;
           }
         }
         this.props.actualizarFiltros(filtros);
-      }
-     return <div className="btn btnnivel btn-primary" onClick={act}>Nivel {niv.nombre}</div>;
-    }
-    else{
+      };
+      return (
+        <div
+          key={"NivButt" + niv.nombre}
+          className="btn btnnivel btn-primary"
+          onClick={act}
+        >
+          Nivel {niv.nombre}
+        </div>
+      );
+    } else {
       let act = () => {
         let filtros = this.props.filtros;
-        for(let i = 0; i< filtros.nivel.length;i++){
-          if(filtros.nivel[i].nombre === niv.nombre){
+        for (let i = 0; i < filtros.nivel.length; i++) {
+          if (filtros.nivel[i].nombre === niv.nombre) {
             filtros.nivel[i].estado = true;
           }
         }
         this.props.actualizarFiltros(filtros);
-      }
-      return <div className="btn btnnivel btn-outline-primary" onClick={act}>Nivel {niv.nombre}</div>;
+      };
+      return (
+        <div
+          key={"NivButtF" + niv.nombre}
+          className="btn btnnivel btn-outline-primary"
+          onClick={act}
+        >
+          Nivel {niv.nombre}
+        </div>
+      );
     }
   }
 
   renderNiveles(niveles) {
     if (niveles !== undefined) {
-      let col = []
-      let col2 = []
-  
-      for(let i = 0; i < niveles.length; i++){
-        if(i%2===0){
-          col.push(niveles[i]);
-        }
-        else{
-          col2.push(niveles[i]);
-        }
-      }
-      return niveles.map(niv => (
-        <div className="row text-center" key={"nivel" + niv.nombre}>
-          <div className="col-sm-6 mx-auto">
-              {this.renderNivel(niv)}
-          </div>
-        </div>
-      ));
+      return niveles.map(niv => this.renderNivel(niv));
     }
+  }
+
+  actualizarNombre(e) {
+    let filtros = this.props.filtros;
+    filtros.nombre = e.target.value;
+    this.props.actualizarFiltros(filtros);
+  }
+
+  renderNombre() {
+    let nombre = "";
+    if (this.props.filtros.nombre !== undefined) {
+      nombre = this.props.filtros.nombre;
+    }
+    return (
+      <label>
+        Name:
+        <input
+          type="text"
+          value={nombre}
+          onChange={this.actualizarNombre.bind(this)}
+        />
+      </label>
+    );
   }
 
   renderFilters(show) {
     if (show) {
+      let col = [];
+      let col2 = [];
+      if (this.props.filtros.nivel !== undefined) {
+        for (let i = 0; i < this.props.filtros.nivel.length; i++) {
+          if (i % 2 === 0) {
+            col.push(this.props.filtros.nivel[i]);
+          } else {
+            col2.push(this.props.filtros.nivel[i]);
+          }
+        }
+      }
+
       return (
         <div className="collapse" id="collapseFilters">
-          <div className="row">
+          <div className="row text-center">
             <div className="col-sm-4 text-center">
-
-              {this.renderNiveles(this.props.filtros.nivel)}
+              <div className="row text-center">
+                <div className="col-sm-4 mx-auto">
+                  {this.renderNiveles(col)}
+                </div>
+                <div className="col-sm-4 mx-auto">
+                  {this.renderNiveles(col2)}
+                </div>
+              </div>
             </div>
-            <div className="col-sm-4 text-center">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life
-              accusamus terry richardson ad squid. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente
-              ea proident.
-            </div>
-            <div className="col-sm-4 text-center">
+            <div className="col-sm-6 text-center">{this.renderNombre()}</div>
+            <div className="col-sm-2 text-center">
               Anim pariatur cliche reprehenderit, enim eiusmod high life
               accusamus terry richardson ad squid. Nihil anim keffiyeh
               helvetica, craft beer labore wes anderson cred nesciunt sapiente
@@ -105,27 +139,29 @@ class NavBar extends Component {
     }
   }
   renderLoginButton(autenticado) {
-    if(!autenticado){
-      return(
+    if (!autenticado) {
+      return (
         <button
           type="button"
           onClick={this.clickAuth}
           className="btn btn-primary"
         >
           Ingresar
-        </button>);
-    }
-    else{
-      return(
+        </button>
+      );
+    } else {
+      return (
         <button
           type="button"
           onClick={this.clickOut}
           className="btn btn-primary"
         >
-          {this.props.username+"|Salir"}
-        </button>);
+          {this.props.username + "|Salir"}
+        </button>
+      );
     }
   }
+
   render() {
     return (
       <div className="row">

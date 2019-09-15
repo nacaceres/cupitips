@@ -25,9 +25,9 @@ class App extends React.Component {
       .then(tips => {
         let filtros = {
           nivel: [],
-          nombre: null,
+          nombre: "",
           likes: 0,
-          tema: null
+          tema: ""
         };
         for (let i = 0; i < tips.length; i++) {
           let encontrado = false;
@@ -63,11 +63,9 @@ class App extends React.Component {
   }
 
   actualizarFiltros = nuevosFiltros => {
-    console.log("NUEVOS",nuevosFiltros);
     let tipsFiltrados = [];
-
     let todosOff = true;
-    for(let i = 0; i < nuevosFiltros.nivel;i++){
+    for(let i = 0; i < nuevosFiltros.nivel.length;i++){
       if(nuevosFiltros.nivel[i].estado === true){
         todosOff = false;
       }
@@ -75,19 +73,19 @@ class App extends React.Component {
     for (let i = 0; i < this.state.tips.length; i++) {
       let aceptado = true;
       for (let j = 0; j < nuevosFiltros.nivel.length; j++) {
-        if ( !todosOff && nuevosFiltros.nivel[j].nombre === this.state.tips[i].nivel) {
+        if (!todosOff && nuevosFiltros.nivel[j].nombre === this.state.tips[i].nivel) {
           aceptado = nuevosFiltros.nivel[j].estado;
         }
       }
       if ( 
-        nuevosFiltros.nombre != null &&
+        nuevosFiltros.nombre !== "" &&
         this.state.tips[i].nombre.indexOf(nuevosFiltros.nombre) === -1
       ) {
         //Si no esta en el filtro de nombre
         aceptado = false;
       }
       if (
-        nuevosFiltros.tema != null &&
+        nuevosFiltros.tema !== "" &&
         this.state.tips[i].tema.indexOf(nuevosFiltros.tema) === -1
       ) {
         //Si no esta en el filtro de tema
@@ -146,7 +144,7 @@ class App extends React.Component {
             path="/cupitip/:id"
             render={props => (
               <CupiTip
-                tips={this.state.tipsFiltrados}
+                tips={this.state.tips}
                 hideFilter={this.hideFilter}
               />
             )}
