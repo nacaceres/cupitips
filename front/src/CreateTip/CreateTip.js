@@ -16,6 +16,7 @@ class CreateTip extends Component {
         codigoErroneo: ""
       }
     };
+    this.enviar = this.enviar.bind(this);
   }
 
   componentDidMount() {
@@ -29,8 +30,34 @@ class CreateTip extends Component {
         pathname: "/auth",
         oldcreatestate: this.state
       });
-    } else {
-      //Enviar?
+    }
+    else {
+      let req = {};
+      req.nombre = this.state.formdata.nombre;
+      req.codigo_mal = this.state.formdata.codigoErroneo;
+      req.codigo_bien = this.state.formdata.codigoCorrecto;
+      req.nivel = Number(this.state.formdata.nivel);
+      req.tema = this.state.formdata.tema;
+      req.descripcion = this.state.formdata.descripcion;
+      console.log(JSON.stringify(req));
+      fetch("addtip", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req)
+      })
+        .then(response => response.json())
+        .then(resp => {
+          if(resp.result.n > 0){
+            alert("Tu tip ha sido enviado correctamente, lo revisaremos y en algunos dias podras verlo publicado");
+            this.props.actualizarTips();
+          }
+          else{
+            alert("Ha ocurrido un error y tu tip no pudo ser enviado.");
+          }
+        });
     }
   };
 

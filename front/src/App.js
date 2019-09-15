@@ -148,6 +148,7 @@ class App extends React.Component {
           <CreateTip
             hideFilter={this.hideFilter}
             autenticado= {this.state.autenticado}
+            actualizarTips={this.actualizarTips}
           />
         )}
       />
