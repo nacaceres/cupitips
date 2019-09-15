@@ -65,4 +65,4 @@ eslint canciones.js
 [Andrés Varón Maya](https://github.com/andresvaron)
 
 # Licencia
-Este proyecto bajo MIT public license. Se pueden econtrar [aqui](https://github.com/nacaceres/cupitips/blob/master/LICENSE).
+Este proyecto está bajo MIT public license. Se pueden econtrar [aqui](https://github.com/nacaceres/cupitips/blob/master/LICENSE).
