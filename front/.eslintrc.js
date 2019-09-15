@@ -35,7 +35,8 @@ module.exports = {
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "react/prop-types": 0
     },
     "parser": "babel-eslint",
     "extends": ['plugin:react/recommended']

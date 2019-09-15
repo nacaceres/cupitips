@@ -144,7 +144,7 @@ class App extends React.Component {
     return (
       <Route
         path="/CreateTip"
-        render={props => (
+        render={() => (
           <CreateTip
             hideFilter={this.hideFilter}
             autenticado= {this.state.autenticado}
@@ -159,7 +159,7 @@ class App extends React.Component {
     return (
       <Route
         path="*"
-        render={props => <NotFound hideFilter={this.hideFilter} />}
+        render={() => <NotFound hideFilter={this.hideFilter} />}
       />
     );
   }
@@ -172,7 +172,7 @@ class App extends React.Component {
           <Route
             exact
             path="/"
-            render={props => (
+            render={() => (
               <TipList
                 tips={this.state.tipsFiltrados}
                 showFilter={this.showFilter}
@@ -181,7 +181,7 @@ class App extends React.Component {
           />
           <Route
             path="/Auth"
-            render={(props) => (
+            render={() => (
               <Auth
                 hideFilter={this.hideFilter}
                 handleAuthentication={this.handleAuthentication}
@@ -190,7 +190,7 @@ class App extends React.Component {
           />
           <Route
             path="/cupitip/:id"
-            render={props => (
+            render={()=> (
               <CupiTip
                 tips={this.state.tips}
                 hideFilter={this.hideFilter}
