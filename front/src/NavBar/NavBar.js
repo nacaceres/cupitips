@@ -246,8 +246,16 @@ class NavBar extends Component {
               <div className="col-sm-4 text-center my-auto" id="colCenter">
                 {this.renderFiltrar(this.props.show)}
               </div>
-              <div className="col-sm-1"></div>
-              <div className="col-sm-3 text-center my-auto">
+              <div className="col-sm-2 my-auto">
+                <button
+                  type="button"
+                  onClick={this.clickAuth}
+                  className="btn btn-primary"
+                >
+                  Sugerir Tip
+                </button>
+              </div>
+              <div className="col-sm-2 text-center my-auto">
                 {this.renderLoginButton(this.props.autenticado)}
               </div>
             </div>
