@@ -5,12 +5,11 @@ import "./TipList.css";
 import TipInList from "./TipInList/TipInList.js";
 
 class TipList extends Component {
-
-  componentDidMount(){
+  componentDidMount() {
     this.props.showFilter();
   }
   renderCols(cols, renderElems) {
-    let valClass = "col-sm-" + 12 / cols.length +  " text-center";
+    let valClass = "col-sm-" + 12 / cols.length + " text-center";
     let columns = [];
     for (let i = 0; i < cols.length; i++) {
       columns.push(
@@ -28,8 +27,8 @@ class TipList extends Component {
     ));
   }
   render() {
-   // console.log(this.props)
-    let width = window.screen.width;
+    // console.log(this.props)
+    let width = window.innerWidth;
     let n = 1;
     if (width >= 768) {
       n++;

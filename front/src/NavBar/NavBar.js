@@ -82,20 +82,47 @@ class NavBar extends Component {
     this.props.actualizarFiltros(filtros);
   }
 
+  actualizarTema(e) {
+    let filtros = this.props.filtros;
+    filtros.tema = e.target.value;
+    this.props.actualizarFiltros(filtros);
+  }
+
   renderNombre() {
     let nombre = "";
     if (this.props.filtros.nombre !== undefined) {
       nombre = this.props.filtros.nombre;
     }
     return (
-      <label>
-        Name:
-        <input
-          type="text"
-          value={nombre}
-          onChange={this.actualizarNombre.bind(this)}
-        />
-      </label>
+      <div className="nombreRw row">
+        <div className="col-sm-2 text-center my-auto nombreStr">Name:</div>
+        <div className="col-sm-10 text-left">
+            <input
+              type="text"
+              value={nombre}
+              onChange={this.actualizarNombre.bind(this)}
+            />
+        </div>
+      </div>
+    );
+  }
+
+  renderTema() {
+    let tema = "";
+    if (this.props.filtros.tema !== undefined) {
+      tema = this.props.filtros.tema;
+    }
+    return (
+      <div className="nombreRw row">
+        <div className="col-sm-2 text-center my-auto nombreStr">Tema:</div>
+        <div className="col-sm-10 text-left">
+            <input
+              type="text"
+              value={tema}
+              onChange={this.actualizarTema.bind(this)}
+            />
+        </div>
+      </div>
     );
   }
 
@@ -116,7 +143,7 @@ class NavBar extends Component {
       return (
         <div className="collapse" id="collapseFilters">
           <div className="row text-center">
-            <div className="col-sm-4 text-center">
+            <div className="col-sm-3 text-center">
               <div className="row text-center">
                 <div className="col-sm-4 mx-auto">
                   {this.renderNiveles(col)}
@@ -126,13 +153,8 @@ class NavBar extends Component {
                 </div>
               </div>
             </div>
-            <div className="col-sm-6 text-center">{this.renderNombre()}</div>
-            <div className="col-sm-2 text-center">
-              Anim pariatur cliche reprehenderit, enim eiusmod high life
-              accusamus terry richardson ad squid. Nihil anim keffiyeh
-              helvetica, craft beer labore wes anderson cred nesciunt sapiente
-              ea proident.
-            </div>
+            <div className="col-sm-6 text-center">{this.renderNombre()} {this.renderTema()}</div>
+            <div className="col-sm-3 text-center"></div>
           </div>
         </div>
       );
