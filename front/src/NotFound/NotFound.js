@@ -8,10 +8,11 @@ class NotFound extends Component {
     this.props.hideFilter();
   }
   render() {
-    return <div className="row text-center">
-      <div className="col-sm-6 mx-auto notfoundlbl">404 Not Found</div>
-
-    </div>;
+    return (
+      <div className="row text-center">
+        <div className="col-sm-6 mx-auto notfoundlbl">404 Not Found</div>
+      </div>
+    );
   }
 }
 
