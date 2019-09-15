@@ -52,7 +52,8 @@ export MONGOLAB_URI="mongodb://{username}:{password}@cluster0-shard-00-00-2gfpv.
 heroku config:set MONGOLAB_URI=“mongodb://{username}:{password}@cluster0-shard-00-00-2gfpv.mongodb.net:27017,cluster0-shard-00-01-2gfpv.mongodb.net:27017,cluster0-shard-00-02-2gfpv.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority”
 
 # Requerimientos como desarrollador
-El proyecto tiene una dependencia como desarrollador hacia [eslint](https://eslint.org), esta dependencia se encarga de revisar la sintaxis del codigo en JS bajo la reglas definidas en el archivo [.eslintrc.js](https://github.com/nacaceres/PaginaPersonalNicolasCaceres/blob/master/.eslintrc.js), en caso de querer validar la sintaxis de un archivo js del proyecto se deben seguir estos pasos:
+El proyecto tiene una dependencia como desarrollador hacia [eslint](https://eslint.org), esta dependencia se encarga de revisar la sintaxis del codigo en JS bajo la reglas definidas en el archivo [.eslintrc.js]
+
 ```
 cd PaginaPersonalNicolasCaceres
 npm install
@@ -62,3 +63,6 @@ eslint canciones.js
 # Autores
 [Nicolás Cáceres Acosta](https://github.com/nacaceres)   
 [Andrés Varón Maya](https://github.com/andresvaron)
+
+# Licencia
+Este proyecto bajo MIT public license. Se pueden econtrar [aqui](https://github.com/nacaceres/cupitips/blob/master/LICENSE)
