@@ -1,5 +1,5 @@
 .sugerirlbl{
-    margin-top: 10%;
+    margin-top: 8%;
     font-size: 3em;
     margin-bottom: 10%;
 }
@@ -7,4 +7,8 @@
 .crtlbl{
     font-size: 1.75em;
     width: 100%;
+}
+
+.btnbckcrt{
+    margin-top: 12%;
 }

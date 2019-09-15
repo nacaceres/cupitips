@@ -19,6 +19,10 @@ class CreateTip extends Component {
     this.enviar = this.enviar.bind(this);
   }
 
+  goBack = () => {
+    this.props.history.goBack();
+  };
+
   componentDidMount() {
     if (this.props.location.oldcreatestate !== undefined) {
       this.setState(this.props.location.oldcreatestate);
@@ -30,8 +34,7 @@ class CreateTip extends Component {
         pathname: "/auth",
         oldcreatestate: this.state
       });
-    }
-    else {
+    } else {
       let req = {};
       req.nombre = this.state.formdata.nombre;
       req.codigo_mal = this.state.formdata.codigoErroneo;
@@ -43,18 +46,19 @@ class CreateTip extends Component {
       fetch("addtip", {
         method: "POST",
         headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify(req)
       })
         .then(response => response.json())
         .then(resp => {
-          if(resp.result.n > 0){
-            alert("Tu tip ha sido enviado correctamente, lo revisaremos y en algunos dias podras verlo publicado");
+          if (resp.result.n > 0) {
+            alert(
+              "Tu tip ha sido enviado correctamente, lo revisaremos y en algunos dias podras verlo publicado"
+            );
             this.props.actualizarTips();
-          }
-          else{
+          } else {
             alert("Ha ocurrido un error y tu tip no pudo ser enviado.");
           }
         });
@@ -75,11 +79,15 @@ class CreateTip extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container-fluid">
         <div className="row text-center">
-          <div className="col-sm-6 mx-auto">
+          <div className="col-sm-2 mx-auto">
+            <button className="btn btn-primary btnbckcrt" onClick={this.goBack}>Back</button>
+          </div>
+          <div className="col-sm-8 mx-auto">
             <div className="sugerirlbl">Sugerir Tip</div>
           </div>
+          <div className="col-sm-2"/>
         </div>
         <div className="row text-center">
           <div className="col-sm-3 my-auto text-right">

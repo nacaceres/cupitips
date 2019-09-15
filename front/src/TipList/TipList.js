@@ -26,6 +26,11 @@ class TipList extends Component {
       <TipInList key={"TipInList" + elem._id} tip={elem}></TipInList>
     ));
   }
+
+  sugerir = () => {
+    this.props.history.push("/createtip");
+  }
+  
   render() {
     // console.log(this.props)
     let width = window.innerWidth;
@@ -46,7 +51,13 @@ class TipList extends Component {
     return (
       <div className="container-fluid" id="tipList">
         <div className="row">{this.renderCols(cols, this.renderElems)}</div>
+        <div className="row">
+          <div className="col-sm-6 text-center mx-auto">
+            <button className="btn btn-primary" onClick={this.sugerir}>Sugerir Tip</button>
+          </div>
+        </div>
       </div>
+
     );
   }
 }
