@@ -190,3 +190,7 @@ input::-moz-focus-inner, input::-moz-focus-outer {
   font-size: 2em;
   margin-top: 5%;
 }
+
+.itemMen:hover{
+  cursor: pointer;
+}

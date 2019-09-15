@@ -16,13 +16,13 @@
 
 .tipTitle{
     height: 40%;
+    font-family: 'Archivo', sans-serif;
 }
 .numeroNivel {
   border-radius: 10%;
-  margin-top: 10%;
+  margin-top: 15%;
   vertical-align: middle;
-  width: 50px;
-  height: 50px;
+  padding:25%;
   display: table;
   text-align: center;
   background-color: #064789;
@@ -37,23 +37,25 @@
 }
 
 .txtNombre{
-    color: #064789;
-    font-size: 1em;
+    color: #1b1c1d;
+    font-size: 1.3em;
 }
 
 .likes{
-  border-radius: 0.5em;
-  background-color: #064789;
-  margin-left: 0.5em;
-  color: white;
+  color: #064789;
+  font-size: 1.5em;
+  margin-right: 2%; 
+  margin-top: 10%;
+  height: 100%;
 }
 
 .tema{
   border-radius: 0.5em;
-  background-color: #064789;
+  padding:3%;
+  background-color: rgb(27, 28, 29,0.8);
   color: white;
 }
 
 .tags{
-  margin-top: 0.5em;
+  margin-top: 4%;
 }

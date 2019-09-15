@@ -149,7 +149,7 @@ class NavBar extends Component {
       <div>
         <div className="row text-center my-auto">
           <div className="col-sm-12 likeslbl">
-          Likes: {this.props.filtros.likes}
+            Likes: {this.props.filtros.likes}
           </div>
         </div>
         <div className="row">
@@ -217,13 +217,24 @@ class NavBar extends Component {
       );
     } else {
       return (
-        <button
-          type="button"
-          onClick={this.clickOut}
-          className="btn btn-primary"
-        >
-          {this.props.username + "|Salir"}
-        </button>
+        <div className="btn-group">
+          <button
+            type="button"
+            className="btn btn-primary dropdown-toggle"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {this.props.username}
+          </button>
+          <div className="dropdown-menu">
+            <div className="dropdown-item itemMen">Sugerir Tip</div>
+            <div className="dropdown-divider"></div>
+            <div className="dropdown-item itemMen" onClick={this.clickOut}>
+              Salir
+            </div>
+          </div>
+        </div>
       );
     }
   }
@@ -246,16 +257,8 @@ class NavBar extends Component {
               <div className="col-sm-4 text-center my-auto" id="colCenter">
                 {this.renderFiltrar(this.props.show)}
               </div>
-              <div className="col-sm-2 my-auto">
-                <button
-                  type="button"
-                  onClick={this.clickAuth}
-                  className="btn btn-primary"
-                >
-                  Sugerir Tip
-                </button>
-              </div>
-              <div className="col-sm-2 text-center my-auto">
+              <div className="col-sm-1" />
+              <div className="col-sm-3 text-center my-auto">
                 {this.renderLoginButton(this.props.autenticado)}
               </div>
             </div>

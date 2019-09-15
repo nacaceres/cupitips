@@ -16,7 +16,7 @@ class App extends React.Component {
       tipsFiltrados: [],
       showFilters: false,
       autenticado: false,
-      username:  undefined
+      username: undefined
     };
   }
 
@@ -67,15 +67,18 @@ class App extends React.Component {
   actualizarFiltros = nuevosFiltros => {
     let tipsFiltrados = [];
     let todosOff = true;
-    for(let i = 0; i < nuevosFiltros.nivel.length;i++){
-      if(nuevosFiltros.nivel[i].estado === true){
+    for (let i = 0; i < nuevosFiltros.nivel.length; i++) {
+      if (nuevosFiltros.nivel[i].estado === true) {
         todosOff = false;
       }
     }
     for (let i = 0; i < this.state.tips.length; i++) {
       let aceptado = true;
       for (let j = 0; j < nuevosFiltros.nivel.length; j++) {
-        if (!todosOff && nuevosFiltros.nivel[j].nombre === this.state.tips[i].nivel) {
+        if (
+          !todosOff &&
+          nuevosFiltros.nivel[j].nombre === this.state.tips[i].nivel
+        ) {
           aceptado = nuevosFiltros.nivel[j].estado;
         }
       }
@@ -118,12 +121,13 @@ class App extends React.Component {
     });
   };
 
-  handleAuthentication = (auth, user ) => {
-    this.setState({ autenticado: auth });
-    this.setState({ username: user });
-  }
+  handleAuthentication = (auth, user) => {
+    this.setState({ 
+      autenticado: auth,
+      username: user });
+  };
 
-  actualizarTips=() =>{
+  actualizarTips = () => {
     fetch("/tips")
       .then(res => res.json())
       .then(tips => {
@@ -132,7 +136,7 @@ class App extends React.Component {
         });
         this.actualizarFiltros(this.state.filtros);
       });
-  }
+  };
 
   render() {
     return (
@@ -151,7 +155,12 @@ class App extends React.Component {
           />
           <Route
             path="/Auth"
-            render={props => <Auth hideFilter={this.hideFilter} handleAuthentication={this.handleAuthentication}/>}
+            render={props => (
+              <Auth
+                hideFilter={this.hideFilter}
+                handleAuthentication={this.handleAuthentication}
+              />
+            )}
           />
           <Route
             path="/cupitip/:id"
@@ -159,14 +168,19 @@ class App extends React.Component {
               <CupiTip
                 tips={this.state.tips}
                 hideFilter={this.hideFilter}
-                actualizarTips = {this.actualizarTips}
-                autenticado = {this.state.autenticado}
+                actualizarTips={this.actualizarTips}
+                autenticado={this.state.autenticado}
               />
             )}
           />
           <Route
             path="/CreateTip"
-            render={ props => <Auth hideFilter={this.hideFilter} handleAuthentication={this.handleAuthentication}/>}
+            render={props => (
+              <Auth
+                hideFilter={this.hideFilter}
+                handleAuthentication={this.handleAuthentication}
+              />
+            )}
           />
         </Switch>
       </div>

@@ -8,14 +8,12 @@ class Auth extends Component {
     this.props.hideFilter();
     this.usuario = React.createRef();
     this.clickLogin = this.clickLogin.bind(this);
+    this.state = {
+      usr: ""
+    };
   }
 
-
-  componentDidMount() {
-
-  }
-
-  clickBack =() => {
+  clickBack = () => {
     this.props.history.push("/");
   };
   clickLogin = () => {
@@ -24,33 +22,55 @@ class Auth extends Component {
     fetch("auth", {
       method: "POST",
       headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(req)
     })
       .then(response => response.json())
       .then(resp => {
-        if(resp.length>0){
-          this.props.handleAuthentication(true,resp[0].username);
+        if (resp.length > 0) {
+          this.props.handleAuthentication(true, resp[0].username);
           this.clickBack();
-        }
-        else{
+        } else {
           alert("Usuario no registrado");
         }
       });
   };
 
+  handleChange(e) {
+    this.setState({ usr: e.target.value });
+  }
+
+  keyPress = (e) => {
+    if (e.keyCode === 13) {
+        this.clickLogin();
+    }
+  }
+
   render() {
     return (
-      <div>
-        <br></br>
-        <label><b>Username</b></label>
-        <div>
-          <input type="text" placeholder="Usuario" ref={this.usuario} />
+      <div className="container contauth">
+        <div className="row text-center">
+          <div className="col-sm-12 usrlbl">Usuario</div>
         </div>
-        <div className="btn btn-primary" onClick={this.clickLogin}>Login</div>
-        <div className="btn btn-primary" onClick={this.clickBack}>Cancelar</div>
+        <div className="row text-center">
+          <div className="col-sm-6 inusr mx-auto">
+            <input type="text" value={this.state.usr} placeholder="Usuario" onKeyDown={this.keyPress} onChange={this.handleChange.bind(this)} ref={this.usuario} />
+          </div>
+        </div>
+        <div className="row text-center">
+          <div className="col-sm-6 text-right">
+            <button className="btn btn-primary" onClick={this.clickLogin}>
+              Login
+            </button>
+          </div>
+          <div className="col-sm-6 text-left">
+            <button className="btn btn-primary" onClick={this.clickBack}>
+              Cancelar
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
