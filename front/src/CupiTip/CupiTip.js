@@ -6,9 +6,14 @@ class CupiTip extends Component {
   constructor(props) {
     super(props);
     this.props.hideFilter();
-    this.comentario = React.createRef();
-    this.sendComment = this.sendComment.bind(this);
+    this.state = {
+      comment: ""
+    };
   }
+
+  clickBack = () => {
+    this.props.history.goBack();
+  };
 
   buscarTip(idActual) {
     let tips = this.props.tips;
@@ -19,6 +24,9 @@ class CupiTip extends Component {
     }
     return null;
   }
+  sugerirTip = () => {
+    this.props.history.push("/CreateTip");
+  };
 
   sendComment = () => {
     if (this.props.autenticado) {
@@ -42,7 +50,7 @@ class CupiTip extends Component {
           }
         });
     } else {
-      alert("Debes ingresar primero para poder enviar un like.");
+      this.props.history.push("/auth");
     }
   };
 
@@ -67,10 +75,19 @@ class CupiTip extends Component {
           }
         });
     } else {
-      alert("Debes ingresar primero para poder enviar un like.");
+      this.props.history.push("/auth");
     }
   };
 
+  onChangeText(e) {
+    this.setState({ comment: e.target.value });
+  }
+
+  keyPress = e => {
+    if (e.keyCode === 13) {
+      this.sendComment();
+    }
+  };
   render() {
     let tip = this.buscarTip(this.props.match.params.id);
 
@@ -84,33 +101,88 @@ class CupiTip extends Component {
     return (
       <div className="container-fluid">
         <div className="row filaNombreTip">
-          <div className="col-sm-2 text-left">
-            <button className="btn btn-primary btnbackTip" onClick={this.clickBack}>
+          <div className="col-sm-1 text-left">
+            <button
+              className="btn btn-primary btnbackTip"
+              onClick={this.clickBack}
+            >
               Back
             </button>
           </div>
-          <div className="col-sm-7 my-auto"><div className="lblNombreTip">{tip.nombre}</div></div>
-          <div className="col-sm-3"></div>
+          <div className="col-sm-8 my-auto">
+            <div className="lblNombreTip text-center">{tip.nombre}</div>
+          </div>
+          <div className="col-sm-3 text-left my-auto">
+            <div className="lblnivelTip">Nivel {tip.nivel}</div>
+          </div>
         </div>
-        <button className="btn btn-primary" onClick={this.sendLike}>
-          Like
-        </button>
-        <h3> Nivel: {tip.nivel}</h3>
-        <h3> #likes: {tip.likes}</h3>
-        <h5>Tema: {tip.tema}</h5>
-        <h6>Descripcion: {tip.descripcion}</h6>
-        <h1>Codigo de Ejemplo</h1>
-        <h2>Codigo correcto</h2>
-        <div dangerouslySetInnerHTML={{ __html: tip.codigo_bien }} />
-        <h2>Codigo correcto</h2>
-        <div dangerouslySetInnerHTML={{ __html: tip.codigo_mal }} />
-        <h1>Corrección, comentario o sugerencia:</h1>
-        <div>
-          <input type="text" placeholder="Comentario" ref={this.comentario} />
+        <div className="row filaDescTip">
+          <div className="col-sm-9">
+            <div className="lblDescTip">
+              <span className="descTitleTip">Descripcion:</span>
+              {tip.descripcion}
+            </div>
+          </div>
+          <div className="col-sm-3 text-left my-auto">
+            <button className="btn btn-outline-like" onClick={this.sendLike}>
+              {tip.likes} <span className="fas fa-star"></span>
+            </button>
+          </div>
         </div>
-        <button className="btn btn-primary" onClick={this.sendComment}>
-          Enviar
-        </button>
+        <div className="row filaTemaTip">
+          <div className="col-sm-2 my-auto text-center">Tema:</div>
+          <div className="col-sm-9 mx-auto text-center">
+            <div className="temaTip">{tip.tema}</div>
+          </div>
+        </div>
+        <div className="row filaCodigoTip">
+          <div className="col-sm-6">
+            <div className="codigolblTip">Codigo Correcto:</div>
+            <div dangerouslySetInnerHTML={{ __html: tip.codigo_bien }} />
+          </div>
+          <div className="col-sm-6">
+            <div className="codigolblTip">Codigo Incorrecto:</div>
+            <div dangerouslySetInnerHTML={{ __html: tip.codigo_mal }} />
+          </div>
+        </div>
+        <div className="row filaBtnsTip text-center mx-auto">
+          <div className="col-sm-12 text-center mx-auto">
+            <button
+              type="button"
+              className="btn btn-primary"
+              data-toggle="collapse"
+              data-target="#collapseComentario"
+              aria-expanded="false"
+              aria-controls="collapseComentario"
+            >
+              Agregar Comentario
+            </button>
+          </div>
+        </div>
+        <div className="row">
+          <div
+            className="collapse col-sm-8 mx-auto text-center"
+            id="collapseComentario"
+          >
+            <div className="row colComent mx-auto text-center">
+              <textarea
+                onKeyDown={this.keyPress}
+                onChange={this.onChangeText.bind(this)}
+                className="form-control rounded-0"
+                value={this.state.comment}
+                rows="4"
+              ></textarea>
+            </div>
+            <div className="row text-center">
+              <button
+                className="btn btn-primary mx-auto"
+                onClick={this.sendComment}
+              >
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
