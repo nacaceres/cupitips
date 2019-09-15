@@ -7,6 +7,12 @@ class NotFound extends Component {
     super(props);
     this.props.hideFilter();
   }
+  render() {
+    return <div className="row text-center">
+      <div className="col-sm-6 mx-auto notfoundlbl">404 Not Found</div>
+
+    </div>;
+  }
 }
 
 export default withRouter(NotFound);
