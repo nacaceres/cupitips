@@ -159,7 +159,7 @@ class App extends React.Component {
                 tips={this.state.tips}
                 hideFilter={this.hideFilter}
                 actualizarTips = {this.actualizarTips}
-                autenticado = {this.autenticado}
+                autenticado = {this.state.autenticado}
               />
             )}
           />

@@ -12,7 +12,7 @@ class Auth extends Component {
 
 
   componentDidMount() {
-    console.log("Auth");
+
   }
 
   clickBack =() => {
@@ -21,7 +21,6 @@ class Auth extends Component {
   clickLogin = () => {
     let req = {};
     req.username = this.usuario.current.value;
-    console.log(req);
     fetch("auth", {
       method: "POST",
       headers: {
@@ -43,7 +42,6 @@ class Auth extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <br></br>

@@ -34,50 +34,63 @@ class CupiTip extends Component {
   }
 
   sendComment = () => {
-    let req = {};
-    req["_id"]= this.props.match.params.id;
-    req.comentario = this.comentario.current.value;
-    console.log(JSON.stringify(req));
-    fetch("comment", {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(req)
-    })
-      .then(response => response.json())
-      .then(resp => {
-        if(resp.result.n > 0){
-          alert("Tu comentario ha sido enviado correctamente.");
-        }
-        else{
-          alert("Ha ocurrido un error y tu comentario no pudo ser enviado.");
-        }
-      });
+    if(this.props.autenticado)
+    {
+      let req = {};
+      req["_id"]= this.props.match.params.id;
+      req.comentario = this.comentario.current.value;
+      console.log(JSON.stringify(req));
+      fetch("comment", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req)
+      })
+        .then(response => response.json())
+        .then(resp => {
+          if(resp.result.n > 0){
+            alert("Tu comentario ha sido enviado correctamente.");
+          }
+          else{
+            alert("Ha ocurrido un error y tu comentario no pudo ser enviado.");
+          }
+        });
+    }
+    else
+    {
+      alert("Debes ingresar primero para poder enviar un like.");
+    }
   }
   sendLike = () =>
   {
-    let req = {};
-    req["_id"]= this.props.match.params.id;
-    console.log(JSON.stringify(req));
-    fetch("like", {
-      method: "POST",
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(req)
-    })
-      .then(response => response.json())
-      .then(resp => {
-        if(resp.result.n > 0){
-          this.props.actualizarTips();
-        }
-        else{
-          alert("Ha ocurrido un error y tu like no pudo ser enviado.");
-        }
-      });
+    if(this.props.autenticado)
+    {
+      let req = {};
+      req["_id"]= this.props.match.params.id;
+      fetch("like", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req)
+      })
+        .then(response => response.json())
+        .then(resp => {
+          if(resp.result.n > 0){
+            this.props.actualizarTips();
+          }
+          else{
+            alert("Ha ocurrido un error y tu like no pudo ser enviado.");
+          }
+        });
+    }
+    else
+    {
+      alert("Debes ingresar primero para poder enviar un like.");
+    }
   }
 
   render() {
