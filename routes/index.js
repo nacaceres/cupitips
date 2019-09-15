@@ -66,7 +66,7 @@ function findTips (callback) {
 }
 
 //Router para actualizar los likes de un tip.
-router.put("/like", function(req, res,next) {
+router.post("/cupitip/like", function(req, res,next) {
   function callbackResp(data){
     res.json(data);
   }

@@ -77,7 +77,7 @@ class App extends React.Component {
           aceptado = nuevosFiltros.nivel[j].estado;
         }
       }
-      if ( 
+      if (
         nuevosFiltros.nombre !== "" &&
         this.state.tips[i].nombre.indexOf(nuevosFiltros.nombre) === -1
       ) {
@@ -121,6 +121,17 @@ class App extends React.Component {
     this.setState({ username: user });
   }
 
+  actualizarTips=() =>{
+    fetch("/tips")
+      .then(res => res.json())
+      .then(tips => {
+        this.setState({
+          tips: tips
+        });
+        this.actualizarFiltros(this.state.filtros);
+      });
+  }
+
   render() {
     return (
       <div>
@@ -146,6 +157,7 @@ class App extends React.Component {
               <CupiTip
                 tips={this.state.tips}
                 hideFilter={this.hideFilter}
+                actualizarTips = {this.actualizarTips}
               />
             )}
           />
