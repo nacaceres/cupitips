@@ -10,119 +10,109 @@ class CupiTip extends Component {
     this.sendComment = this.sendComment.bind(this);
   }
 
-  componentDidMount() {
-
-  }
-
-  click = () => {
-    this.props.history.push("/");
-  }
-
-  findTip = (idActual) =>{
+  buscarTip(idActual) {
     let tips = this.props.tips;
-    for (let i=0; i < tips.length; i++)
-    {
-      if(tips[i]._id === idActual)
-      {
+    for (let i = 0; i < tips.length; i++) {
+      if (tips[i]._id === idActual) {
         return tips[i];
       }
     }
-  }
-
-  clickBack =() => {
-    this.props.history.push("/");
+    return null;
   }
 
   sendComment = () => {
-    if(this.props.autenticado)
-    {
+    if (this.props.autenticado) {
       let req = {};
-      req["_id"]= this.props.match.params.id;
+      req["_id"] = this.props.match.params.id;
       req.comentario = this.comentario.current.value;
-      console.log(JSON.stringify(req));
       fetch("comment", {
         method: "POST",
         headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify(req)
       })
         .then(response => response.json())
         .then(resp => {
-          if(resp.result.n > 0){
+          if (resp.result.n > 0) {
             alert("Tu comentario ha sido enviado correctamente.");
-          }
-          else{
+          } else {
             alert("Ha ocurrido un error y tu comentario no pudo ser enviado.");
           }
         });
-    }
-    else
-    {
+    } else {
       alert("Debes ingresar primero para poder enviar un like.");
     }
-  }
-  sendLike = () =>
-  {
-    if(this.props.autenticado)
-    {
+  };
+
+  sendLike = () => {
+    if (this.props.autenticado) {
       let req = {};
-      req["_id"]= this.props.match.params.id;
+      req["_id"] = this.props.match.params.id;
       fetch("like", {
         method: "POST",
         headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify(req)
       })
         .then(response => response.json())
         .then(resp => {
-          if(resp.result.n > 0){
+          if (resp.result.n > 0) {
             this.props.actualizarTips();
-          }
-          else{
+          } else {
             alert("Ha ocurrido un error y tu like no pudo ser enviado.");
           }
         });
-    }
-    else
-    {
+    } else {
       alert("Debes ingresar primero para poder enviar un like.");
     }
-  }
+  };
 
   render() {
-    let tip = this.findTip(this.props.match.params.id);
-    if(tip!= null)
-    {
-      return (
-        <div>
-          <button className="btn btn-primary" onClick={this.clickBack}>Back</button>
-          <button className="btn btn-primary" onClick={this.sendLike}>Like</button>
-          <h2> {tip.nombre} </h2>
-          <h3> Nivel: {tip.nivel}</h3>
-          <h3> #likes: {tip.likes}</h3>
-          <h5>Tema: {tip.tema}</h5>
-          <h6>Descripcion: {tip.descripcion}</h6>
-          <h1>Codigo de Ejemplo</h1>
-          <h2>Codigo correcto</h2>
-          <div dangerouslySetInnerHTML={{ __html: tip.codigo_bien }} />
-          <h2>Codigo correcto</h2>
-          <div dangerouslySetInnerHTML={{ __html: tip.codigo_mal }} />
-          <h1>Corrección, comentario o sugerencia:</h1>
-          <div>
-            <input type="text" placeholder="Comentario" ref={this.comentario} />
+    let tip = this.buscarTip(this.props.match.params.id);
+
+    if (this.props.tips.length > 0 && tip === null) {
+      this.props.history.push("/NotFound");
+    }
+
+    if (tip === null) {
+      return <div></div>;
+    }
+    return (
+      <div className="container-fluid">
+        <div className="row filaNombreTip">
+          <div className="col-sm-2 text-left">
+            <button className="btn btn-primary btnbackTip" onClick={this.clickBack}>
+              Back
+            </button>
           </div>
-          <button className="btn btn-primary" onClick={this.sendComment}>Enviar</button>
+          <div className="col-sm-7 my-auto"><div className="lblNombreTip">{tip.nombre}</div></div>
+          <div className="col-sm-3"></div>
         </div>
-      );
-    }
-    else
-    {
-      return(<div></div>);
-    }
+        <button className="btn btn-primary" onClick={this.sendLike}>
+          Like
+        </button>
+        <h3> Nivel: {tip.nivel}</h3>
+        <h3> #likes: {tip.likes}</h3>
+        <h5>Tema: {tip.tema}</h5>
+        <h6>Descripcion: {tip.descripcion}</h6>
+        <h1>Codigo de Ejemplo</h1>
+        <h2>Codigo correcto</h2>
+        <div dangerouslySetInnerHTML={{ __html: tip.codigo_bien }} />
+        <h2>Codigo correcto</h2>
+        <div dangerouslySetInnerHTML={{ __html: tip.codigo_mal }} />
+        <h1>Corrección, comentario o sugerencia:</h1>
+        <div>
+          <input type="text" placeholder="Comentario" ref={this.comentario} />
+        </div>
+        <button className="btn btn-primary" onClick={this.sendComment}>
+          Enviar
+        </button>
+      </div>
+    );
   }
 }
 
