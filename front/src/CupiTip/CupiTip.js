@@ -38,8 +38,8 @@ class CupiTip extends Component {
   sendComment = () => {
     if (this.props.autenticado) {
       let req = {};
-      req["_id"] = this.props.match.params.id;
-      req.comentario = this.comentario.current.value;
+      req["_id"] = this.state.id;
+      req.comentario = this.state.comment;
       fetch("comment", {
         method: "POST",
         headers: {
