@@ -7,8 +7,15 @@ class CupiTip extends Component {
     super(props);
     this.props.hideFilter();
     this.state = {
-      comment: ""
+      comment: "",
+      id: this.props.match.params.id
     };
+  }
+
+  componentDidMount() {
+    if (this.props.location.olddetailstate !== undefined) {
+      this.setState(this.props.location.olddetailstate);
+    }
   }
 
   clickBack = () => {
@@ -50,7 +57,10 @@ class CupiTip extends Component {
           }
         });
     } else {
-      this.props.history.push("/auth");
+      this.props.history.push({
+        pathname: "/auth",
+        olddetailstate: this.state
+      });
     }
   };
 

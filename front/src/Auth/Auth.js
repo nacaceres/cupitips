@@ -14,12 +14,17 @@ class Auth extends Component {
   }
 
   clickBack = () => {
-    if(this.props.location.oldcreatestate !== undefined){
+    if (this.props.location.oldcreatestate !== undefined) {
       this.props.history.push({
-        pathname:"/createtip",
+        pathname: "/createtip",
         oldcreatestate: this.props.location.oldcreatestate
       });
-    }else{
+    } else if (this.props.location.olddetailstate !== undefined) {
+      this.props.history.push({
+        pathname: "/cupitip/" + this.props.location.olddetailstate.id,
+        olddetailstate: this.props.location.olddetailstate
+      });
+    } else {
       this.props.history.goBack();
     }
   };
@@ -50,11 +55,11 @@ class Auth extends Component {
     this.setState({ usr: e.target.value });
   }
 
-  keyPress = (e) => {
+  keyPress = e => {
     if (e.keyCode === 13) {
       this.clickLogin();
     }
-  }
+  };
 
   render() {
     return (
@@ -64,7 +69,14 @@ class Auth extends Component {
         </div>
         <div className="row text-center">
           <div className="col-sm-6 inusr mx-auto">
-            <input type="text" value={this.state.usr} placeholder="Usuario" onKeyDown={this.keyPress} onChange={this.handleChange.bind(this)} ref={this.usuario} />
+            <input
+              type="text"
+              value={this.state.usr}
+              placeholder="Usuario"
+              onKeyDown={this.keyPress}
+              onChange={this.handleChange.bind(this)}
+              ref={this.usuario}
+            />
           </div>
         </div>
         <div className="row text-center">
