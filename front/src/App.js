@@ -3,6 +3,7 @@ import TipList from "./TipList/TipList.js";
 import NavBar from "./NavBar/NavBar.js";
 import CupiTip from "./CupiTip/CupiTip.js";
 import Auth from "./Auth/Auth.js";
+import Create from "./CreateTip/create.js";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
 
@@ -162,6 +163,10 @@ class App extends React.Component {
                 autenticado = {this.state.autenticado}
               />
             )}
+          />
+          <Route
+            path="/CreateTip"
+            render={ props => <Auth hideFilter={this.hideFilter} handleAuthentication={this.handleAuthentication}/>}
           />
         </Switch>
       </div>
