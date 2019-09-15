@@ -97,11 +97,12 @@ class NavBar extends Component {
       <div className="nombreRw row">
         <div className="col-sm-2 text-center my-auto nombreStr">Name:</div>
         <div className="col-sm-10 text-left">
-            <input
-              type="text"
-              value={nombre}
-              onChange={this.actualizarNombre.bind(this)}
-            />
+          <input
+            type="text"
+            value={nombre}
+            className="form-control"
+            onChange={this.actualizarNombre.bind(this)}
+          />
         </div>
       </div>
     );
@@ -116,11 +117,52 @@ class NavBar extends Component {
       <div className="nombreRw row">
         <div className="col-sm-2 text-center my-auto nombreStr">Tema:</div>
         <div className="col-sm-10 text-left">
+          <input
+            type="text"
+            className="form-control"
+            value={tema}
+            onChange={this.actualizarTema.bind(this)}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  actualizarLikes(e) {
+    let filtros = this.props.filtros;
+    filtros.likes = e.target.value;
+    this.props.actualizarFiltros(filtros);
+  }
+
+  renderLikes() {
+    let max = 0;
+    for (let i = 0; i < this.props.tips.length; i++) {
+      if (this.props.tips[i].likes > max) {
+        max = this.props.tips[i].likes;
+      }
+    }
+    let likes = "";
+    if (this.props.filtros.likes !== undefined) {
+      likes = this.props.filtros.likes;
+    }
+    return (
+      <div>
+        <div className="row text-center my-auto">
+          <div className="col-sm-12 likeslbl">
+          Likes: {this.props.filtros.likes}
+          </div>
+        </div>
+        <div className="row">
+          <div className="range-slider">
             <input
-              type="text"
-              value={tema}
-              onChange={this.actualizarTema.bind(this)}
+              className="range-slider__range"
+              type="range"
+              value={likes}
+              min="0"
+              max={max}
+              onChange={this.actualizarLikes.bind(this)}
             />
+          </div>
         </div>
       </div>
     );
@@ -142,19 +184,21 @@ class NavBar extends Component {
 
       return (
         <div className="collapse" id="collapseFilters">
-          <div className="row text-center">
+          <div className="row text-center colRow">
             <div className="col-sm-3 text-center">
               <div className="row text-center">
-                <div className="col-sm-4 mx-auto">
+                <div className="col-sm-6 mx-auto">
                   {this.renderNiveles(col)}
                 </div>
-                <div className="col-sm-4 mx-auto">
+                <div className="col-sm-6 mx-auto">
                   {this.renderNiveles(col2)}
                 </div>
               </div>
             </div>
-            <div className="col-sm-6 text-center">{this.renderNombre()} {this.renderTema()}</div>
-            <div className="col-sm-3 text-center"></div>
+            <div className="col-sm-6 text-center">
+              {this.renderNombre()} {this.renderTema()}
+            </div>
+            <div className="col-sm-3 text-center">{this.renderLikes()}</div>
           </div>
         </div>
       );

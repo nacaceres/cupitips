@@ -53,6 +53,7 @@ class App extends React.Component {
       <NavBar
         show={this.state.showFilters}
         filtros={this.state.filtros}
+        tips={this.state.tips}
         actualizarFiltros={this.actualizarFiltros}
         hideFilter={this.hideFilter}
         autenticado={this.state.autenticado}
