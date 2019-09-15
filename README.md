@@ -1,5 +1,7 @@
 # Cupitips
 Una pagina web que contiene tips para las personas que estan comenzando a aprender a programar en Pyhton.
+Los tips estan diseñados en particular para el curso de Introducción a la programación, ofrecido por el Dpto de Ing de sistemas y computación de la Universidad de los Andes.
+Dentro de la pagina podrás: Consultar un tip, consultar el detalle de un tip, darle like a un tip, sugerir una corrección de un tip, sugerir un nuevo tip, filtrar los tips, autenticarte como estudiante.
 # Link a la página del proyecto   
 https://nameless-everglades-03120.herokuapp.com/
 # Tecnologias usadas
@@ -17,8 +19,8 @@ https://nameless-everglades-03120.herokuapp.com/
 # Despliegue
 
 ## Requisitos 
-- **Node JS**
-- **Yarn**
+- [**Node JS**](https://nodejs.org/es/download/)
+- [**Yarn**](https://yarnpkg.com/lang/es-es/docs/cli/install/)
 
 ## Pasos
 
