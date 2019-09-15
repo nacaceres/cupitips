@@ -19,7 +19,7 @@ class Auth extends Component {
     this.props.history.push("/");
   };
   clickLogin = () => {
-    var req = {};
+    let req = {};
     req.username = this.usuario.current.value;
     console.log(req);
     fetch("auth", {

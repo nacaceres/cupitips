@@ -96,7 +96,7 @@ function addLike (mongoId,likesAdd,callback) {
   });
 }
 //Retorna en el res si se puede ingresar el comentario al tip correspondiente.
-router.post("/comment", function(req, res,next) {
+router.post("/cupitip/comment", function(req, res,next) {
   function callbackResp(data){
     res.json(data);
   }
