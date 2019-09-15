@@ -3,7 +3,8 @@ import TipList from "./TipList/TipList.js";
 import NavBar from "./NavBar/NavBar.js";
 import CupiTip from "./CupiTip/CupiTip.js";
 import Auth from "./Auth/Auth.js";
-import Create from "./CreateTip/create.js";
+import CreateTip from "./CreateTip/CreateTip.js";
+import NotFound from "./NotFound/NotFound.js";
 import { Switch, Route } from "react-router-dom";
 import "./App.css";
 
@@ -122,9 +123,10 @@ class App extends React.Component {
   };
 
   handleAuthentication = (auth, user) => {
-    this.setState({ 
+    this.setState({
       autenticado: auth,
-      username: user });
+      username: user
+    });
   };
 
   actualizarTips = () => {
@@ -137,6 +139,29 @@ class App extends React.Component {
         this.actualizarFiltros(this.state.filtros);
       });
   };
+
+  renderCreate() {
+    return (
+      <Route
+        path="/CreateTip"
+        render={props => (
+          <CreateTip
+            hideFilter={this.hideFilter}
+            autenticado= {this.state.autenticado}
+          />
+        )}
+      />
+    );
+  }
+
+  renderNotFound() {
+    return (
+      <Route
+        path="*"
+        render={props => <NotFound hideFilter={this.hideFilter} />}
+      />
+    );
+  }
 
   render() {
     return (
@@ -173,15 +198,8 @@ class App extends React.Component {
               />
             )}
           />
-          <Route
-            path="/CreateTip"
-            render={props => (
-              <Auth
-                hideFilter={this.hideFilter}
-                handleAuthentication={this.handleAuthentication}
-              />
-            )}
-          />
+          {this.renderCreate()}
+          {this.renderNotFound()}
         </Switch>
       </div>
     );

@@ -3,6 +3,8 @@ import { withRouter } from "react-router-dom";
 
 import "./TipInList.css";
 class TipInList extends Component {
+
+  
   clicked = () => {
     this.props.history.push("/cupitip/" + this.props.tip._id);
   };

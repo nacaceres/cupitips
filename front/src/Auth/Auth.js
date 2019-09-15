@@ -14,8 +14,17 @@ class Auth extends Component {
   }
 
   clickBack = () => {
-    this.props.history.push("/");
+    if(this.props.location.oldcreatestate !== undefined){
+      console.log(this.props.location)
+      this.props.history.push({
+        pathname:"/createtip",
+        oldcreatestate: this.props.location.oldcreatestate
+      })
+    }else{
+      this.props.history.goBack();
+    }
   };
+
   clickLogin = () => {
     let req = {};
     req.username = this.usuario.current.value;

@@ -11,6 +11,10 @@ class NavBar extends Component {
     this.props.handleAuthentication(false, undefined);
   };
 
+  clickCreate = () => {
+    this.props.history.push("/CreateTip");
+  }
+
   renderFiltrar(show) {
     if (show) {
       return (
@@ -228,7 +232,7 @@ class NavBar extends Component {
             {this.props.username}
           </button>
           <div className="dropdown-menu">
-            <div className="dropdown-item itemMen">Sugerir Tip</div>
+            <div className="dropdown-item itemMen" onClick={this.clickCreate}>Sugerir Tip</div>
             <div className="dropdown-divider"></div>
             <div className="dropdown-item itemMen" onClick={this.clickOut}>
               Salir
