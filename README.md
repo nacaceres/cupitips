@@ -1,5 +1,7 @@
 # Cupitips
 Una pagina web que contiene tips para las personas que estan comenzando a aprender a programar en Pyhton.
+# Link a la página del proyecto   
+https://nameless-everglades-03120.herokuapp.com/
 # Tecnologias usadas
 * HTML
 * CSS
@@ -26,3 +28,6 @@ npm install
 cd scripts
 eslint canciones.js
 ```
+# Autores
+[Nicolás Cáceres Acosta](https://github.com/nacaceres)   
+[Andrés Varón Maya](https://github.com/andresvaron)
