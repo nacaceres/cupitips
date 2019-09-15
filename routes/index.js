@@ -1,8 +1,7 @@
 let express = require("express");
 let router = express.Router();
-var ObjectId = require('mongodb').ObjectID;
+var ObjectId = require("mongodb").ObjectID;
 const MongoClient = require("mongodb").MongoClient;
-const assert = require("assert");
 // Connection URL
 const url = "mongodb://nacaceres:cupitips@cluster0-shard-00-00-2gfpv.mongodb.net:27017,cluster0-shard-00-01-2gfpv.mongodb.net:27017,cluster0-shard-00-02-2gfpv.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority";
 // Database Name
@@ -21,7 +20,7 @@ var conn = MongoClient.connect(url, {
 });
 
 //Ejemplo para conectar el front con el back borrar al final!!
-router.get("/data", function(req, res, next) {
+router.get("/data", function(req, res) {
 
   const tweets = [
     {id:1, text: "Holi", user:{screen_name: "John"}},
@@ -33,7 +32,7 @@ router.get("/data", function(req, res, next) {
 });
 
 //Retorna en el res los usuarios con el username dado en el body del req
-router.post("/auth", function(req, res,next) {
+router.post("/auth", function(req, res) {
   function callback(data){
     res.json(data);
   }
@@ -50,7 +49,7 @@ function findUser (username,callback) {
 }
 
 //Router para obtener todos los tips disponibles en la coleccion tips
-router.get("/tips", function(req, res, next) {
+router.get("/tips", function(req, res) {
   function callback(data){
     res.json(data);
   }
@@ -66,11 +65,11 @@ function findTips (callback) {
 }
 
 //Router para actualizar los likes de un tip.
-router.post("/cupitip/like", function(req, res,next) {
+router.post("/cupitip/like", function(req, res) {
   function callbackResp(data){
     res.json(data);
   }
-  mongoId = new ObjectId(req.body._id);
+  let mongoId = new ObjectId(req.body._id);
   function callbackSearch(data){
     let likesAdd = data[0].likes +1;
     addLike(mongoId,likesAdd,callbackResp);
@@ -96,11 +95,11 @@ function addLike (mongoId,likesAdd,callback) {
   });
 }
 //Retorna en el res si se puede ingresar el comentario al tip correspondiente.
-router.post("/cupitip/comment", function(req, res,next) {
+router.post("/cupitip/comment", function(req, res) {
   function callbackResp(data){
     res.json(data);
   }
-  mongoId = new ObjectId(req.body._id);
+  let mongoId = new ObjectId(req.body._id);
   function callbackSearch(data){
     let comments = data[0].comentarios;
     comments.push(req.body.comentario);
@@ -120,7 +119,7 @@ function addComment (mongoId,comments,callback) {
   });
 }
 //Retorna en el res si se puede agregar el comentario correspondiente.
-router.post("/addtip", function(req, res,next) {
+router.post("/addtip", function(req, res) {
   function callback(data){
     res.json(data);
   }
@@ -134,10 +133,10 @@ router.post("/addtip", function(req, res,next) {
 //Funcion encargada de adicionar un tip en la BD.
 function addTip (tip,callback) {
   conn.then(client => {
-        client.db(dbName).collection(collCupitips).insertOne(tip, (error, data) => {
-            callback(data);
-        });
+    client.db(dbName).collection(collCupitips).insertOne(tip, (error, data) => {
+      callback(data);
     });
+  });
 }
 
 module.exports = router;

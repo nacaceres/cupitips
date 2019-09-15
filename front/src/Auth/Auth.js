@@ -15,11 +15,10 @@ class Auth extends Component {
 
   clickBack = () => {
     if(this.props.location.oldcreatestate !== undefined){
-      console.log(this.props.location)
       this.props.history.push({
         pathname:"/createtip",
         oldcreatestate: this.props.location.oldcreatestate
-      })
+      });
     }else{
       this.props.history.goBack();
     }
@@ -53,7 +52,7 @@ class Auth extends Component {
 
   keyPress = (e) => {
     if (e.keyCode === 13) {
-        this.clickLogin();
+      this.clickLogin();
     }
   }
 

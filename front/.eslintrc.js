@@ -37,5 +37,6 @@ module.exports = {
             "always"
         ]
     },
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "extends": ['plugin:react/recommended']
 };

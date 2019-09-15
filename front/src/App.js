@@ -181,7 +181,7 @@ class App extends React.Component {
           />
           <Route
             path="/Auth"
-            render={props => (
+            render={(props) => (
               <Auth
                 hideFilter={this.hideFilter}
                 handleAuthentication={this.handleAuthentication}
