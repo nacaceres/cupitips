@@ -63,10 +63,9 @@ Para desplegar el proyecto en heroku desde git, puedes seguir las siguientes ins
 El proyecto tiene una dependencia como desarrollador hacia [eslint](https://eslint.org), esta dependencia se encarga de revisar la sintaxis del codigo en JS bajo la reglas definidas en el archivo [.eslintrc.js]
 
 ```
-cd PaginaPersonalNicolasCaceres
-npm install
-cd scripts
-eslint canciones.js
+cd cupitips
+yarn install
+eslint App.js
 ```
 # Autores
 [Nicolás Cáceres Acosta](https://github.com/nacaceres)   
