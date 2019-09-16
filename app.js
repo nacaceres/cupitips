@@ -38,3 +38,7 @@ app.use(function(err, req, res) {
 });
 
 module.exports = app;
+
+/* Encuentro este proyecto muy completo. De verdad quiero felicitarlos por el gran trabajo.
+Se nota que se esforzaron y tuvieron mucha dedicación. La página funciona, está bien desplegada y además es útil. Yo la usaría, de hecho.
+*/
