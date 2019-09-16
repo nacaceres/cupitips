@@ -1,3 +1,9 @@
+/*En general me parece que el proyecto está demasiado bien, se nota el 
+esfuerzo y dedicación que le pusieron. Esta muy fácil de leer el código
+aunque hubiera sido chévere que comentaran el código más, no solo algunas partes.
+
+De resto me parece que es un código demasiado bien estructurado y los felicito. */
+
 let createError = require("http-errors");
 let express = require("express");
 let path = require("path");
