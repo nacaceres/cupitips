@@ -111,3 +111,20 @@
   border-radius: 1%;
   border-style: solid;
 }
+.codigo {
+  display: inline-block;
+  font-family: monospace, monospace;
+  counter-reset: line;
+}
+.codigo span {
+  display: block;
+  white-space: pre;
+  line-height: 1.5rem;
+}
+.codigo span:before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  border-right: 1px solid #ddd;
+  margin-right: 0.5em;
+}

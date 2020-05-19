@@ -22,6 +22,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    const script = document.createElement("script");
+  script.async = true;      
+  //./pyodide-0.14.3/src/pyodide.js
+  script.src = "https://pyodide.cdn.iodide.io/pyodide.js";
+  document.head.appendChild(script);
+  //Window.pyodide.runPython('import sys\nsys.version')
+  console.log("Se inicializa Pyodide");
     fetch("/tips")
       .then(res => res.json())
       .then(tips => {
