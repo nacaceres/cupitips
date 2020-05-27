@@ -1,136 +1,137 @@
 .filaNombreTip {
-  margin-top: 2%;
+    margin-top: 2%;
 }
 .lblNombreTip {
-  padding-top: 6%;
-  font-size: 2.5em;
-  line-height: 1.2;
+    padding-top: 6%;
+    font-size: 2.5em;
+    line-height: 1.2;
 }
 
 .btnbackTip {
-  margin-left: 10%;
+    margin-left: 10%;
 }
 .lblnivelTip {
-  border-radius: 5%;
-  margin-top: 15%;
-  vertical-align: middle;
-  padding-bottom: 7.5%;
-  padding-top: 7.5%;
-  padding-left: 12.5%;
-  padding-right: 12.5%;
-  display: table;
-  text-align: center;
-  background-color: #064789;
-  color: white;
-  font-size: 2em;
+    border-radius: 5%;
+    margin-top: 15%;
+    vertical-align: middle;
+    padding-bottom: 7.5%;
+    padding-top: 7.5%;
+    padding-left: 12.5%;
+    padding-right: 12.5%;
+    display: table;
+    text-align: center;
+    background-color: #064789;
+    color: white;
+    font-size: 2em;
 }
 
 .descTitleTip {
-  font-size: 1.5em;
-  margin-right: 1%;
+    font-size: 1.5em;
+    margin-right: 1%;
 }
 .filaDescTip {
-  margin-top: 3%;
+    margin-top: 3%;
 }
 .lblDescTip {
-  margin-left: 2%;
-  line-height: 1.5;
-  font-size: 1.5em;
+    margin-left: 2%;
+    line-height: 1.5;
+    font-size: 1.5em;
 }
 .btn-outline-like {
-  margin-left: 10%;
-  padding-left: 5%;
-  padding-right: 5%;
-  color: #064789;
-  background-color: transparent;
-  border-color: #064789;
-  font-size: 2em;
-  border-width: medium;
-  border-radius: 15%;
+    margin-left: 10%;
+    padding-left: 5%;
+    padding-right: 5%;
+    color: #064789;
+    background-color: transparent;
+    border-color: #064789;
+    font-size: 2em;
+    border-width: medium;
+    border-radius: 15%;
 }
 
 .btn-outline-like:hover {
-  color: #fff;
-  background-color: #064789;
-  border-color: #064789;
+    color: #fff;
+    background-color: #064789;
+    border-color: #064789;
 }
 
 .btn-outline-like:focus,
 .btn-outline-like.focus {
-  box-shadow: 0 0 0 0.2rem rgba(6, 71, 137, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(6, 71, 137, 0.5);
 }
 
 .btn-outline-like.disabled,
 .btn-outline-like:disabled {
-  color: #064789;
-  background-color: transparent;
+    color: #064789;
+    background-color: transparent;
 }
 
 .btn-outline-like:not(:disabled):not(.disabled):active,
 .btn-outline-like:not(:disabled):not(.disabled).active,
 .show > .btn-outline-like.dropdown-toggle {
-  color: #fff;
-  background-color: #064789;
-  border-color: #064789;
+    color: #fff;
+    background-color: #064789;
+    border-color: #064789;
 }
 
 .btn-outline-like:not(:disabled):not(.disabled):active:focus,
 .btn-outline-like:not(:disabled):not(.disabled).active:focus,
 .show > .btn-outline-like.dropdown-toggle:focus {
-  box-shadow: 0 0 0 0.2rem rgba(6, 71, 137, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(6, 71, 137, 0.5);
 }
 
 .temaTip {
-  border-radius: 1em;
-  padding-left: 5%;
-  padding-top: 1%;
-  padding-bottom: 1%;
-  padding-right: 5%;
-  width: max-content;
-  background-color: rgb(27, 28, 29, 0.8);
-  color: white;
+    border-radius: 1em;
+    padding-left: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-right: 5%;
+    width: max-content;
+    background-color: rgb(27, 28, 29, 0.8);
+    color: white;
 }
 
 .filaTemaTip {
-  margin-top: 2%;
-  font-size: 2em;
+    margin-top: 2%;
+    font-size: 2em;
 }
 
-.filaCodigoTip{
-  margin: 2%;
+.filaCodigoTip {
+    margin: 2%;
 }
-.codigolblTip{
-  margin-bottom: 2%;
-  font-size: 1.4em;
+.codigolblTip {
+    margin-bottom: 2%;
+    font-size: 1.4em;
 }
-.test{
-  background-color: red;
+.test {
+    background-color: red;
 }
-.colComent{
-  border-color: rgb(143, 148, 145, 0.8);
-  border-radius: 1%;
-  border-style: solid;
+.colComent {
+    border-color: rgb(143, 148, 145, 0.8);
+    border-radius: 1%;
+    border-style: solid;
 }
 .codigo {
-  display: inline-block;
-  font-family: monospace, monospace;
-  counter-reset: line;
-  background-color: white;
-  padding: 10px;
-  width: 100%;
-  border: 1px solid grey;
-  border-radius: 5px;
+    display: inline-block;
+    font-family: monospace, monospace;
+    counter-reset: line;
+    background-color: white;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid grey;
+    border-radius: 5px;
 }
 .codigo span {
-  display: block;
-  white-space: pre;
-  line-height: 1.5rem;
+    display: block;
+    white-space: pre;
+    line-height: 1.5rem;
+    outline: none;
 }
 .codigo span:before {
-  counter-increment: line;
-  content: counter(line);
-  display: inline-block;
-  border-right: 1px solid #ddd;
-  margin-right: 0.5em;
-  padding-right: 5px;
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    margin-right: 0.5em;
+    padding-right: 5px;
 }
