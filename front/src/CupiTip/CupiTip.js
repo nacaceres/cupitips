@@ -91,16 +91,36 @@ class CupiTip extends Component {
 
   compliePython(event ,code) {
     if(event){
-      var stringb = "def multiplicar(a,b):\n    print(a*b)\n    return a*b\nmultiplicar(2,4)";
-      //alert(stringb);
-      var resp = window.pyodide.runPython(stringb);
-      alert(resp);
-      document.getElementById("compileBien").innerText = ("El Resultado es: \n" + resp);
+      var cod = "";
+      var parts = code.split("\\n");
+      for (let i = 0; i < parts.length; i++) {
+        cod = cod + parts[i] +"\n";
+      }
+      window.pyodide.runPythonAsync(cod)
+        .then((output) => {
+          var resp= output;
+          document.getElementById("compileBien").innerText = ("El Resultado es: \n" + resp);});
+      
     }
     else{
-      var stringm = code;
-      var respm = window.pyodide.runPython(stringm);
-      alert(respm);
+      var codm = "";
+      var partsm = code.split("\\n");
+      for (let i = 0; i < partsm.length; i++) {
+        codm = codm + partsm[i] +"\n";
+      }
+      try {
+        window.pyodide.runPythonAsync(codm)
+          .then((output)=> {
+            var resp= output;
+            console.log(output);
+            document.getElementById("compileMal").innerText = ("El Resultado es: \n" + resp);});
+      } catch (error) {
+        console.log("ERROR");
+        console.log(error);
+      }
+      
+      
+        
       //alert(window.pyodide.runPython(stringm));
     }
     
@@ -173,7 +193,7 @@ class CupiTip extends Component {
             <div className="codigolblTip">Codigo Correcto:</div>
             <form onSubmit={this.compliePython}>
               <div className='codigo' cols="80" rows="10">{tip.codigo_bien_p.split("\\n").map(linea => <span>{linea}</span>)}</div>
-              <p id="compileBien" ></p>
+              <p id="compileBien"></p>
               <button
                 type="button"
                 className="btn btn-primary"
