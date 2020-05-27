@@ -17,9 +17,7 @@ class CupiTip extends Component {
       this.setState(this.props.location.olddetailstate);
     }
   }
-  renderText(i) {
-    return <EssayForm value={i} />;
-  }
+
   clickBack = () => {
     this.props.history.goBack();
   };
@@ -91,14 +89,27 @@ class CupiTip extends Component {
     }
   };
 
-  compliePython(event) {
-    var string = this.refs.intento2
-    console.log(window.pyodide)
-    var resp = "SE LOGRO"
-    console.log(resp)
-    var ret = window.pyodide.runPython(string)
-    console.log(ret)
-  };
+  compliePython(event ,code) {
+    if(event){
+      var stringb = "def multiplicar(a,b):\n    print(a*b)\n    return a*b\nmultiplicar(2,4)";
+      //alert(stringb);
+      var resp = window.pyodide.runPython(stringb);
+      alert(resp);
+      document.getElementById("compileBien").innerText = ("El Resultado es: \n" + resp);
+    }
+    else{
+      var stringm = code;
+      var respm = window.pyodide.runPython(stringm);
+      alert(respm);
+      //alert(window.pyodide.runPython(stringm));
+    }
+    
+    //console.log(window.pyodide);
+    //var resp = "SE LOGRO";
+    //console.log(resp);
+    //var ret = window.pyodide.runPython(string);
+    //console.log(ret);
+  }
   handleChange(event) { this.intento2.value = event.target.value }
   handleChangeCode(event) { this.setState({ value: event.target.value }); }
   onChangeText(e) {
@@ -156,27 +167,28 @@ class CupiTip extends Component {
           <div className="col-sm-9 mx-auto text-center">
             <div className="temaTip">{tip.tema}</div>
           </div>
-        </div>
+        </div> 
         <div className="row filaCodigoTip1">
           <div className="col-sm-6">
             <div className="codigolblTip">Codigo Correcto:</div>
             <form onSubmit={this.compliePython}>
               <div className='codigo' cols="80" rows="10">{tip.codigo_bien_p.split("\\n").map(linea => <span>{linea}</span>)}</div>
-              <p id="compileBien"></p>
+              <p id="compileBien" ></p>
               <button
-                type="submit"
+                type="button"
                 className="btn btn-primary"
+                onClick={() => this.compliePython(true,tip.codigo_bien_p)}
               ><i className="fas fa-dragon"></i> Compile</button>
             </form>
           </div>
           <div className="col-sm-6">
             <div className="codigolblTip">Codigo Incorrecto:</div>
-            <div className='codigo'>{tip.codigo_mal_p.split("\\n").map(linea => <span contentEditable="true">{linea}</span>)}</div>
-            <p id="compileMal"></p>
+            <div className='codigo' >{tip.codigo_mal_p.split("\\n").map(linea => <span contentEditable="true">{linea}</span>)}</div>
+            <p id="compileMal" ></p>
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => this.compliePython(false)}
+              onClick={() => this.compliePython(false,tip.codigo_mal_p)}
             ><i className="fas fa-dragon"></i> Compile</button>
           </div>
         </div>
