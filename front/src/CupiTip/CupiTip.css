@@ -115,6 +115,11 @@
   display: inline-block;
   font-family: monospace, monospace;
   counter-reset: line;
+  background-color: white;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid grey;
+  border-radius: 5px;
 }
 .codigo span {
   display: block;
@@ -127,4 +132,5 @@
   display: inline-block;
   border-right: 1px solid #ddd;
   margin-right: 0.5em;
+  padding-right: 5px;
 }

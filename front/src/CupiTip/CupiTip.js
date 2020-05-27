@@ -6,42 +6,42 @@ import "./CupiTip.css";
 class EssayForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state ="";
+    this.state = "";
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    
-    
+
+
   }
-  componentDidMount(){
-    const { description} = this.props;
+  componentDidMount() {
+    const { description } = this.props;
     this.setState({ description });
   }
-  handleChange(event) {    this.setState({value: event.target.value});  }
+  handleChange(event) { this.setState({ value: event.target.value }); }
   handleSubmit(event) {
     let string = this.refs.intento
     console.log(window.pyodide)
     //var resp ="SE LOGRO"
     var resp = window.pyodide.runPython(string)
     console.log(resp)
-  
+
   }
 
   render() {
     return (
-      <div className ="EssayForm">
+      <div className="EssayForm">
         <form onSubmit={this.handleSubmit}>
-        <label>
-          <textarea cols="80" rows="10" value={this.state.value} onChange={this.handleChange} /> 
-        </label>
-        <p></p>
-        <button
+          <label>
+            <textarea cols="80" rows="10" value={this.state.value} onChange={this.handleChange} />
+          </label>
+          <p></p>
+          <button
             type="submit"
-              className="btn btn-primary"
-              ><i className="fas fa-dragon"></i> Compile</button>
+            className="btn btn-primary"
+          ><i className="fas fa-dragon"></i> Compile</button>
         </form>
-       
+
       </div>
-      
+
     );
   }
 }
@@ -136,16 +136,16 @@ class CupiTip extends Component {
     }
   };
 
-  compliePython(event){
-     var string = this.refs.intento2
-      console.log(window.pyodide)
-      var resp ="SE LOGRO"
-      console.log(resp)
-      var ret = window.pyodide.runPython(string)
-      console.log(ret)
+  compliePython(event) {
+    var string = this.refs.intento2
+    console.log(window.pyodide)
+    var resp = "SE LOGRO"
+    console.log(resp)
+    var ret = window.pyodide.runPython(string)
+    console.log(ret)
   };
-  handleChange(event) {   this.intento2.value= event.target.value  }
-  handleChangeCode(event) {    this.setState({value: event.target.value});  }
+  handleChange(event) { this.intento2.value = event.target.value }
+  handleChangeCode(event) { this.setState({ value: event.target.value }); }
   onChangeText(e) {
     this.setState({ comment: e.target.value });
   }
@@ -209,25 +209,23 @@ class CupiTip extends Component {
           <div className="col-sm-6">
             <div className="codigolblTip">Codigo Correcto:</div>
             <form onSubmit={this.compliePython}>
-            <label>
-            <textarea className ='codigo' ref='intento' cols="80" rows="10" value={tip.codigo_bien_p}/> 
-            </label>
-            <p id="compileBien"></p>
-            <button
-            type="submit"
-              className="btn btn-primary"
+              <div className='codigo' cols="80" rows="10">{tip.codigo_bien_p.split("\\n").map(linea => <span>{linea}</span>)}</div>
+              <p id="compileBien"></p>
+              <button
+                type="submit"
+                className="btn btn-primary"
               ><i className="fas fa-dragon"></i> Compile</button>
             </form>
           </div>
           <div className="col-sm-6">
             <div className="codigolblTip">Codigo Incorrecto:</div>
-            <textarea className ='codigo'cols="80" rows="10" value={tip.codigo_mal_p} /> 
+            <div className='codigo'>{tip.codigo_mal_p.split("\\n").map(linea => <span contentEditable="true">{linea}</span>)}</div>
             <p id="compileMal"></p>
             <button
-            type="button"
+              type="button"
               className="btn btn-primary"
               onClick={() => this.compliePython(false)}
-              ><i className="fas fa-dragon"></i> Compile</button>
+            ><i className="fas fa-dragon"></i> Compile</button>
           </div>
         </div>
         <div className="row filaBtnsTip text-center mx-auto">
