@@ -2,51 +2,6 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
 import "./CupiTip.css";
-
-class EssayForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = "";
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-
-
-  }
-  componentDidMount() {
-    const { description } = this.props;
-    this.setState({ description });
-  }
-  handleChange(event) { this.setState({ value: event.target.value }); }
-  handleSubmit(event) {
-    let string = this.refs.intento
-    console.log(window.pyodide)
-    //var resp ="SE LOGRO"
-    var resp = window.pyodide.runPython(string)
-    console.log(resp)
-
-  }
-
-  render() {
-    return (
-      <div className="EssayForm">
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            <textarea cols="80" rows="10" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <p></p>
-          <button
-            type="submit"
-            className="btn btn-primary"
-          ><i className="fas fa-dragon"></i> Compile</button>
-        </form>
-
-      </div>
-
-    );
-  }
-}
-
-
 class CupiTip extends Component {
   constructor(props) {
     super(props);
@@ -201,9 +156,6 @@ class CupiTip extends Component {
           <div className="col-sm-9 mx-auto text-center">
             <div className="temaTip">{tip.tema}</div>
           </div>
-        </div>
-        <div>
-          {this.renderText(tip.codigo_mal_p)}
         </div>
         <div className="row filaCodigoTip1">
           <div className="col-sm-6">
