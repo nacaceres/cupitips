@@ -1,16 +1,34 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import CodeMirror from '@uiw/react-codemirror';
+import 'codemirror/keymap/sublime';
+import 'codemirror/theme/darcula.css';
+import './CupiTip.css';
 
-import "./CupiTip.css";
 class CupiTip extends Component {
     constructor(props) {
         super(props);
         this.props.hideFilter();
         this.state = {
-            comment: "",
+            comment: '',
             id: this.props.match.params.id,
+            current_correcto: '',
+            current_incorrecto: '',
         };
     }
+
+    handleIncorrectoChange = (editor, data, value) => {
+        this.setState({ current_incorrecto: editor.getValue() });
+    };
+
+    handleCorrectoChange = (editor, data, value) => {
+        this.setState({ current_correcto: editor.getValue() });
+    };
+
+    formatCode = (code) => {
+        let newCode = code.split('\\n').join('\n');
+        return newCode;
+    };
 
     componentDidMount() {
         if (this.props.location.olddetailstate !== undefined) {
@@ -32,35 +50,35 @@ class CupiTip extends Component {
         return null;
     }
     sugerirTip = () => {
-        this.props.history.push("/CreateTip");
+        this.props.history.push('/CreateTip');
     };
 
     sendComment = () => {
         if (this.props.autenticado) {
             let req = {};
-            req["_id"] = this.state.id;
+            req['_id'] = this.state.id;
             req.comentario = this.state.comment;
-            fetch("comment", {
-                method: "POST",
+            fetch('comment', {
+                method: 'POST',
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(req),
             })
                 .then((response) => response.json())
                 .then((resp) => {
                     if (resp.result.n > 0) {
-                        alert("Tu comentario ha sido enviado correctamente.");
+                        alert('Tu comentario ha sido enviado correctamente.');
                     } else {
                         alert(
-                            "Ha ocurrido un error y tu comentario no pudo ser enviado."
+                            'Ha ocurrido un error y tu comentario no pudo ser enviado.'
                         );
                     }
                 });
         } else {
             this.props.history.push({
-                pathname: "/auth",
+                pathname: '/auth',
                 olddetailstate: this.state,
             });
         }
@@ -69,12 +87,12 @@ class CupiTip extends Component {
     sendLike = () => {
         if (this.props.autenticado) {
             let req = {};
-            req["_id"] = this.props.match.params.id;
-            fetch("like", {
-                method: "POST",
+            req['_id'] = this.props.match.params.id;
+            fetch('like', {
+                method: 'POST',
                 headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(req),
             })
@@ -84,53 +102,57 @@ class CupiTip extends Component {
                         this.props.actualizarTips();
                     } else {
                         alert(
-                            "Ha ocurrido un error y tu like no pudo ser enviado."
+                            'Ha ocurrido un error y tu like no pudo ser enviado.'
                         );
                     }
                 });
         } else {
-            this.props.history.push("/auth");
+            this.props.history.push('/auth');
         }
     };
 
-    compliePython(event ,code) {
-        if(event){
-            var cod = "";
-            var parts = code.split("\\n");
+    compliePython(event, code) {
+        if (event) {
+            var cod = '';
+            var parts = code.split('\\n');
             for (let i = 0; i < parts.length; i++) {
-                cod = cod + parts[i] +"\n";
+                cod = cod + parts[i] + '\n';
             }
-            window.pyodide.runPythonAsync(cod)
-                .then((output) => {
-                    var resp= output;
-                    document.getElementById("compileBien").innerText = ("El Resultado es: \n" + resp);});
-      
-        }
-        else{
-            var codm = "";
-            var partsm = code.split("\\n");
+            window.pyodide.runPythonAsync(cod).then((output) => {
+                var resp = output;
+                document.getElementById('compileBien').innerText =
+                    'El Resultado es: \n' + resp;
+            });
+        } else {
+            var codm = '';
+            var partsm = code.split('\\n');
             for (let i = 0; i < partsm.length; i++) {
-                codm = codm + partsm[i] +"\n";
+                codm = codm + partsm[i] + '\n';
             }
             try {
-                window.pyodide.runPythonAsync(codm)
-                    .then((output)=> {
-                        var resp= output;
-                        console.log(output);
-                        document.getElementById("compileMal").innerText = ("El Resultado es: \n" + resp);});
+                window.pyodide.runPythonAsync(codm).then((output) => {
+                    var resp = output;
+                    console.log(output);
+                    document.getElementById('compileMal').innerText =
+                        'El Resultado es: \n' + resp;
+                });
             } catch (error) {
-                console.log("ERROR");
-                var e = ("" + error).split('File "<unknown>",')[1].split("at")[0].split("\n");
-                var msgE = "Error\n" + e[3] +"\n"+ e[0] +"\n"+ e[1] +"\n"; 
+                console.log('ERROR');
+                var e = ('' + error)
+                    .split('File "<unknown>",')[1]
+                    .split('at')[0]
+                    .split('\n');
+                var msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
                 console.log(msgE);
-                document.getElementById("compileMal").innerText = (msgE);
-            }  
+                document.getElementById('compileMal').innerText = msgE;
+            }
             //alert(window.pyodide.runPython(stringm));
         }
     }
     handleChangeCode(event) {
         this.setState({ value: event.target.value });
-    }Error
+    }
+    Error;
     onChangeText(e) {
         this.setState({ comment: e.target.value });
     }
@@ -144,7 +166,7 @@ class CupiTip extends Component {
         let tip = this.buscarTip(this.props.match.params.id);
 
         if (this.props.tips.length > 0 && tip === null) {
-            this.props.history.push("/NotFound");
+            this.props.history.push('/NotFound');
         }
 
         if (tip === null) {
@@ -195,47 +217,61 @@ class CupiTip extends Component {
                 <div className="row filaCodigoTip1">
                     <div className="col-sm-6">
                         <div className="codigolblTip">Codigo Correcto:</div>
-                        <form onSubmit={this.compliePython}>
-                            <div className="codigo" cols="80" rows="10">
-                                {tip.codigo_bien_p
-                                    .split("\\n")
-                                    .map((linea, i) => (
-                                        <span key={i}>{linea}</span>
-                                    ))}
-                            </div>
+                        <form>
+                            <CodeMirror
+                                onChange={this.handleCorrectoChange}
+                                value={this.formatCode(tip.codigo_bien_p)}
+                                options={{
+                                    theme: 'darcula',
+                                    keyMap: 'sublime',
+                                    mode: 'python',
+                                    lineNumbers: true,
+                                }}
+                            />
                             <p id="compileBien"></p>
                             <button
                                 type="button"
                                 className="btn btn-primary"
                                 disabled={!this.props.seCargoPyodide}
                                 onClick={() =>
-                                    this.compliePython(true, tip.codigo_bien_p)
+                                    this.compliePython(
+                                        true,
+                                        this.state.current_correcto
+                                    )
                                 }
                             >
-                                <i className="fas fa-dragon"></i> Compile
+                                <i className="fas fa-dragon"></i> Correr
                             </button>
                         </form>
                     </div>
                     <div className="col-sm-6">
                         <div className="codigolblTip">Codigo Incorrecto:</div>
-                        <div className="codigo">
-                            {tip.codigo_mal_p.split("\\n").map((linea, i) => (
-                                <span contentEditable="true" key={i}>
-                                    {linea}
-                                </span>
-                            ))}
-                        </div>
-                        <p id="compileMal"></p>
-                        <button
-                            type="button"
-                            className="btn btn-primary"
-                            disabled={!this.props.seCargoPyodide}
-                            onClick={() =>
-                                this.compliePython(false, tip.codigo_mal_p)
-                            }
-                        >
-                            <i className="fas fa-dragon"></i> Compile
-                        </button>
+                        <form>
+                            <CodeMirror
+                                onChange={this.handleIncorrectoChange}
+                                value={this.formatCode(tip.codigo_mal_p)}
+                                options={{
+                                    theme: 'darcula',
+                                    keyMap: 'sublime',
+                                    mode: 'python',
+                                    lineNumbers: true,
+                                }}
+                            />
+                            <p id="compileMal"></p>
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                disabled={!this.props.seCargoPyodide}
+                                onClick={() =>
+                                    this.compliePython(
+                                        false,
+                                        this.state.current_incorrecto
+                                    )
+                                }
+                            >
+                                <i className="fas fa-dragon"></i> Correr
+                            </button>
+                        </form>
                     </div>
                 </div>
                 <div className="row filaBtnsTip text-center mx-auto">
