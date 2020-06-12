@@ -60,6 +60,7 @@
 
 .codigolblTip {
     margin-top: 20px;
+    display: inline-block;
 }
 
 .btn-outline-like {
@@ -109,6 +110,8 @@
     border: 3px solid rgb(100, 211, 100);
     border-radius: 10px;
     padding: 10px;
+    max-height: 90px;
+    overflow-y: scroll;
 }
 
 .compileMal {
@@ -116,6 +119,8 @@
     border: 3px solid rgb(211, 100, 100);
     border-radius: 10px;
     padding: 10px;
+    max-height: 90px;
+    overflow-y: scroll;
 }
 
 .botonEjecutar {
@@ -124,4 +129,28 @@
 
 .botonAgregar {
     margin: 10px 0 !important;
+}
+
+.refreshButton {
+    float: right;
+    margin-top: 20px !important;
+    margin-right: 0px !important;
+    height: 30px;
+    width: 30px;
+    padding: 7px;
+    background-color: #009c95;
+    border: none;
+    border-radius: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.refreshButton:hover {
+    background-color: #007872;
+}
+
+.refreshButton img {
+    vertical-align: top;
+    height: 16px;
+    width: 16px;
 }

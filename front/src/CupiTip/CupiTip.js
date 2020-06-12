@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import CodeMirror from '@uiw/react-codemirror';
+import CodeMirror2 from 'codemirror';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/darcula.css';
 import './CupiTip.css';
+import refreshIcon from './refresh.svg';
 
 class CupiTip extends Component {
     constructor(props) {
@@ -16,6 +18,8 @@ class CupiTip extends Component {
             current_incorrecto: '',
             resultadoCorrecto: undefined,
             resultadoIncorrecto: undefined,
+            editorBien: undefined,
+            editorMal: undefined,
         };
         this.colores = {
             1: 'rgb(70, 157, 204)',
@@ -25,12 +29,18 @@ class CupiTip extends Component {
         };
     }
 
-    handleIncorrectoChange = (editor, data, value) => {
-        this.setState({ current_incorrecto: editor.getValue() });
+    handleIncorrectoChange = (editor) => {
+        this.setState({
+            current_incorrecto: editor.getValue(),
+            editorMal: editor,
+        });
     };
 
-    handleCorrectoChange = (editor, data, value) => {
-        this.setState({ current_correcto: editor.getValue() });
+    handleCorrectoChange = (editor) => {
+        this.setState({
+            current_correcto: editor.getValue(),
+            editorBien: editor,
+        });
     };
 
     formatCode = (code) => {
@@ -189,7 +199,6 @@ class CupiTip extends Component {
     renderDescription = (tip) => {
         let partes = tip.descripcion.split('**');
         let content = [];
-        console.log(partes);
         for (let i in partes) {
             if (i % 2 == 0) {
                 content.push(partes[i]);
@@ -198,6 +207,14 @@ class CupiTip extends Component {
             }
         }
         return <p className='description'>{content}</p>;
+    };
+
+    handleRefreshCorrect = (tip) => {
+        this.state.editorBien.setValue(this.formatCode(tip.codigo_bien_p));
+    };
+
+    handleRefreshIncorrect = (tip) => {
+        this.state.editorMal.setValue(this.formatCode(tip.codigo_mal_p));
     };
 
     render() {
@@ -241,7 +258,15 @@ class CupiTip extends Component {
                 </div>
                 <div className='row filaCodigoTip1'>
                     <div className='col-sm-6'>
-                        <h4 className='codigolblTip'>Código Correcto:</h4>
+                        <div>
+                            <h4 className='codigolblTip'>Código Correcto:</h4>
+                            <button
+                                className='refreshButton'
+                                onClick={() => this.handleRefreshCorrect(tip)}
+                            >
+                                <img src={refreshIcon} />
+                            </button>
+                        </div>
                         <form>
                             <CodeMirror
                                 onChange={this.handleCorrectoChange}
@@ -269,7 +294,15 @@ class CupiTip extends Component {
                         </form>
                     </div>
                     <div className='col-sm-6'>
-                        <h4 className='codigolblTip'>Código Incorrecto:</h4>
+                        <div>
+                            <h4 className='codigolblTip'>Código Incorrecto:</h4>
+                            <button
+                                className='refreshButton'
+                                onClick={() => this.handleRefreshIncorrect(tip)}
+                            >
+                                <img src={refreshIcon} />
+                            </button>
+                        </div>
                         <form>
                             <CodeMirror
                                 onChange={this.handleIncorrectoChange}
