@@ -159,15 +159,12 @@ class CupiTip extends Component {
                     });
                 });
         } catch (error) {
-            console.log(error.toString());
-
             let e = error
                 .toString()
                 .split('File "<unknown>",')[1]
                 .split('at')[0]
                 .split('\n');
             let msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
-            console.log(msgE);
 
             this.setState({
                 resultadoIncorrecto: { correct: false, msg: msgE },
@@ -189,6 +186,20 @@ class CupiTip extends Component {
         }
     };
 
+    renderDescription = (tip) => {
+        let partes = tip.descripcion.split('**');
+        let content = [];
+        console.log(partes);
+        for (let i in partes) {
+            if (i % 2 == 0) {
+                content.push(partes[i]);
+            } else {
+                content.push(<span className='hightlight'>{partes[i]}</span>);
+            }
+        }
+        return <p className='description'>{content}</p>;
+    };
+
     render() {
         let tip = this.buscarTip(this.props.match.params.id);
 
@@ -208,22 +219,24 @@ class CupiTip extends Component {
                     >
                         N{tip.nivel}
                     </div>
-                    <h1 className='lblNombreTip text-center'>{tip.nombre}</h1>
+                    <h1 className='lblNombreTip'>{tip.nombre}</h1>
                 </div>
                 <div className='filaDescTip'>
                     <h2>Descripción:</h2>
-                    <p>{tip.descripcion}</p>
+                    {this.renderDescription(tip)}
                 </div>
                 <div className='filaTemaTip'>
-                    <h3>Temas:</h3>
-                    <div className='flexbox'>
-                        <div className='temaTip'>{tip.tema}</div>
+                    <div>
+                        <h3>Temas:</h3>
                         <button
                             className='btn btn-outline-like'
                             onClick={this.sendLike}
                         >
                             {tip.likes} <span className='fas fa-star'></span>
                         </button>
+                    </div>
+                    <div className=' temasContainer flexbox'>
+                        <div className='temaTip'>{tip.tema}</div>
                     </div>
                 </div>
                 <div className='row filaCodigoTip1'>
@@ -242,7 +255,7 @@ class CupiTip extends Component {
                             />
                             <button
                                 type='button'
-                                className='btn btn-primary'
+                                className='botonEjecutar btn btn-primary'
                                 disabled={!this.props.seCargoPyodide}
                                 onClick={this.handleCompileBien}
                             >
@@ -270,7 +283,7 @@ class CupiTip extends Component {
                             />
                             <button
                                 type='button'
-                                className='btn btn-primary'
+                                className='botonEjecutar btn btn-primary'
                                 disabled={!this.props.seCargoPyodide}
                                 onClick={this.handleCompileMal}
                             >
@@ -284,20 +297,16 @@ class CupiTip extends Component {
                         </form>
                     </div>
                 </div>
-                <div className='row filaBtnsTip text-center mx-auto'>
-                    <div className='col-sm-12 mx-auto'>
-                        <button
-                            type='button'
-                            className='btn btn-primary'
-                            data-toggle='collapse'
-                            data-target='#collapseComentario'
-                            aria-expanded='false'
-                            aria-controls='collapseComentario'
-                        >
-                            Agregar Comentario
-                        </button>
-                    </div>
-                </div>
+                <button
+                    type='button'
+                    className='btn btn-primary botonAgregar'
+                    data-toggle='collapse'
+                    data-target='#collapseComentario'
+                    aria-expanded='false'
+                    aria-controls='collapseComentario'
+                >
+                    Agregar Comentario
+                </button>
                 <div className='row'>
                     <div
                         className='collapse col-sm-8 mx-auto text-center'
@@ -312,7 +321,7 @@ class CupiTip extends Component {
                                 rows='4'
                             ></textarea>
                         </div>
-                        <div className='row text-center'>
+                        <div className='row'>
                             <button
                                 className='btn btn-primary mx-auto'
                                 onClick={this.sendComment}

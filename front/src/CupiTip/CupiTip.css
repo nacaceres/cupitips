@@ -4,6 +4,7 @@
 .lblNombreTip {
     margin: auto 10px;
     font-size: 28px;
+    max-width: calc(100% - 80px);
 }
 .lblnivelTip {
     vertical-align: top;
@@ -20,6 +21,32 @@
     font-size: 24px;
 }
 
+.filaTemaTip h3 {
+    font-size: 20px;
+    display: inline-block;
+}
+.filaTemaTip button {
+    float: right;
+    display: inline-block;
+}
+
+.temasContainer {
+    flex-wrap: wrap;
+    width: calc(100% - 80px);
+}
+
+.description {
+    font-size: 16px;
+}
+
+.hightlight {
+    background-color: #cd6530;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    padding: 01px 5px;
+}
+
 .temaTip {
     margin: auto 5px;
     height: min-content;
@@ -29,6 +56,10 @@
     width: max-content;
     background-color: rgba(199, 201, 202, 0.8);
     color: black;
+}
+
+.codigolblTip {
+    margin-top: 20px;
 }
 
 .btn-outline-like {
@@ -73,51 +104,6 @@
     box-shadow: 0 0 0 0.2rem rgba(6, 71, 137, 0.5);
 }
 
-.filaTemaTip {
-    margin-top: 2%;
-    font-size: 2em;
-}
-
-.filaCodigoTip {
-    margin: 2%;
-}
-.codigolblTip {
-    margin: 10px 0;
-    font-size: 1.4em;
-}
-.test {
-    background-color: red;
-}
-.colComent {
-    border-color: rgb(143, 148, 145, 0.8);
-    border-radius: 1%;
-    border-style: solid;
-}
-.codigo {
-    display: inline-block;
-    font-family: monospace, monospace;
-    counter-reset: line;
-    background-color: white;
-    padding: 10px;
-    width: 100%;
-    border: 1px solid grey;
-    border-radius: 5px;
-}
-.codigo span {
-    display: block;
-    white-space: pre;
-    line-height: 1.5rem;
-    outline: none;
-}
-.codigo span:before {
-    counter-increment: line;
-    content: counter(line);
-    display: inline-block;
-    border-right: 1px solid #ddd;
-    margin-right: 0.5em;
-    padding-right: 5px;
-}
-
 .compileBien {
     background-color: rgb(177, 241, 177);
     border: 3px solid rgb(100, 211, 100);
@@ -130,4 +116,12 @@
     border: 3px solid rgb(211, 100, 100);
     border-radius: 10px;
     padding: 10px;
+}
+
+.botonEjecutar {
+    margin: 10px 0 !important;
+}
+
+.botonAgregar {
+    margin: 10px 0 !important;
 }
