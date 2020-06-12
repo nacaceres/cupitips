@@ -1,50 +1,44 @@
 .filaNombreTip {
-    margin-top: 2%;
+    margin: 20px 0;
 }
 .lblNombreTip {
-    padding-top: 6%;
-    font-size: 2.5em;
-    line-height: 1.2;
-}
-
-.btnbackTip {
-    margin-left: 10%;
+    margin: auto 10px;
+    font-size: 28px;
 }
 .lblnivelTip {
-    border-radius: 5%;
-    margin-top: 15%;
-    vertical-align: middle;
-    padding-bottom: 7.5%;
-    padding-top: 7.5%;
-    padding-left: 12.5%;
-    padding-right: 12.5%;
-    display: table;
+    vertical-align: top;
+    border-radius: 10px;
+    font-size: 14px;
+    width: 60px;
+    height: 40px;
+    padding: 10px 0;
     text-align: center;
     background-color: #064789;
     color: white;
-    font-size: 2em;
 }
 
-.descTitleTip {
-    font-size: 1.5em;
-    margin-right: 1%;
+.filaDescTip h2 {
+    font-size: 24px;
 }
-.filaDescTip {
-    margin-top: 3%;
+
+.temaTip {
+    margin: auto 5px;
+    height: min-content;
+    font-size: 18px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    width: max-content;
+    background-color: rgb(146, 146, 146);
+    color: white;
 }
-.lblDescTip {
-    margin-left: 2%;
-    line-height: 1.5;
-    font-size: 1.5em;
-}
+
 .btn-outline-like {
-    margin-left: 10%;
-    padding-left: 5%;
-    padding-right: 5%;
+    margin: auto 10px auto auto;
+    height: 40px;
     color: #064789;
     background-color: transparent;
     border-color: #064789;
-    font-size: 2em;
+    font-size: 14px;
     border-width: medium;
     border-radius: 15%;
 }
@@ -80,17 +74,6 @@
     box-shadow: 0 0 0 0.2rem rgba(6, 71, 137, 0.5);
 }
 
-.temaTip {
-    border-radius: 1em;
-    padding-left: 5%;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    padding-right: 5%;
-    width: max-content;
-    background-color: rgb(27, 28, 29, 0.8);
-    color: white;
-}
-
 .filaTemaTip {
     margin-top: 2%;
     font-size: 2em;
@@ -100,7 +83,7 @@
     margin: 2%;
 }
 .codigolblTip {
-    margin-bottom: 2%;
+    margin: 10px 0;
     font-size: 1.4em;
 }
 .test {
@@ -134,4 +117,18 @@
     border-right: 1px solid #ddd;
     margin-right: 0.5em;
     padding-right: 5px;
+}
+
+.compileBien {
+    background-color: rgb(177, 241, 177);
+    border: 3px solid rgb(100, 211, 100);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.compileMal {
+    background-color: rgb(241, 177, 177);
+    border: 3px solid rgb(211, 100, 100);
+    border-radius: 10px;
+    padding: 10px;
 }

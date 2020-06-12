@@ -14,6 +14,8 @@ class CupiTip extends Component {
             id: this.props.match.params.id,
             current_correcto: '',
             current_incorrecto: '',
+            resultadoCorrecto: undefined,
+            resultadoIncorrecto: undefined,
         };
     }
 
@@ -111,48 +113,66 @@ class CupiTip extends Component {
         }
     };
 
-    compliePython(event, code) {
-        if (event) {
-            var cod = '';
-            var parts = code.split('\\n');
-            for (let i = 0; i < parts.length; i++) {
-                cod = cod + parts[i] + '\n';
-            }
-            window.pyodide.runPythonAsync(cod).then((output) => {
-                var resp = output;
-                document.getElementById('compileBien').innerText =
-                    'El Resultado es: \n' + resp;
-            });
-        } else {
-            var codm = '';
-            var partsm = code.split('\\n');
-            for (let i = 0; i < partsm.length; i++) {
-                codm = codm + partsm[i] + '\n';
-            }
-            try {
-                window.pyodide.runPythonAsync(codm).then((output) => {
+    handleCompileBien = () => {
+        try {
+            window.pyodide
+                .runPythonAsync(this.state.current_correcto)
+                .then((output) => {
                     var resp = output;
-                    console.log(output);
-                    document.getElementById('compileMal').innerText =
-                        'El Resultado es: \n' + resp;
+                    this.setState({
+                        resultadoCorrecto: {
+                            correct: true,
+                            msg: 'El Resultado es: \n' + resp,
+                        },
+                    });
                 });
-            } catch (error) {
-                console.log('ERROR');
-                var e = ('' + error)
-                    .split('File "<unknown>",')[1]
-                    .split('at')[0]
-                    .split('\n');
-                var msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
-                console.log(msgE);
-                document.getElementById('compileMal').innerText = msgE;
-            }
-            //alert(window.pyodide.runPython(stringm));
+        } catch (error) {
+            let e = error
+                .toString()
+                .split('File "<unknown>",')[1]
+                .split('at')[0]
+                .split('\n');
+            let msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
+            this.setState({
+                resultadoIncorrecto: { correct: false, msg: msgE },
+            });
         }
-    }
+    };
+
+    handleCompileMal = () => {
+        try {
+            window.pyodide
+                .runPythonAsync(this.state.current_incorrecto)
+                .then((output) => {
+                    var resp = output;
+                    this.setState({
+                        resultadoCorrecto: {
+                            correct: true,
+                            msg: 'El Resultado es: \n' + resp,
+                        },
+                    });
+                });
+        } catch (error) {
+            console.log(error.toString());
+
+            let e = error
+                .toString()
+                .split('File "<unknown>",')[1]
+                .split('at')[0]
+                .split('\n');
+            let msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
+            console.log(msgE);
+
+            this.setState({
+                resultadoIncorrecto: { correct: false, msg: msgE },
+            });
+        }
+    };
+
     handleChangeCode(event) {
         this.setState({ value: event.target.value });
     }
-    Error;
+
     onChangeText(e) {
         this.setState({ comment: e.target.value });
     }
@@ -162,6 +182,7 @@ class CupiTip extends Component {
             this.sendComment();
         }
     };
+
     render() {
         let tip = this.buscarTip(this.props.match.params.id);
 
@@ -173,50 +194,30 @@ class CupiTip extends Component {
             return <div></div>;
         }
         return (
-            <div className="container-fluid">
-                <div className="row filaNombreTip">
-                    <div className="col-sm-1 text-left">
-                        <button
-                            className="btn btn-primary btnbackTip"
-                            onClick={this.clickBack}
-                        >
-                            Back
-                        </button>
-                    </div>
-                    <div className="col-sm-8 my-auto">
-                        <div className="lblNombreTip text-center">
-                            {tip.nombre}
-                        </div>
-                    </div>
-                    <div className="col-sm-3 text-left my-auto">
-                        <div className="lblnivelTip">Nivel {tip.nivel}</div>
-                    </div>
+            <div className='container-fluid'>
+                <div className='filaNombreTip flexbox'>
+                    <div className='lblnivelTip'>N{tip.nivel}</div>
+                    <h1 className='lblNombreTip text-center'>{tip.nombre}</h1>
                 </div>
-                <div className="row filaDescTip">
-                    <div className="col-sm-9">
-                        <div className="lblDescTip">
-                            <span className="descTitleTip">Descripcion:</span>
-                            {tip.descripcion}
-                        </div>
-                    </div>
-                    <div className="col-sm-3 text-left my-auto">
+                <div className='filaDescTip'>
+                    <h2>Descripción:</h2>
+                    <p>{tip.descripcion}</p>
+                </div>
+                <div className='filaTemaTip'>
+                    <h3>Temas:</h3>
+                    <div className='flexbox'>
+                        <div className='temaTip'>{tip.tema}</div>
                         <button
-                            className="btn btn-outline-like"
+                            className='btn btn-outline-like'
                             onClick={this.sendLike}
                         >
-                            {tip.likes} <span className="fas fa-star"></span>
+                            {tip.likes} <span className='fas fa-star'></span>
                         </button>
                     </div>
                 </div>
-                <div className="row filaTemaTip">
-                    <div className="col-sm-2 my-auto text-center">Tema:</div>
-                    <div className="col-sm-9 mx-auto text-center">
-                        <div className="temaTip">{tip.tema}</div>
-                    </div>
-                </div>
-                <div className="row filaCodigoTip1">
-                    <div className="col-sm-6">
-                        <div className="codigolblTip">Codigo Correcto:</div>
+                <div className='row filaCodigoTip1'>
+                    <div className='col-sm-6'>
+                        <h4 className='codigolblTip'>Código Correcto:</h4>
                         <form>
                             <CodeMirror
                                 onChange={this.handleCorrectoChange}
@@ -228,24 +229,23 @@ class CupiTip extends Component {
                                     lineNumbers: true,
                                 }}
                             />
-                            <p id="compileBien"></p>
                             <button
-                                type="button"
-                                className="btn btn-primary"
+                                type='button'
+                                className='btn btn-primary'
                                 disabled={!this.props.seCargoPyodide}
-                                onClick={() =>
-                                    this.compliePython(
-                                        true,
-                                        this.state.current_correcto
-                                    )
-                                }
+                                onClick={this.handleCompileBien}
                             >
-                                <i className="fas fa-dragon"></i> Correr
+                                <i className='fas fa-dragon'></i> Ejecutar
                             </button>
+                            {this.state.resultadoCorrecto && (
+                                <p className='compileBien'>
+                                    {this.state.resultadoCorrecto.msg}
+                                </p>
+                            )}
                         </form>
                     </div>
-                    <div className="col-sm-6">
-                        <div className="codigolblTip">Codigo Incorrecto:</div>
+                    <div className='col-sm-6'>
+                        <h4 className='codigolblTip'>Código Incorrecto:</h4>
                         <form>
                             <CodeMirror
                                 onChange={this.handleIncorrectoChange}
@@ -257,54 +257,53 @@ class CupiTip extends Component {
                                     lineNumbers: true,
                                 }}
                             />
-                            <p id="compileMal"></p>
                             <button
-                                type="button"
-                                className="btn btn-primary"
+                                type='button'
+                                className='btn btn-primary'
                                 disabled={!this.props.seCargoPyodide}
-                                onClick={() =>
-                                    this.compliePython(
-                                        false,
-                                        this.state.current_incorrecto
-                                    )
-                                }
+                                onClick={this.handleCompileMal}
                             >
-                                <i className="fas fa-dragon"></i> Correr
+                                <i className='fas fa-dragon'></i> Ejecutar
                             </button>
+                            {this.state.resultadoIncorrecto && (
+                                <p className='compileMal'>
+                                    {this.state.resultadoIncorrecto.msg}
+                                </p>
+                            )}
                         </form>
                     </div>
                 </div>
-                <div className="row filaBtnsTip text-center mx-auto">
-                    <div className="col-sm-12 text-center mx-auto">
+                <div className='row filaBtnsTip text-center mx-auto'>
+                    <div className='col-sm-12 mx-auto'>
                         <button
-                            type="button"
-                            className="btn btn-primary"
-                            data-toggle="collapse"
-                            data-target="#collapseComentario"
-                            aria-expanded="false"
-                            aria-controls="collapseComentario"
+                            type='button'
+                            className='btn btn-primary'
+                            data-toggle='collapse'
+                            data-target='#collapseComentario'
+                            aria-expanded='false'
+                            aria-controls='collapseComentario'
                         >
                             Agregar Comentario
                         </button>
                     </div>
                 </div>
-                <div className="row">
+                <div className='row'>
                     <div
-                        className="collapse col-sm-8 mx-auto text-center"
-                        id="collapseComentario"
+                        className='collapse col-sm-8 mx-auto text-center'
+                        id='collapseComentario'
                     >
-                        <div className="row colComent mx-auto text-center">
+                        <div className='row colComent mx-auto text-center'>
                             <textarea
                                 onKeyDown={this.keyPress}
                                 onChange={this.onChangeText.bind(this)}
-                                className="form-control rounded-0"
+                                className='form-control rounded-0'
                                 value={this.state.comment}
-                                rows="4"
+                                rows='4'
                             ></textarea>
                         </div>
-                        <div className="row text-center">
+                        <div className='row text-center'>
                             <button
-                                className="btn btn-primary mx-auto"
+                                className='btn btn-primary mx-auto'
                                 onClick={this.sendComment}
                             >
                                 Enviar
