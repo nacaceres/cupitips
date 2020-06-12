@@ -1,66 +1,55 @@
 .tipInList {
-  margin-bottom: 7.5%;
-  margin-left: 5%;
-  margin-right: 5%;
-  background-color: rgb(143, 148, 145, 0.5);
-  border-radius: 10px;
-  border: 4px solid #8f9491;
-  font-family: "Roboto Slab", serif;
-  cursor: pointer;
-  min-height: 15vh;
-}
-
-.tipInList .row {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.tipTitle {
-  height: 40%;
-  font-family: "Archivo", sans-serif;
+    margin: 0 20px 30px 20px;
+    background-color: white;
+    border-radius: 10px;
+    font-family: 'Roboto Slab', serif;
+    cursor: pointer;
+    width: 400px;
+    height: fit-content;
+    padding: 10px;
+    -webkit-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
 .numeroNivel {
-  border-radius: 10%;
-  margin-top: 15%;
-  vertical-align: middle;
-  padding-bottom: 15%;
-  padding-top: 15%;
-  padding-left: 15%;
-  padding-right: 15%;
-  display: table;
-  text-align: center;
-  background-color: #064789;
-}
-
-.txtNumeroNivel {
-  height: 100%;
-  display: table-cell;
-  vertical-align: middle;
-  color: white;
-  font-size: 20px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px;
+    display: inline-block;
+    color: white;
+    vertical-align: top;
 }
 
 .txtNombre {
-  color: #1b1c1d;
-  font-size: 1.3em;
-}
-
-.likes {
-  color: #064789;
-  font-size: 1.5em;
-  margin-right: 2%;
-  margin-top: 10%;
-  height: 100%;
+    color: #1b1c1d;
+    font-size: 16px;
+    margin-left: 10px;
+    display: inline-block;
+    max-width: calc(100% - 40px);
 }
 
 .tema {
-  border-radius: 0.5em;
-  padding: 3%;
-  background-color: rgb(27, 28, 29, 0.8);
-  color: white;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 5px;
+    width: fit-content;
+    background-color: rgba(199, 201, 202, 0.8);
+    color: black;
+    display: inline-block;
+}
+
+.likes {
+    border-radius: 10px;
+    text-align: center;
+    padding: 5px;
+    margin-top: 10px;
+    display: inline-block;
+    color: white;
+    vertical-align: top;
+    float: right;
 }
 
 .tags {
-  margin-top: 4%;
+    margin-top: 4%;
 }

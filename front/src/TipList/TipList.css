@@ -1,3 +1,8 @@
-#tipList{
-  padding-top: 2%;
+#tipList {
+    padding-top: 2%;
+}
+
+.tipListContainer {
+    flex-wrap: wrap;
+    justify-content: center;
 }

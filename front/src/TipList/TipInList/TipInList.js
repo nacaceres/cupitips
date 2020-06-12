@@ -2,7 +2,18 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import './TipInList.css';
+
 class TipInList extends Component {
+    constructor(props) {
+        super(props);
+        this.colores = {
+            1: 'rgb(70, 157, 204)',
+            2: 'rgb(133, 177, 45)',
+            3: 'rgb(113, 25, 65)',
+            4: 'rgb(232, 100, 44)',
+        };
+    }
+
     clicked = () => {
         this.props.history.push({
             pathname: '/cupitip/' + this.props.tip._id,
@@ -12,31 +23,28 @@ class TipInList extends Component {
 
     render() {
         return (
-            <div
-                className="tipInList container-flex disable-select"
-                onClick={this.clicked.bind(this)}
-            >
-                <div className="row tipTitle">
-                    <div className="col-sm-2">
-                        <div className="numeroNivel mx-auto">
-                            <div className="txtNumeroNivel">
-                                {'N' + this.props.tip.nivel}
-                            </div>
-                        </div>
+            <div className='tipInList' onClick={this.clicked.bind(this)}>
+                <div>
+                    <div
+                        className='numeroNivel'
+                        style={{
+                            backgroundColor: this.colores[this.props.tip.nivel],
+                        }}
+                    >
+                        {'N' + this.props.tip.nivel}
                     </div>
-                    <div className="col-sm-10 text-left my-auto txtNombre">
-                        <div className="row">{this.props.tip.nombre}</div>
-                    </div>
+                    <div className='txtNombre'>{this.props.tip.nombre}</div>
                 </div>
-                <div className="row tags">
-                    <div className="col-sm-9 text-left">
-                        <label className="tema">{this.props.tip.tema}</label>
-                    </div>
-                    <div className=" col-sm-3 text-right parLikes">
-                        <div className="likes">
-                            {this.props.tip.likes}{' '}
-                            <span className="fas fa-star"></span>
-                        </div>
+                <div>
+                    <div className='tema'>{this.props.tip.tema}</div>
+                    <div
+                        className='likes'
+                        style={{
+                            backgroundColor: this.colores[this.props.tip.nivel],
+                        }}
+                    >
+                        {this.props.tip.likes + ' '}
+                        <div className='fas fa-star'></div>
                     </div>
                 </div>
             </div>
