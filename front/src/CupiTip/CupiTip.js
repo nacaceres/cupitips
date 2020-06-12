@@ -17,6 +17,12 @@ class CupiTip extends Component {
             resultadoCorrecto: undefined,
             resultadoIncorrecto: undefined,
         };
+        this.colores = {
+            1: 'rgb(70, 157, 204)',
+            2: 'rgb(133, 177, 45)',
+            3: 'rgb(113, 25, 65)',
+            4: 'rgb(232, 100, 44)',
+        };
     }
 
     handleIncorrectoChange = (editor, data, value) => {
@@ -196,7 +202,12 @@ class CupiTip extends Component {
         return (
             <div className='container-fluid'>
                 <div className='filaNombreTip flexbox'>
-                    <div className='lblnivelTip'>N{tip.nivel}</div>
+                    <div
+                        className='lblnivelTip'
+                        style={{ backgroundColor: this.colores[tip.nivel] }}
+                    >
+                        N{tip.nivel}
+                    </div>
                     <h1 className='lblNombreTip text-center'>{tip.nombre}</h1>
                 </div>
                 <div className='filaDescTip'>
