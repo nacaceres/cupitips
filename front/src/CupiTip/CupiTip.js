@@ -6,6 +6,8 @@ import 'codemirror/keymap/sublime';
 import 'codemirror/theme/darcula.css';
 import './CupiTip.css';
 import refreshIcon from './refresh.svg';
+import LevelTipList from "./levelTipList/levelTipList.js";
+import { Container, Row, Col } from 'reactstrap';
 
 class CupiTip extends Component {
     constructor(props) {
@@ -27,6 +29,7 @@ class CupiTip extends Component {
             3: 'rgb(113, 25, 65)',
             4: 'rgb(232, 100, 44)',
         };
+        console.log(this.props.tips);
     }
 
     handleIncorrectoChange = (editor) => {
@@ -168,17 +171,24 @@ class CupiTip extends Component {
                         },
                     });
                 });
+                
         } catch (error) {
-            let e = error
-                .toString()
-                .split('File "<unknown>",')[1]
-                .split('at')[0]
-                .split('\n');
-            let msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
+            console.log(error);
+            let es = error.toString();
+            if( es.includes('File "<unknown>",')){
+                console.log("Sintax");
+                let e = error
+                    .toString()
+                    .split('File "<unknown>",')[1]
+                    .split('at')[0]
+                    .split('\n');
+                let msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
 
-            this.setState({
-                resultadoIncorrecto: { correct: false, msg: msgE },
-            });
+                this.setState({
+                    resultadoIncorrecto: { correct: false, msg: msgE },
+                });
+            }
+            console.log("FFF");
         }
     };
 
@@ -228,143 +238,158 @@ class CupiTip extends Component {
             return <div></div>;
         }
         return (
-            <div className='container-fluid'>
-                <div className='filaNombreTip flexbox'>
-                    <div
-                        className='lblnivelTip'
-                        style={{ backgroundColor: this.colores[tip.nivel] }}
-                    >
-                        N{tip.nivel}
-                    </div>
-                    <h1 className='lblNombreTip'>{tip.nombre}</h1>
-                </div>
-                <div className='filaDescTip'>
-                    <h2>Descripción:</h2>
-                    {this.renderDescription(tip)}
-                </div>
-                <div className='filaTemaTip'>
-                    <div>
-                        <h3>Temas:</h3>
-                        <button
-                            className='btn btn-outline-like'
-                            onClick={this.sendLike}
-                        >
-                            {tip.likes} <span className='fas fa-star'></span>
-                        </button>
-                    </div>
-                    <div className=' temasContainer flexbox'>
-                        <div className='temaTip'>{tip.tema}</div>
-                    </div>
-                </div>
-                <div className='row filaCodigoTip1'>
-                    <div className='col-sm-6'>
-                        <div>
-                            <h4 className='codigolblTip'>Código Correcto:</h4>
-                            <button
-                                className='refreshButton'
-                                onClick={() => this.handleRefreshCorrect(tip)}
-                            >
-                                <img src={refreshIcon} />
-                            </button>
-                        </div>
-                        <form>
-                            <CodeMirror
-                                onChange={this.handleCorrectoChange}
-                                value={this.formatCode(tip.codigo_bien_p)}
-                                options={{
-                                    theme: 'darcula',
-                                    keyMap: 'sublime',
-                                    mode: 'python',
-                                    lineNumbers: true,
-                                }}
-                            />
-                            <button
-                                type='button'
-                                className='botonEjecutar btn btn-primary'
-                                disabled={!this.props.seCargoPyodide}
-                                onClick={this.handleCompileBien}
-                            >
-                                <i className='fas fa-dragon'></i> Ejecutar
-                            </button>
-                            {this.state.resultadoCorrecto && (
-                                <p className='compileBien'>
-                                    {this.state.resultadoCorrecto.msg}
-                                </p>
-                            )}
-                        </form>
-                    </div>
-                    <div className='col-sm-6'>
-                        <div>
-                            <h4 className='codigolblTip'>Código Incorrecto:</h4>
-                            <button
-                                className='refreshButton'
-                                onClick={() => this.handleRefreshIncorrect(tip)}
-                            >
-                                <img src={refreshIcon} />
-                            </button>
-                        </div>
-                        <form>
-                            <CodeMirror
-                                onChange={this.handleIncorrectoChange}
-                                value={this.formatCode(tip.codigo_mal_p)}
-                                options={{
-                                    theme: 'darcula',
-                                    keyMap: 'sublime',
-                                    mode: 'python',
-                                    lineNumbers: true,
-                                }}
-                            />
-                            <button
-                                type='button'
-                                className='botonEjecutar btn btn-primary'
-                                disabled={!this.props.seCargoPyodide}
-                                onClick={this.handleCompileMal}
-                            >
-                                <i className='fas fa-dragon'></i> Ejecutar
-                            </button>
-                            {this.state.resultadoIncorrecto && (
-                                <p className='compileMal'>
-                                    {this.state.resultadoIncorrecto.msg}
-                                </p>
-                            )}
-                        </form>
-                    </div>
-                </div>
-                <button
-                    type='button'
-                    className='btn btn-primary botonAgregar'
-                    data-toggle='collapse'
-                    data-target='#collapseComentario'
-                    aria-expanded='false'
-                    aria-controls='collapseComentario'
-                >
-                    Agregar Comentario
-                </button>
-                <div className='row'>
-                    <div
-                        className='collapse col-sm-8 mx-auto text-center'
-                        id='collapseComentario'
-                    >
-                        <div className='row colComent mx-auto text-center'>
-                            <textarea
-                                onKeyDown={this.keyPress}
-                                onChange={this.onChangeText.bind(this)}
-                                className='form-control rounded-0'
-                                value={this.state.comment}
-                                rows='4'
-                            ></textarea>
-                        </div>
-                        <div className='row'>
-                            <button
-                                className='btn btn-primary mx-auto'
-                                onClick={this.sendComment}
-                            >
-                                Enviar
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div>
+                <Container>
+                    <Row>
+                        <Col xs="10">
+                            <div className='container-fluid'>
+                                <div className='filaNombreTip flexbox'>
+                                    <div
+                                        className='lblnivelTip'
+                                        style={{ backgroundColor: this.colores[tip.nivel] }}
+                                    >
+                                    N{tip.nivel}
+                                    </div>
+                                    <h1 className='lblNombreTip'>{tip.nombre}</h1>
+                                </div>
+                                <div className='filaDescTip'>
+                                    <h2>Descripción:</h2>
+                                    {this.renderDescription(tip)}
+                                </div>
+                                <div className='filaTemaTip'>
+                                    <div>
+                                        <h3>Temas:</h3>
+                                        <button
+                                            className='btn btn-outline-like'
+                                            onClick={this.sendLike}
+                                        >
+                                            {tip.likes} <span className='fas fa-star'></span>
+                                        </button>
+                                    </div>
+                                    <div className=' temasContainer flexbox'>
+                                        <div className='temaTip'>{tip.tema}</div>
+                                    </div>
+                                </div>
+                                <div className='row filaCodigoTip1'>
+                                    <div className='col-sm-6'>
+                                        <div>
+                                            <h4 className='codigolblTip'>Código Correcto:</h4>
+                                            <button
+                                                className='refreshButton'
+                                                onClick={() => this.handleRefreshCorrect(tip)}
+                                            >
+                                                <img src={refreshIcon} />
+                                            </button>
+                                        </div>
+                                        <form>
+                                            <CodeMirror
+                                                onChange={this.handleCorrectoChange}
+                                                value={this.formatCode(tip.codigo_bien_p)}
+                                                options={{
+                                                    theme: 'darcula',
+                                                    keyMap: 'sublime',
+                                                    mode: 'python',
+                                                    lineNumbers: true,
+                                                }}
+                                            />
+                                            <button
+                                                type='button'
+                                                className='botonEjecutar btn btn-primary'
+                                                disabled={!this.props.seCargoPyodide}
+                                                onClick={this.handleCompileBien}
+                                            >
+                                                <i className='fas fa-dragon'></i> Ejecutar
+                                            </button>
+                                            {this.state.resultadoCorrecto && (
+                                                <p className='compileBien'>
+                                                    {this.state.resultadoCorrecto.msg}
+                                                </p>
+                                            )}
+                                        </form>
+                                    </div>
+                                    <div className='col-sm-6'>
+                                        <div>
+                                            <h4 className='codigolblTip'>Código Incorrecto:</h4>
+                                            <button
+                                                className='refreshButton'
+                                                onClick={() => this.handleRefreshIncorrect(tip)}
+                                            >
+                                                <img src={refreshIcon} />
+                                            </button>
+                                        </div>
+                                        <form>
+                                            <CodeMirror
+                                                onChange={this.handleIncorrectoChange}
+                                                value={this.formatCode(tip.codigo_mal_p)}
+                                                options={{
+                                                    theme: 'darcula',
+                                                    keyMap: 'sublime',
+                                                    mode: 'python',
+                                                    lineNumbers: true,
+                                                }}
+                                            />
+                                            <button
+                                                type='button'
+                                                className='botonEjecutar btn btn-primary'
+                                                disabled={!this.props.seCargoPyodide}
+                                                onClick={this.handleCompileMal}
+                                            >
+                                                <i className='fas fa-dragon'></i> Ejecutar
+                                            </button>
+                                            {this.state.resultadoIncorrecto && (
+                                                <p className='compileMal'>
+                                                    {this.state.resultadoIncorrecto.msg}
+                                                </p>
+                                            )}
+                                        </form>
+                                    </div>
+                                </div>
+                                <button
+                                    type='button'
+                                    className='btn btn-primary botonAgregar'
+                                    data-toggle='collapse'
+                                    data-target='#collapseComentario'
+                                    aria-expanded='false'
+                                    aria-controls='collapseComentario'
+                                >
+                                    Agregar Comentario
+                                </button>
+                                <div className='row'>
+                                    <div
+                                        className='collapse col-sm-8 mx-auto text-center'
+                                        id='collapseComentario'
+                                    >
+                                        <div className='row colComent mx-auto text-center'>
+                                            <textarea
+                                                onKeyDown={this.keyPress}
+                                                onChange={this.onChangeText.bind(this)}
+                                                className='form-control rounded-0'
+                                                value={this.state.comment}
+                                                rows='4'
+                                            ></textarea>
+                                        </div>
+                                        <div className='row'>
+                                            <button
+                                                className='btn btn-primary mx-auto'
+                                                onClick={this.sendComment}
+                                            >
+                                                Enviar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Col>
+                        <Col xs="2">
+                            <LevelTipList
+                                tips={this.props.tips}>
+
+                            </LevelTipList>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
+            
         );
     }
 }
