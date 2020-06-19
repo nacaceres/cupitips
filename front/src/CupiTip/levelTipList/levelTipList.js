@@ -2,8 +2,17 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './levelTipList.css';
+import ListSubheader from '@material-ui/core/ListSubheader';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Collapse from '@material-ui/core/Collapse';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 class LevelTipList extends Component {
+    
+    
     constructor(props) {
         console.log(props);
         super(props);
@@ -23,20 +32,46 @@ class LevelTipList extends Component {
                 n1.push(tips[i]);
             }
             if (tips[i].nivel === 2) {
-                n2.push(tips[i].nombre);
+                n2.push(tips[i]);
             }
             if (tips[i].nivel === 3) {
-                n3.push(tips[i].nombre);
+                n3.push(tips[i]);
             }
             if (tips[i].nivel === 4) {
-                n4.push(tips[i].nombre);
+                n4.push(tips[i]);
             }
         }
         this.n1 = n1;
         this.n2 = n2;
         this.n3 = n3;
         this.n4 = n4;
+        this.state = {
+            openN1: false,
+            openN2: false,
+            openN3: false,
+            openN4: false
+        };
     }
+
+    handleClickN1 = () => {
+        console.log(this.state.openN1);
+        this.setState({ openN1: !this.state.openN1});
+    };
+
+    handleClickN2 = () => {
+        console.log(this.state.openN2);
+        this.setState({ openN2: !this.state.openN2});
+    };
+    
+    handleClickN3 = () => {
+        console.log(this.state.openN3);
+        this.setState({ openN3: !this.state.openN3});
+    };
+
+    handleClickN4 = () => {
+        console.log(this.state.openN4);
+        this.setState({ openN4: !this.state.openN4});
+    };
 
     clicked = () => {
         this.props.history.push({
@@ -48,59 +83,84 @@ class LevelTipList extends Component {
     render() {
         return (
             <div>
-                <h2> Tips Nivels 1</h2>
-                <ul className= "lstnivel">
-                    {this.n1.map(item => {
-                        return <div key = {item.nombre}
-                            className='numeroNivel'
-                            style={{
-                                backgroundColor: this.colores[1]
-                            }}
-                            //onClick={this.clicked(this)}
-                        >
-                            {item.nombre}
-                        </div>;
-                    })}
-                </ul>
-                <h2> Tips Nivels 2</h2>
-                <ul className= "lstnivel">
-                    {this.n2.map(item => {
-                        return <div key = {item}
-                            className='numeroNivel'
-                            style={{
-                                backgroundColor: this.colores[2]
-                            }}
-                        >
-                            {item}
-                        </div>;
-                    })}
-                </ul>
-                <h2> Tips Nivels 3</h2>
-                <ul className= "lstnivel">
-                    {this.n3.map(item => {
-                        return <div key = {item}
-                            className='numeroNivel'
-                            style={{
-                                backgroundColor: this.colores[3]
-                            }}
-                        >
-                            {item}
-                        </div>;
-                    })}     
-                </ul>
-                <h2> Tips Nivels 4</h2>
-                <ul className= "lstnivel">
-                    {this.n4.map(item => {
-                        return <div key = {item}
-                            className='numeroNivel'
-                            style={{
-                                backgroundColor: this.colores[4]
-                            }}
-                        >
-                            {item}
-                        </div>;
-                    })}
-                </ul>
+                <List
+                    component="nav"
+                    aria-labelledby="nested-list-subheader"
+                    
+                    className = "root"
+                >
+                    <ListItem >
+                        <h2 className= 'listTxt'>Otros Tips</h2>
+                    </ListItem>
+                    <ListItem button onClick={this.handleClickN1}>
+                        <ListItemText primary="Nivel 1" className='listTxt'/>
+                        {this.state.openN1 ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={this.state.openN1} unmountOnExit>
+                        <List component="div" disablePadding>
+                            {this.n1.map(item => {
+                                return <ListItem button className='classes.nested' key='item._id'>
+                                    <p className='lblnivelTip'
+                                        style={{ backgroundColor: this.colores[1] }}>
+                                        N1 
+                                    </p>
+                                    <ListItemText primary={item.nombre} className='listTxt' />
+                                </ListItem>;
+                            })}
+                        </List>
+                    </Collapse>
+                    <ListItem button onClick={this.handleClickN2}>
+                        <ListItemText primary="Nivel 2" className='listTxt'/>
+                        {this.state.openN2 ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={this.state.openN2} unmountOnExit>
+                        <List component="div" disablePadding>
+                            {this.n2.map(item => {
+                                return <ListItem button className='classes.nested' key='item._id'>
+                                    <p className='lblnivelTip'
+                                        style={{ backgroundColor: this.colores[2] }}>
+                                        N2  
+                                    </p>
+                                    <ListItemText primary={item.nombre} className='listTxt' />
+                                </ListItem>;
+                            })}
+                        </List>
+                    </Collapse>
+                    <ListItem button onClick={this.handleClickN3}>
+                        <ListItemText primary="Nivel 3" className='listTxt'/>
+                        {this.state.openN3 ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={this.state.openN3} unmountOnExit>
+                        <List component="div" disablePadding>
+                            {this.n3.map(item => {
+                                return <ListItem button className='classes.nested' key='item._id'>
+                                    <p className='lblnivelTip'
+                                        style={{ backgroundColor: this.colores[3] }}>
+                                        N3 
+                                    </p>
+                                    <ListItemText primary={item.nombre} className='listTxt' />
+                                </ListItem>;
+                            })}
+                        </List>
+                    </Collapse>
+                    <ListItem button onClick={this.handleClickN4}>
+                        <ListItemText primary="Nivel 4" className='listTxt'/>
+                        {this.state.openN4 ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={this.state.openN4} unmountOnExit>
+                        <List component="div" disablePadding>
+                            {this.n4.map(item => {
+                                return <ListItem button className='classes.nested' key='item._id'>
+                                    <p className='lblnivelTip'
+                                        style={{ backgroundColor: this.colores[4] }}>
+                                        N4 
+                                    </p>
+                                    <ListItemText primary={item.nombre} className='listTxt' />
+                                </ListItem>;
+                            })}
+                        </List>
+                    </Collapse>
+                </List> 
             </div>
         );
     }

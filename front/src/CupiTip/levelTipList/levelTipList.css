@@ -1,7 +1,6 @@
 .lblnivelTip {
     vertical-align: top;
-    border-radius: 10px;
-    font-size: 14px;
+    font-size: 12px;
     width: 60px;
     height: 40px;
     padding: 10px 0;
@@ -16,4 +15,25 @@
     padding: 10px;
     max-height: 130px;
     overflow-y: scroll;
+}
+
+
+.list{
+    border-color: black;
+}
+
+.root {
+    width: '100%';
+    max-width: 360;
+    border-color: black;
+    border-radius: 3px;
+    max-height: 550px;
+    overflow-y: scroll;
+}
+.nested {
+    padding-left: 4px;
+}
+.listTxt {
+    font-size: xx-large;
+    color: black
 }
