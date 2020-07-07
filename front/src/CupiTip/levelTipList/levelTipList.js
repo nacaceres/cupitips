@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import LevelinList from './levelinList/levelinList';
 
 class LevelTipList extends Component {
     
@@ -73,6 +74,27 @@ class LevelTipList extends Component {
         this.setState({ openN4: !this.state.openN4});
     };
 
+    renderElemsN1(col) {
+        return this.n1.map((tip) => (
+            <LevelinList key={'TipInList' + tip._id} tip={tip}></LevelinList>
+        ));
+    }
+    renderElemsN2(col) {
+        return this.n2.map((tip) => (
+            <LevelinList key={'TipInList' + tip._id} tip={tip}></LevelinList>
+        ));
+    }
+    renderElemsN3(col) {
+        return this.n3.map((tip) => (
+            <LevelinList key={'TipInList' + tip._id} tip={tip}></LevelinList>
+        ));
+    }
+    renderElemsN4(col) {
+        return this.n4.map((tip) => (
+            <LevelinList key={'TipInList' + tip._id} tip={tip}></LevelinList>
+        ));
+    }
+
     clicked = () => {
         this.props.history.push({
             pathname: '/cupitip/' + this.props.tip._id,
@@ -98,15 +120,7 @@ class LevelTipList extends Component {
                     </ListItem>
                     <Collapse in={this.state.openN1} unmountOnExit>
                         <List component="div" disablePadding>
-                            {this.n1.map(item => {
-                                return <ListItem button className='classes.nested' key='item._id'>
-                                    <p className='lblnivelTip'
-                                        style={{ backgroundColor: this.colores[1] }}>
-                                        N1 
-                                    </p>
-                                    <ListItemText primary={item.nombre} className='listTxt' />
-                                </ListItem>;
-                            })}
+                            {this.renderElemsN1()}
                         </List>
                     </Collapse>
                     <ListItem button onClick={this.handleClickN2}>
@@ -115,15 +129,7 @@ class LevelTipList extends Component {
                     </ListItem>
                     <Collapse in={this.state.openN2} unmountOnExit>
                         <List component="div" disablePadding>
-                            {this.n2.map(item => {
-                                return <ListItem button className='classes.nested' key='item._id'>
-                                    <p className='lblnivelTip'
-                                        style={{ backgroundColor: this.colores[2] }}>
-                                        N2  
-                                    </p>
-                                    <ListItemText primary={item.nombre} className='listTxt' />
-                                </ListItem>;
-                            })}
+                            {this.renderElemsN2()}
                         </List>
                     </Collapse>
                     <ListItem button onClick={this.handleClickN3}>
@@ -132,15 +138,7 @@ class LevelTipList extends Component {
                     </ListItem>
                     <Collapse in={this.state.openN3} unmountOnExit>
                         <List component="div" disablePadding>
-                            {this.n3.map(item => {
-                                return <ListItem button className='classes.nested' key='item._id'>
-                                    <p className='lblnivelTip'
-                                        style={{ backgroundColor: this.colores[3] }}>
-                                        N3 
-                                    </p>
-                                    <ListItemText primary={item.nombre} className='listTxt' />
-                                </ListItem>;
-                            })}
+                            {this.renderElemsN3()}
                         </List>
                     </Collapse>
                     <ListItem button onClick={this.handleClickN4}>
@@ -149,15 +147,7 @@ class LevelTipList extends Component {
                     </ListItem>
                     <Collapse in={this.state.openN4} unmountOnExit>
                         <List component="div" disablePadding>
-                            {this.n4.map(item => {
-                                return <ListItem button className='classes.nested' key='item._id'>
-                                    <p className='lblnivelTip'
-                                        style={{ backgroundColor: this.colores[4] }}>
-                                        N4 
-                                    </p>
-                                    <ListItemText primary={item.nombre} className='listTxt' />
-                                </ListItem>;
-                            })}
+                            {this.renderElemsN4()}
                         </List>
                     </Collapse>
                 </List> 

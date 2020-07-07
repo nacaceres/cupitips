@@ -25,14 +25,14 @@ class TipList extends Component {
                     {this.renderElems()}
                 </div>
                 <div className='row'>
-                    <div className='col-sm-6 text-center mx-auto'>
+                    {/* <div className='col-sm-6 text-center mx-auto'>
                         <button
                             className='btn btn-primary'
                             onClick={this.sugerir}
                         >
                             Sugerir Tip
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         );

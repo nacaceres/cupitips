@@ -144,6 +144,40 @@ class CupiTip extends Component {
                             msg: 'El Resultado es: \n' + resp,
                         },
                     });
+                })
+                .catch((error)=>{
+                    var e1 = error.toString();
+                    if(e1.includes('[')){
+                        var e2 = e1.split("[");
+                        var un = e2[0];
+                        var err= e2[1].split("]")[1];
+                        var temp = un.split('\n');
+                        var line = temp[temp.length-2];
+                        var parts = line.split(',');
+                        var l = parts[1];
+                        var msm = parts[2];
+                        //console.log(l);
+                        //console.log(msm);
+                        //console.log(err);
+                        let msgE = 'Error\n' + err + '\n' + l + ' ' + msm + '\n';
+
+                        this.setState({
+                            resultadoIncorrecto: { correct: false, msg: msgE },
+                        });
+                    }
+                    else{
+                        var t = e1.split('\n');
+                        var er = t[t.length-2];
+                        var lin = t[t.length-3];
+                        var part = lin.split(',');
+                        //console.log(er);
+                        //console.log(lin);
+                        let msgE = 'Error\n' + er + '\n' + part[1] + ' ' + part[2] + '\n';
+
+                        this.setState({
+                            resultadoIncorrecto: { correct: false, msg: msgE },
+                        });
+                    }
                 });
         } catch (error) {
             let e = error
@@ -170,6 +204,40 @@ class CupiTip extends Component {
                             msg: 'El Resultado es: \n' + resp,
                         },
                     });
+                })
+                .catch((error)=>{
+                    var e1 = error.toString();
+                    if(e1.includes('[')){
+                        var e2 = e1.split("[");
+                        var un = e2[0];
+                        var err= e2[1].split("]")[1];
+                        var temp = un.split('\n');
+                        var line = temp[temp.length-2];
+                        var parts = line.split(',');
+                        var l = parts[1];
+                        var msm = parts[2];
+                        //console.log(l);
+                        //console.log(msm);
+                        //console.log(err);
+                        let msgE = 'Error\n' + err + '\n' + l + ' ' + msm + '\n';
+
+                        this.setState({
+                            resultadoIncorrecto: { correct: false, msg: msgE },
+                        });
+                    }
+                    else{
+                        var t = e1.split('\n');
+                        var er = t[t.length-2];
+                        var lin = t[t.length-3];
+                        var part = lin.split(',');
+                        //console.log(er);
+                        //console.log(lin);
+                        let msgE = 'Error\n' + er + '\n' + part[1] + ' ' + part[2] + '\n';
+
+                        this.setState({
+                            resultadoIncorrecto: { correct: false, msg: msgE },
+                        });
+                    }
                 });
                 
         } catch (error) {
@@ -344,7 +412,7 @@ class CupiTip extends Component {
                                         </form>
                                     </div>
                                 </div>
-                                <button
+                                {/* <button
                                     type='button'
                                     className='btn btn-primary botonAgregar'
                                     data-toggle='collapse'
@@ -377,7 +445,7 @@ class CupiTip extends Component {
                                             </button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                         </Col>
                         <Col xs="2">

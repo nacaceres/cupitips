@@ -25,7 +25,7 @@ class App extends React.Component {
     componentDidMount() {
         const script = document.createElement('script');
         script.async = false;
-        script.src = 'https://pyodide.cdn.iodide.io/pyodide.js';
+        script.src = 'https://pyodide-cdn2.iodide.io/v0.15.0/full/pyodide.js';
         script.onload = () => {
             window.languagePluginLoader.then(() => {
                 this.setState({ seCargoPyodide: true });
@@ -44,6 +44,27 @@ class App extends React.Component {
                     likes: 0,
                     tema: '',
                 };
+                var tipsOrdenados = [];
+                for (let a = 0; a < tips.length; a++) {
+                    if(tips[a].nivel ==1){
+                        tipsOrdenados.push(tips[a]);
+                    }
+                }
+                for (let b = 0; b < tips.length; b++) {
+                    if(tips[b].nivel ==2){
+                        tipsOrdenados.push(tips[b]);
+                    }
+                }
+                for (let c = 0; c < tips.length; c++) {
+                    if(tips[c].nivel ==3){
+                        tipsOrdenados.push(tips[c]);
+                    }
+                }
+                for (let d = 0; d < tips.length; d++) {
+                    if(tips[d].nivel ==4){
+                        tipsOrdenados.push(tips[d]);
+                    }
+                }
                 for (let i = 0; i < tips.length; i++) {
                     let encontrado = false;
                     for (let j = 0; j < filtros.nivel.length; j++) {
@@ -59,9 +80,9 @@ class App extends React.Component {
                     }
                 }
                 this.setState({
-                    tips: tips,
+                    tips: tipsOrdenados,
                     filtros: filtros,
-                    tipsFiltrados: tips,
+                    tipsFiltrados: tipsOrdenados,
                 });
             });
     }
@@ -149,8 +170,29 @@ class App extends React.Component {
         fetch('/tips')
             .then((res) => res.json())
             .then((tips) => {
+                var tipsOrdenados = [];
+                for (let a = 0; a < tips.length; a++) {
+                    if(tips[a].nivel ==1){
+                        tipsOrdenados.push(tips[a]);
+                    }
+                }
+                for (let b = 0; b < tips.length; b++) {
+                    if(tips[b].nivel ==2){
+                        tipsOrdenados.push(tips[b]);
+                    }
+                }
+                for (let c = 0; c < tips.length; c++) {
+                    if(tips[c].nivel ==3){
+                        tipsOrdenados.push(tips[c]);
+                    }
+                }
+                for (let d = 0; d < tips.length; d++) {
+                    if(tips[d].nivel ==4){
+                        tipsOrdenados.push(tips[d]);
+                    }
+                }
                 this.setState({
-                    tips: tips,
+                    tips: tipsOrdenados,
                 });
                 this.actualizarFiltros(this.state.filtros);
             });

@@ -267,7 +267,7 @@ class NavBar extends Component {
                         Filtrar
                     </button>
                 )}
-                {this.renderLoginButton(this.props.autenticado)}
+                {/* {this.renderLoginButton(this.props.autenticado)} */}
                 {this.renderFilters(this.props.show)}
             </div>
         );
