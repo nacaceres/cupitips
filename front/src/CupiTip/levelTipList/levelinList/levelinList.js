@@ -15,10 +15,12 @@ class LevelinList extends Component {
     }
 
     clicked = () => {
+
         this.props.history.push({
             pathname: '/cupitip/' + this.props.tip._id,
             tip: this.props.tip,
         });
+
     };
 
     render() {

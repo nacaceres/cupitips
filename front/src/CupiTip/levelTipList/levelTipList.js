@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './levelTipList.css';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -15,7 +14,7 @@ class LevelTipList extends Component {
     
     
     constructor(props) {
-        console.log(props);
+        //console.log(props);
         super(props);
         this.colores = {
             1: 'rgb(70, 157, 204)',
@@ -55,22 +54,22 @@ class LevelTipList extends Component {
     }
 
     handleClickN1 = () => {
-        console.log(this.state.openN1);
+        //console.log(this.state.openN1);
         this.setState({ openN1: !this.state.openN1});
     };
 
     handleClickN2 = () => {
-        console.log(this.state.openN2);
+        //console.log(this.state.openN2);
         this.setState({ openN2: !this.state.openN2});
     };
     
     handleClickN3 = () => {
-        console.log(this.state.openN3);
+        //console.log(this.state.openN3);
         this.setState({ openN3: !this.state.openN3});
     };
 
     handleClickN4 = () => {
-        console.log(this.state.openN4);
+        //console.log(this.state.openN4);
         this.setState({ openN4: !this.state.openN4});
     };
 
@@ -95,13 +94,7 @@ class LevelTipList extends Component {
         ));
     }
 
-    clicked = () => {
-        this.props.history.push({
-            pathname: '/cupitip/' + this.props.tip._id,
-            tip: this.props.tip,
-        });
-    };
-
+  
     render() {
         return (
             <div>

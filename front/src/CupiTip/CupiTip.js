@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import CodeMirror from '@uiw/react-codemirror';
-import CodeMirror2 from 'codemirror';
 import 'codemirror/keymap/sublime';
 import 'codemirror/theme/darcula.css';
 import './CupiTip.css';
@@ -12,14 +11,16 @@ import { Container, Row, Col } from 'reactstrap';
 class CupiTip extends Component {
     constructor(props) {
         super(props);
-        this.props.hideFilter();
+        //console.log(props);
         this.state = {
             comment: '',
             id: this.props.match.params.id,
             current_correcto: '',
             current_incorrecto: '',
-            resultadoCorrecto: undefined,
-            resultadoIncorrecto: undefined,
+            resultadoCorrectoC: false,
+            resultadoCorrectoI: false,
+            resultadoIncorrectoC: false,
+            resultadoIncorrectoI: false,
             editorBien: undefined,
             editorMal: undefined,
         };
@@ -29,7 +30,9 @@ class CupiTip extends Component {
             3: 'rgb(113, 25, 65)',
             4: 'rgb(232, 100, 44)',
         };
-        console.log(this.props.tips);
+        this.idTip = undefined;
+        this.nuevo = false;
+        //console.log(this.props.tips);
     }
 
     handleIncorrectoChange = (editor) => {
@@ -55,16 +58,40 @@ class CupiTip extends Component {
         if (this.props.location.olddetailstate !== undefined) {
             this.setState(this.props.location.olddetailstate);
         }
+        
     }
+    
+    componentDidUpdate(){
+        if(this.nuevo){
+            //console.log("UPDATE");
+            //console.log(this.idTip);
+            this.setState({
+                resultadoCorrectoC: undefined,
+                resultadoCorrectoI: undefined,
+                resultadoIncorrectoC: undefined,
+                resultadoIncorrectoI: undefined,
+            });
+        }
+        
+    }
+   
 
     clickBack = () => {
         this.props.history.goBack();
     };
 
     buscarTip(idActual) {
+        //console.log(idActual);
         let tips = this.props.tips;
         for (let i = 0; i < tips.length; i++) {
+            if (this.idTip !== idActual) {
+                this.nuevo = true;
+            }
+            else {
+                this.nuevo = false;
+            }
             if (tips[i]._id === idActual) {
+                this.idTip = idActual;
                 return tips[i];
             }
         }
@@ -133,16 +160,17 @@ class CupiTip extends Component {
     };
 
     handleCompileBien = () => {
+
+        
         try {
             window.pyodide
                 .runPythonAsync(this.state.current_correcto)
                 .then((output) => {
                     var resp = output;
                     this.setState({
-                        resultadoCorrecto: {
-                            correct: true,
-                            msg: 'El Resultado es: \n' + resp,
-                        },
+                        resultadoCorrectoC: { correct: true, msg: 'El Resultado es: \n' + resp,},
+                        resultadoCorrectoI: undefined,
+                        
                     });
                 })
                 .catch((error)=>{
@@ -162,7 +190,9 @@ class CupiTip extends Component {
                         let msgE = 'Error\n' + err + '\n' + l + ' ' + msm + '\n';
 
                         this.setState({
-                            resultadoIncorrecto: { correct: false, msg: msgE },
+                            resultadoCorrectoI: { correct: false, msg: msgE },
+                            resultadoCorrectoC: undefined,
+                            
                         });
                     }
                     else{
@@ -175,7 +205,8 @@ class CupiTip extends Component {
                         let msgE = 'Error\n' + er + '\n' + part[1] + ' ' + part[2] + '\n';
 
                         this.setState({
-                            resultadoIncorrecto: { correct: false, msg: msgE },
+                            resultadoCorrectoI: { correct: false, msg: msgE },
+                            resultadoCorrectoC: undefined,
                         });
                     }
                 });
@@ -187,9 +218,11 @@ class CupiTip extends Component {
                 .split('\n');
             let msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
             this.setState({
-                resultadoIncorrecto: { correct: false, msg: msgE },
+                resultadoCorrectoI: { correct: false, msg: msgE },
+                resultadoCorrectoC: undefined,
             });
         }
+        
     };
 
     handleCompileMal = () => {
@@ -199,10 +232,11 @@ class CupiTip extends Component {
                 .then((output) => {
                     var resp = output;
                     this.setState({
-                        resultadoCorrecto: {
+                        resultadoIncorrectoC: {
                             correct: true,
                             msg: 'El Resultado es: \n' + resp,
                         },
+                        resultadoIncorrectoI: undefined,
                     });
                 })
                 .catch((error)=>{
@@ -222,7 +256,8 @@ class CupiTip extends Component {
                         let msgE = 'Error\n' + err + '\n' + l + ' ' + msm + '\n';
 
                         this.setState({
-                            resultadoIncorrecto: { correct: false, msg: msgE },
+                            resultadoIncorrectoI: { correct: false, msg: msgE },
+                            resultadoIncorrectoC: undefined,
                         });
                     }
                     else{
@@ -233,18 +268,19 @@ class CupiTip extends Component {
                         //console.log(er);
                         //console.log(lin);
                         let msgE = 'Error\n' + er + '\n' + part[1] + ' ' + part[2] + '\n';
-
+                        
                         this.setState({
-                            resultadoIncorrecto: { correct: false, msg: msgE },
+                            resultadoIncorrectoI: { correct: false, msg: msgE },
+                            resultadoIncorrectoC: undefined,
                         });
                     }
                 });
                 
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             let es = error.toString();
             if( es.includes('File "<unknown>",')){
-                console.log("Sintax");
+                //console.log("Sintax");
                 let e = error
                     .toString()
                     .split('File "<unknown>",')[1]
@@ -253,10 +289,11 @@ class CupiTip extends Component {
                 let msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
 
                 this.setState({
-                    resultadoIncorrecto: { correct: false, msg: msgE },
+                    resultadoIncorrectoI: { correct: false, msg: msgE },
+                    resultadoIncorrectoC: undefined,
                 });
             }
-            console.log("FFF");
+            //console.log("FFF");
         }
     };
 
@@ -277,11 +314,12 @@ class CupiTip extends Component {
     renderDescription = (tip) => {
         let partes = tip.descripcion.split('**');
         let content = [];
+        let id = tip._id;
         for (let i in partes) {
-            if (i % 2 == 0) {
+            if (i % 2 === 0) {
                 content.push(partes[i]);
             } else {
-                content.push(<span className='hightlight'>{partes[i]}</span>);
+                content.push(<span key= {id+i} className='hightlight'>{partes[i]}</span>);
             }
         }
         return <p className='description'>{content}</p>;
@@ -295,8 +333,13 @@ class CupiTip extends Component {
         this.state.editorMal.setValue(this.formatCode(tip.codigo_mal_p));
     };
 
+   
+
     render() {
         let tip = this.buscarTip(this.props.match.params.id);
+        //console.log(tip);
+        //console.log(this.state);
+     
 
         if (this.props.tips.length > 0 && tip === null) {
             this.props.history.push('/NotFound');
@@ -305,6 +348,7 @@ class CupiTip extends Component {
         if (tip === null) {
             return <div></div>;
         }
+
         return (
             <div>
                 <Container>
@@ -346,7 +390,7 @@ class CupiTip extends Component {
                                                 className='refreshButton'
                                                 onClick={() => this.handleRefreshCorrect(tip)}
                                             >
-                                                <img src={refreshIcon} />
+                                                <img src={refreshIcon} alt='' />
                                             </button>
                                         </div>
                                         <form>
@@ -368,9 +412,14 @@ class CupiTip extends Component {
                                             >
                                                 <i className='fas fa-dragon'></i> Ejecutar
                                             </button>
-                                            {this.state.resultadoCorrecto && (
+                                            {this.state.resultadoCorrectoC && (
                                                 <p className='compileBien'>
-                                                    {this.state.resultadoCorrecto.msg}
+                                                    {this.state.resultadoCorrectoC.msg}
+                                                </p>
+                                            )}
+                                            {this.state.resultadoCorrectoI && (
+                                                <p className='compileMal'>
+                                                    {this.state.resultadoCorrectoI.msg}
                                                 </p>
                                             )}
                                         </form>
@@ -382,7 +431,7 @@ class CupiTip extends Component {
                                                 className='refreshButton'
                                                 onClick={() => this.handleRefreshIncorrect(tip)}
                                             >
-                                                <img src={refreshIcon} />
+                                                <img src={refreshIcon} alt=''/>
                                             </button>
                                         </div>
                                         <form>
@@ -404,9 +453,14 @@ class CupiTip extends Component {
                                             >
                                                 <i className='fas fa-dragon'></i> Ejecutar
                                             </button>
-                                            {this.state.resultadoIncorrecto && (
+                                            {this.state.resultadoIncorrectoC && ( 
+                                                <p className='compileBien'>
+                                                    {this.state.resultadoIncorrectoC.msg}
+                                                </p>
+                                            )}
+                                            {this.state.resultadoIncorrectoI && ( 
                                                 <p className='compileMal'>
-                                                    {this.state.resultadoIncorrecto.msg}
+                                                    {this.state.resultadoIncorrectoI.msg}
                                                 </p>
                                             )}
                                         </form>

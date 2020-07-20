@@ -34,7 +34,7 @@ class App extends React.Component {
         document.head.appendChild(script);
 
         //Window.pyodide.runPython('import sys\nsys.version')
-        console.log('Se inicializa Pyodide');
+        //console.log('Se inicializa Pyodide');
         fetch('/tips')
             .then((res) => res.json())
             .then((tips) => {
@@ -46,22 +46,22 @@ class App extends React.Component {
                 };
                 var tipsOrdenados = [];
                 for (let a = 0; a < tips.length; a++) {
-                    if(tips[a].nivel ==1){
+                    if(tips[a].nivel ===1){
                         tipsOrdenados.push(tips[a]);
                     }
                 }
                 for (let b = 0; b < tips.length; b++) {
-                    if(tips[b].nivel ==2){
+                    if(tips[b].nivel ===2){
                         tipsOrdenados.push(tips[b]);
                     }
                 }
                 for (let c = 0; c < tips.length; c++) {
-                    if(tips[c].nivel ==3){
+                    if(tips[c].nivel ===3){
                         tipsOrdenados.push(tips[c]);
                     }
                 }
                 for (let d = 0; d < tips.length; d++) {
-                    if(tips[d].nivel ==4){
+                    if(tips[d].nivel ===4){
                         tipsOrdenados.push(tips[d]);
                     }
                 }
@@ -172,22 +172,22 @@ class App extends React.Component {
             .then((tips) => {
                 var tipsOrdenados = [];
                 for (let a = 0; a < tips.length; a++) {
-                    if(tips[a].nivel ==1){
+                    if(tips[a].nivel ===1){
                         tipsOrdenados.push(tips[a]);
                     }
                 }
                 for (let b = 0; b < tips.length; b++) {
-                    if(tips[b].nivel ==2){
+                    if(tips[b].nivel ===2){
                         tipsOrdenados.push(tips[b]);
                     }
                 }
                 for (let c = 0; c < tips.length; c++) {
-                    if(tips[c].nivel ==3){
+                    if(tips[c].nivel ===3){
                         tipsOrdenados.push(tips[c]);
                     }
                 }
                 for (let d = 0; d < tips.length; d++) {
-                    if(tips[d].nivel ==4){
+                    if(tips[d].nivel ===4){
                         tipsOrdenados.push(tips[d]);
                     }
                 }
@@ -255,6 +255,7 @@ class App extends React.Component {
                                 actualizarTips={this.actualizarTips}
                                 autenticado={this.state.autenticado}
                                 seCargoPyodide={this.state.seCargoPyodide}
+
                             />
                         )}
                     />
