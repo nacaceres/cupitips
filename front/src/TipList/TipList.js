@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './TipList.css';
 import TipInList from './TipInList/TipInList.js';
+import logo from './LPT-12.png'
 
 class TipList extends Component {
     componentDidMount() {
@@ -20,12 +21,16 @@ class TipList extends Component {
 
     render() {
         return (
-            <div className='container-fluid' id='tipList'>
-                <div className='tipListContainer flexbox'>
-                    {this.renderElems()}
+            <div>
+                <div >
+                    <img src={logo} alt='Logo' className="rounded mx-auto d-block" width='25%' ></img>
                 </div>
-                <div className='row'>
-                    {/* <div className='col-sm-6 text-center mx-auto'>
+                <div className='container-fluid' id='tipList'>
+                    <div className='tipListContainer flexbox'>
+                        {this.renderElems()}
+                    </div>
+                    <div className='row'>
+                        {/* <div className='col-sm-6 text-center mx-auto'>
                         <button
                             className='btn btn-primary'
                             onClick={this.sugerir}
@@ -33,6 +38,7 @@ class TipList extends Component {
                             Sugerir Tip
                         </button>
                     </div> */}
+                    </div>
                 </div>
             </div>
         );

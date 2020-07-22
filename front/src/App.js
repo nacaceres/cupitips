@@ -8,6 +8,7 @@ import NotFound from './NotFound/NotFound.js';
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -231,6 +232,7 @@ class App extends React.Component {
                         exact
                         path="/"
                         render={() => (
+                            
                             <TipList
                                 tips={this.state.tipsFiltrados}
                                 showFilter={this.showFilter}
