@@ -479,7 +479,6 @@ class CupiTip extends Component {
                                         <h3>Temas:</h3>
                                         <button
                                             className='btn btn-outline-like'
-                                            onClick={this.sendLike}
                                         >
                                             {tip.likes} <span className='fas fa-star'></span>
                                         </button>
