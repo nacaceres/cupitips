@@ -75,7 +75,6 @@ class CupiTip extends Component {
         
     }
    
-
     clickBack = () => {
         this.props.history.goBack();
     };
@@ -159,142 +158,249 @@ class CupiTip extends Component {
         }
     };
 
-    handleCompileBien = () => {
+    verificacionCicloInfinito(codigo){
+        var ciclo = false;
+        if (codigo.includes("while ")){
+            ciclo = true;
+            var condicion = codigo.split('while ')[1].split(':')[0];
+            //console.log(condicion);
+            var partes = undefined;
+            if (condicion.includes('=')){
+                if (condicion.includes('>')){
+                    partes = condicion.split('>=');
+                }
+                else if (condicion.includes('<')){
+                    partes = condicion.split('<=');
+                }
+                else if (condicion.includes('!')){
+                    partes = condicion.split('!=');
+                }
+            }
+            else{
+                if (condicion.includes('>')){
+                    partes = condicion.split('>');
+                }
+                else if (condicion.includes('<')){
+                    partes = condicion.split('<');
+                }
+            }
+            //console.log(partes); 
+            var selec = undefined;
+            for (let p = 0;  p< partes.length; p++) {
+                var v1 = partes[p] +" =";
+                var v2 = partes[p] +"=";
+                if (codigo.includes(v1) ||  codigo.includes(v2)){
+                    selec = partes[p];
+                    //console.log(partes[p]);
+                }
+            }   
+            var ins = codigo.split('return')[0].split('        ');
+            //console.log(ins);
+            for (let l = 0;  l< ins.length; l++) { 
+                
+                if (l != 0 ) {
+                    var line1 = selec + "+=";
+                    var line2 = selec + " +=";
+                    var line3 = selec + "=" + selec + "+";
+                    var line4 = selec + " = " + selec + " +";
+                    //console.log(ins[l]);
+                    if (ins[l].includes(line1) || ins[l].includes(line2) || ins[l].includes(line3) || ins[l].includes(line4)){
+                        ciclo = false;
+                    }
+                }
+            }
+        }
+        return ciclo;
+    }
 
-        
-        try {
-            window.pyodide
-                .runPythonAsync(this.state.current_correcto)
-                .then((output) => {
-                    var resp = output;
-                    this.setState({
-                        resultadoCorrectoC: { correct: true, msg: 'El Resultado es: \n' + resp,},
-                        resultadoCorrectoI: undefined,
+    timeout(ms,promise){
+        let timeout = new Promise((resolve, reject) => {
+            let id = setTimeout(() => {
+                clearTimeout(id);
+                //throw new Error('Timed out in '+ ms + 'ms.');
+                reject('Timed out in '+ ms + 'ms.')
+            }, ms);
+        });
+        console.log('race');
+        // Returns a race between our timeout and the passed in promise
+        return Promise.race([
+            promise,
+            timeout
+        ]);
+    }
+
+    handleCompileBien = () => {   
+        var cic = this.verificacionCicloInfinito(this.state.current_correcto);
+        //console.log(cic);
+        if (!cic) {
+            try {   
+
+                window.pyodide
+                    .runPythonAsync(this.state.current_correcto)
+                    .then((output) => {
                         
-                    });
-                })
-                .catch((error)=>{
-                    var e1 = error.toString();
-                    if(e1.includes('[')){
-                        var e2 = e1.split("[");
-                        var un = e2[0];
-                        var err= e2[1].split("]")[1];
-                        var temp = un.split('\n');
-                        var line = temp[temp.length-2];
-                        var parts = line.split(',');
-                        var l = parts[1];
-                        var msm = parts[2];
-                        //console.log(l);
-                        //console.log(msm);
-                        //console.log(err);
-                        let msgE = 'Error\n' + err + '\n' + l + ' ' + msm + '\n';
-
+                        var resp = output;
                         this.setState({
-                            resultadoCorrectoI: { correct: false, msg: msgE },
-                            resultadoCorrectoC: undefined,
+                            resultadoCorrectoC: { correct: true, msg: 'El Resultado es: \n' + resp,},
+                            resultadoCorrectoI: undefined,
                             
                         });
-                    }
-                    else{
-                        var t = e1.split('\n');
-                        var er = t[t.length-2];
-                        var lin = t[t.length-3];
-                        var part = lin.split(',');
-                        //console.log(er);
-                        //console.log(lin);
-                        let msgE = 'Error\n' + er + '\n' + part[1] + ' ' + part[2] + '\n';
-
-                        this.setState({
-                            resultadoCorrectoI: { correct: false, msg: msgE },
-                            resultadoCorrectoC: undefined,
-                        });
-                    }
-                });
-        } catch (error) {
-            let e = error
-                .toString()
-                .split('File "<unknown>",')[1]
-                .split('at')[0]
-                .split('\n');
-            let msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
-            this.setState({
-                resultadoCorrectoI: { correct: false, msg: msgE },
-                resultadoCorrectoC: undefined,
-            });
-        }
-        
-    };
-
-    handleCompileMal = () => {
-        try {
-            window.pyodide
-                .runPythonAsync(this.state.current_incorrecto)
-                .then((output) => {
-                    var resp = output;
-                    this.setState({
-                        resultadoIncorrectoC: {
-                            correct: true,
-                            msg: 'El Resultado es: \n' + resp,
-                        },
-                        resultadoIncorrectoI: undefined,
-                    });
-                })
-                .catch((error)=>{
-                    var e1 = error.toString();
-                    if(e1.includes('[')){
-                        var e2 = e1.split("[");
-                        var un = e2[0];
-                        var err= e2[1].split("]")[1];
-                        var temp = un.split('\n');
-                        var line = temp[temp.length-2];
-                        var parts = line.split(',');
-                        var l = parts[1];
-                        var msm = parts[2];
-                        //console.log(l);
-                        //console.log(msm);
-                        //console.log(err);
-                        let msgE = 'Error\n' + err + '\n' + l + ' ' + msm + '\n';
-
-                        this.setState({
-                            resultadoIncorrectoI: { correct: false, msg: msgE },
-                            resultadoIncorrectoC: undefined,
-                        });
-                    }
-                    else{
-                        var t = e1.split('\n');
-                        var er = t[t.length-2];
-                        var lin = t[t.length-3];
-                        var part = lin.split(',');
-                        //console.log(er);
-                        //console.log(lin);
-                        let msgE = 'Error\n' + er + '\n' + part[1] + ' ' + part[2] + '\n';
+                    })
+                    .catch((error)=>{
                         
-                        this.setState({
-                            resultadoIncorrectoI: { correct: false, msg: msgE },
-                            resultadoIncorrectoC: undefined,
-                        });
-                    }
-                });
-                
-        } catch (error) {
-            //console.log(error);
-            let es = error.toString();
-            if( es.includes('File "<unknown>",')){
-                //console.log("Sintax");
+                        var e1 = error.toString();
+                        console.log(e1);
+                        if (e1.includes("Timed out")){
+                            console.log("TIMEOUT");
+                            this.setState({
+                                resultadoCorrectoI: { correct: false, msg: 'TIMEOUT',},
+                                resultadoCorrectoC: undefined,
+                                    
+                            });
+                        }
+                        else {
+                            if(e1.includes('[')){
+                                var e2 = e1.split("[");
+                                var un = e2[0];
+                                var err= e2[1].split("]")[1];
+                                var temp = un.split('\n');
+                                var line = temp[temp.length-2];
+                                var parts = line.split(',');
+                                var l = parts[1];
+                                var msm = parts[2];
+                                //console.log(l);
+                                //console.log(msm);
+                                //console.log(err);
+                                let msgE = 'Error\n' + err + '\n' + l + ' ' + msm + '\n';
+        
+                                this.setState({
+                                    resultadoCorrectoI: { correct: false, msg: msgE },
+                                    resultadoCorrectoC: undefined,
+                                    
+                                });
+                            }
+                            else{
+                                var t = e1.split('\n');
+                                var er = t[t.length-2];
+                                var lin = t[t.length-3];
+                                var part = lin.split(',');
+                                //console.log(er);
+                                //console.log(lin);
+                                let msgE = 'Error\n' + er + '\n' + part[1] + ' ' + part[2] + '\n';
+        
+                                this.setState({
+                                    resultadoCorrectoI: { correct: false, msg: msgE },
+                                    resultadoCorrectoC: undefined,
+                                });
+                            }
+                        }
+                        
+                    });
+            } catch (error) {
+                console.log(error);
                 let e = error
                     .toString()
                     .split('File "<unknown>",')[1]
                     .split('at')[0]
                     .split('\n');
                 let msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
-
                 this.setState({
-                    resultadoIncorrectoI: { correct: false, msg: msgE },
-                    resultadoIncorrectoC: undefined,
+                    resultadoCorrectoI: { correct: false, msg: msgE },
+                    resultadoCorrectoC: undefined,
                 });
             }
-            //console.log("FFF");
         }
+        else {
+            this.setState({
+                resultadoCorrectoI: { correct: false, msg: 'Error: Se encontro un ciclo infinito en el codigo' },
+                resultadoCorrectoC: undefined,
+            });
+        }
+        
+
+        
+    };
+
+    handleCompileMal = () => {
+        var cic = this.verificacionCicloInfinito(this.state.current_incorrecto);
+        if(!cic){
+            try {
+                window.pyodide
+                    .runPythonAsync(this.state.current_incorrecto)
+                    .then((output) => {
+                        var resp = output;
+                        this.setState({
+                            resultadoIncorrectoC: {
+                                correct: true,
+                                msg: 'El Resultado es: \n' + resp,
+                            },
+                            resultadoIncorrectoI: undefined,
+                        });
+                    })
+                    .catch((error)=>{
+                        var e1 = error.toString();
+                        if(e1.includes('[')){
+                            var e2 = e1.split("[");
+                            var un = e2[0];
+                            var err= e2[1].split("]")[1];
+                            var temp = un.split('\n');
+                            var line = temp[temp.length-2];
+                            var parts = line.split(',');
+                            var l = parts[1];
+                            var msm = parts[2];
+                            //console.log(l);
+                            //console.log(msm);
+                            //console.log(err);
+                            let msgE = 'Error\n' + err + '\n' + l + ' ' + msm + '\n';
+    
+                            this.setState({
+                                resultadoIncorrectoI: { correct: false, msg: msgE },
+                                resultadoIncorrectoC: undefined,
+                            });
+                        }
+                        else{
+                            var t = e1.split('\n');
+                            var er = t[t.length-2];
+                            var lin = t[t.length-3];
+                            var part = lin.split(',');
+                            //console.log(er);
+                            //console.log(lin);
+                            let msgE = 'Error\n' + er + '\n' + part[1] + ' ' + part[2] + '\n';
+                            
+                            this.setState({
+                                resultadoIncorrectoI: { correct: false, msg: msgE },
+                                resultadoIncorrectoC: undefined,
+                            });
+                        }
+                    });
+                    
+            } catch (error) {
+                //console.log(error);
+                let es = error.toString();
+                if( es.includes('File "<unknown>",')){
+                    //console.log("Sintax");
+                    let e = error
+                        .toString()
+                        .split('File "<unknown>",')[1]
+                        .split('at')[0]
+                        .split('\n');
+                    let msgE = 'Error\n' + e[3] + '\n' + e[0] + '\n' + e[1] + '\n';
+    
+                    this.setState({
+                        resultadoIncorrectoI: { correct: false, msg: msgE },
+                        resultadoIncorrectoC: undefined,
+                    });
+                }
+                //console.log("FFF");
+            }
+        }
+        else{
+            this.setState({
+                resultadoIncorrectoI: { correct: false, msg: 'Error: Se encontro un ciclo infinito en el codigo' },
+                resultadoIncorrectoC: undefined,
+            });
+        }
+        
     };
 
     handleChangeCode(event) {
