@@ -7,6 +7,9 @@ import './CupiTip.css';
 import refreshIcon from './refresh.svg';
 import LevelTipList from "./levelTipList/levelTipList.js";
 import { Container, Row, Col } from 'reactstrap';
+import logo from './LPT-12.png';
+
+
 
 class CupiTip extends Component {
     constructor(props) {
@@ -55,6 +58,7 @@ class CupiTip extends Component {
     };
 
     componentDidMount() {
+       
         if (this.props.location.olddetailstate !== undefined) {
             this.setState(this.props.location.olddetailstate);
         }
@@ -198,7 +202,7 @@ class CupiTip extends Component {
             //console.log(ins);
             for (let l = 0;  l< ins.length; l++) { 
                 
-                if (l != 0 ) {
+                if (l !== 0 ) {
                     var line1 = selec + "+=";
                     var line2 = selec + " +=";
                     var line3 = selec + "=" + selec + "+";
@@ -218,7 +222,7 @@ class CupiTip extends Component {
             let id = setTimeout(() => {
                 clearTimeout(id);
                 //throw new Error('Timed out in '+ ms + 'ms.');
-                reject('Timed out in '+ ms + 'ms.')
+                reject('Timed out in '+ ms + 'ms.');
             }, ms);
         });
         console.log('race');
@@ -230,6 +234,36 @@ class CupiTip extends Component {
     }
 
     handleCompileBien = () => {   
+        var w = new Worker('./worker.js');
+        console.log(w);
+        w.onmessage = function(e){
+            console.log(e);
+        };
+        w.onerror = function(e){
+            console.log(e);
+        };
+
+        // Attach an event listener to receive calculations from your worker
+
+        // pyobienworker.onerror = (e) => {
+        //     console.log(`Error in pyodideWorker at ${e.filename}, Line: ${e.lineno}, ${e.message}`);
+        // };
+        // pyobienworker.onmessage = (e) => {
+        //     const {results, error} = e.data;
+        //     if (results) {
+        //         console.log('pyodideWorker return results: ', results);
+        //     } else if (error) {
+        //         console.log('pyodideWorker error: ', error);
+        //     }
+        // };
+        // var data = {
+        //     python: this.state.current_correcto
+        // };
+
+        // pyobienworker.postMessage(data);
+        
+
+
         var cic = this.verificacionCicloInfinito(this.state.current_correcto);
         //console.log(cic);
         if (!cic) {
@@ -460,6 +494,7 @@ class CupiTip extends Component {
                 <Container>
                     <Row>
                         <Col xs="10">
+                            <img src={logo} alt='Logo' className="rounded mx-auto d-block" width='25%' ></img>
                             <div className='container-fluid'>
                                 <div className='filaNombreTip flexbox'>
                                     <div
