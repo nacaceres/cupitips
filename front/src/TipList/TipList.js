@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import './TipList.css';
 import TipInList from './TipInList/TipInList.js';
-import logo from './LPT-12.png'
+import logo from './imagenes/LPT-12.png'
 
 class TipList extends Component {
     componentDidMount() {

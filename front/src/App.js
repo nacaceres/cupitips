@@ -1,12 +1,12 @@
-import React from 'react';
-import TipList from './TipList/TipList.js';
-import NavBar from './NavBar/NavBar.js';
-import CupiTip from './CupiTip/CupiTip.js';
-import Auth from './Auth/Auth.js';
-import CreateTip from './CreateTip/CreateTip.js';
-import NotFound from './NotFound/NotFound.js';
-import { Switch, Route } from 'react-router-dom';
-import './App.css';
+import React from "react";
+import TipList from "./TipList/TipList.js";
+import NavBar from "./NavBar/NavBar.js";
+import CupiTip from "./CupiTip/CupiTip.js";
+import Auth from "./Auth/Auth.js";
+import CreateTip from "./CreateTip/CreateTip.js";
+import NotFound from "./NotFound/NotFound.js";
+import { Switch, Route } from "react-router-dom";
+import "./App.css";
 
 
 class App extends React.Component {
@@ -24,26 +24,52 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        const script = document.createElement('script');
+        const script = document.createElement("script");
         script.async = false;
-        script.src = 'https://pyodide-cdn2.iodide.io/v0.15.0/full/pyodide.js';
+        script.src = "https://pyodide-cdn2.iodide.io/v0.15.0/full/pyodide.js";
         script.onload = () => {
             window.languagePluginLoader.then(() => {
-                this.setState({ seCargoPyodide: true });
+                this.setState({ seCargoPyodide: true });  
+                
+                var dbPromise = window.indexedDB.open('TEST', 1);
+
+                dbPromise.onupgradeneeded = event => {
+                    const db = event.target.result;
+            
+                    const objectStore = db.createObjectStore(
+                        "WINDOWOBJECTS"
+                    );
+                };
+
+                dbPromise.onsuccess=() => {
+                    const db = dbPromise.result;
+                    const transaction = db.transaction(
+                        [ "WINDOWOBJECTS" ],
+                        "readwrite"
+                    );
+                    const objStore = transaction.objectStore("WINDOWOBJECTS");
+            
+                    console.log(window.pyodide);
+                    objStore.put(
+                        {id: 1, name: "pyodide", object: "F"},1
+                    );
+                };
             });
+
+            
         };
         document.head.appendChild(script);
-
+        
         //Window.pyodide.runPython('import sys\nsys.version')
         //console.log('Se inicializa Pyodide');
-        fetch('/tips')
+        fetch("/tips")
             .then((res) => res.json())
             .then((tips) => {
                 let filtros = {
                     nivel: [],
-                    nombre: '',
+                    nombre: "",
                     likes: 0,
-                    tema: '',
+                    tema: "",
                 };
                 var tipsOrdenados = [];
                 for (let a = 0; a < tips.length; a++) {
@@ -122,14 +148,14 @@ class App extends React.Component {
                 }
             }
             if (
-                nuevosFiltros.nombre !== '' &&
+                nuevosFiltros.nombre !== "" &&
                 this.state.tips[i].nombre.indexOf(nuevosFiltros.nombre) === -1
             ) {
                 //Si no esta en el filtro de nombre
                 aceptado = false;
             }
             if (
-                nuevosFiltros.tema !== '' &&
+                nuevosFiltros.tema !== "" &&
                 this.state.tips[i].tema.indexOf(nuevosFiltros.tema) === -1
             ) {
                 //Si no esta en el filtro de tema
@@ -168,7 +194,7 @@ class App extends React.Component {
     };
 
     actualizarTips = () => {
-        fetch('/tips')
+        fetch("/tips")
             .then((res) => res.json())
             .then((tips) => {
                 var tipsOrdenados = [];

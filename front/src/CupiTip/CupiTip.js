@@ -36,6 +36,7 @@ class CupiTip extends Component {
         this.idTip = undefined;
         this.nuevo = false;
         //console.log(this.props.tips);
+        
     }
 
     handleIncorrectoChange = (editor) => {
@@ -58,7 +59,6 @@ class CupiTip extends Component {
     };
 
     componentDidMount() {
-       
         if (this.props.location.olddetailstate !== undefined) {
             this.setState(this.props.location.olddetailstate);
         }
@@ -234,33 +234,52 @@ class CupiTip extends Component {
     }
 
     handleCompileBien = () => {   
-        var w = new Worker('./worker.js');
-        console.log(w);
-        w.onmessage = function(e){
-            console.log(e);
+        var dbPromise = window.indexedDB.open('TEST', 1);
+        dbPromise.onsuccess=() => {
+            const db = dbPromise.result;
+            const transaction = db.transaction(
+                [ "WINDOWOBJECTS" ],
+                "readwrite"
+            );
+            const objStore = transaction.objectStore("WINDOWOBJECTS");
+
+            const getRequest = objStore.get(1);
+            getRequest.onsuccess = () => {
+                // Do something with the data
+                console.log(getRequest.result.object);
+            };
         };
-        w.onerror = function(e){
-            console.log(e);
+        
+        var d= `
+        var onmessage = function(e) { // eslint-disable-line no-unused-vars
+                    self.pyodide.runPythonAsync(data.python, () => {})
+                        .then((results) => { self.postMessage({results}); })
+                        .catch((err) => {
+                        // if you prefer messages with the error
+                        self.postMessage({error : err.message});
+                    });
+
+        }
+        `;
+        var blob = new Blob([d], { type: 'text/javascript' });
+        var w = new Worker(window.URL.createObjectURL(blob));
+        
+        w.onerror = (e) => {
+            console.log(`Error in pyodideWorker at ${e.filename}, Line: ${e.lineno}, ${e.message}`);
         };
+        w.onmessage = (e) => {
+            const {results, error} = e.data;
+            if (results) {
+                console.log('pyodideWorker return results: ', results);
+            } else if (error) {
+                console.log('pyodideWorker error: ', error);
+            }
+        };
+        const py = window.pyodide;
+        var data = {python: this.state.current_correcto};
+        w.postMessage(data);
 
-        // Attach an event listener to receive calculations from your worker
-
-        // pyobienworker.onerror = (e) => {
-        //     console.log(`Error in pyodideWorker at ${e.filename}, Line: ${e.lineno}, ${e.message}`);
-        // };
-        // pyobienworker.onmessage = (e) => {
-        //     const {results, error} = e.data;
-        //     if (results) {
-        //         console.log('pyodideWorker return results: ', results);
-        //     } else if (error) {
-        //         console.log('pyodideWorker error: ', error);
-        //     }
-        // };
-        // var data = {
-        //     python: this.state.current_correcto
-        // };
-
-        // pyobienworker.postMessage(data);
+        
         
 
 
