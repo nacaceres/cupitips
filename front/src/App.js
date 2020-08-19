@@ -48,10 +48,18 @@ class App extends React.Component {
                         "readwrite"
                     );
                     const objStore = transaction.objectStore("WINDOWOBJECTS");
-            
+                    
                     console.log(window.pyodide);
+                    
+                    
+
+                    var prueba = "F";
+
+                    console.log(prueba);
+                    //console.log(resp);
+
                     objStore.put(
-                        {id: 1, name: "pyodide", object: "F"},1
+                        {id: 1, name: "pyodide", object: prueba},1
                     );
                 };
             });

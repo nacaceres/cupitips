@@ -28,7 +28,7 @@ class LevelinList extends Component {
             <div  onClick={this.clicked.bind(this)}>
                 <ListItem button className='classes.nested' key='item._id'>
                     <p className='lblnivelTip'
-                        style={{ backgroundColor: this.colores[this.props.tip.nivel] }}>
+                        style={{ backgroundColor: this.colores[this.props.tip.nivel], width: "20px", height:"40px" }}>
                         {'N' + this.props.tip.nivel}
                     </p>
                     <ListItemText primary={this.props.tip.nombre} className='listTxt' />
