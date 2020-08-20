@@ -31,45 +31,43 @@ class App extends React.Component {
             window.languagePluginLoader.then(() => {
                 this.setState({ seCargoPyodide: true });  
                 
-                var dbPromise = window.indexedDB.open('TEST', 1);
+                // var dbPromise = window.indexedDB.open('TEST', 1);
 
-                dbPromise.onupgradeneeded = event => {
-                    const db = event.target.result;
+                // dbPromise.onupgradeneeded = event => {
+                //     const db = event.target.result;
             
-                    const objectStore = db.createObjectStore(
-                        "WINDOWOBJECTS"
-                    );
-                };
+                //     const objectStore = db.createObjectStore(
+                //         "WINDOWOBJECTS"
+                //     );
+                // };
 
-                dbPromise.onsuccess=() => {
-                    const db = dbPromise.result;
-                    const transaction = db.transaction(
-                        [ "WINDOWOBJECTS" ],
-                        "readwrite"
-                    );
-                    const objStore = transaction.objectStore("WINDOWOBJECTS");
+                // dbPromise.onsuccess=() => {
+                //     const db = dbPromise.result;
+                //     const transaction = db.transaction(
+                //         [ "WINDOWOBJECTS" ],
+                //         "readwrite"
+                //     );
+                //     const objStore = transaction.objectStore("WINDOWOBJECTS");
                     
-                    console.log(window.pyodide);
+                //     console.log(window.pyodide);
                     
                     
 
-                    var prueba = "F";
+                //     var prueba = "F";
 
-                    console.log(prueba);
-                    //console.log(resp);
+                //     console.log(prueba);
+                //     //console.log(resp);
 
-                    objStore.put(
-                        {id: 1, name: "pyodide", object: prueba},1
-                    );
-                };
+                //     objStore.put(
+                //         {id: 1, name: "pyodide", object: prueba},1
+                //     );
+                // };
             });
 
             
         };
         document.head.appendChild(script);
-        
-        //Window.pyodide.runPython('import sys\nsys.version')
-        //console.log('Se inicializa Pyodide');
+
         fetch("/tips")
             .then((res) => res.json())
             .then((tips) => {

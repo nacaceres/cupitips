@@ -23,7 +23,7 @@ class TipList extends Component {
         return (
             <div>
                 <div >
-                    <img src={logo} alt='Logo' className="rounded mx-auto d-block" width='25%' ></img>
+                    <img src={logo} alt='Logo' className="rounded mx-auto d-block" width='25%'/>
                 </div>
                 <div className='container-fluid' id='tipList'>
                     <div className='tipListContainer flexbox'>
