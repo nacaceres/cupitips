@@ -701,7 +701,7 @@ class CupiTip extends Component {
                                             <h4 className='codigolblTip'>Código Correcto:</h4>
                                             <button
                                                 className='refreshButton'
-                                                style={{ backgroundColor: 'rgb(70, 157, 204)' }}
+                                                style={{ backgroundColor: 'rgb(70, 157, 204)' , borderColor:'rgb(70, 157, 204)'}}
                                                 onClick={() => this.handleRefreshCorrect(tip)}
                                             >
                                                 <img src={refreshIcon} alt='' />
@@ -721,7 +721,7 @@ class CupiTip extends Component {
                                             <button
                                                 type='button'
                                                 className='botonEjecutar btn btn-primary'
-                                                style={{ backgroundColor: 'rgb(70, 157, 204)' }}
+                                                style={{ backgroundColor: 'rgb(70, 157, 204)', borderColor:'rgb(70, 157, 204)' }}
                                                 disabled={!this.props.seCargoPyodide}
                                                 onClick={this.handleCompileBien}
                                             >
@@ -744,7 +744,7 @@ class CupiTip extends Component {
                                             <h4 className='codigolblTip'>Código Incorrecto:</h4>
                                             <button
                                                 className='refreshButton'
-                                                style={{ backgroundColor: 'rgb(70, 157, 204)' }}
+                                                style={{ backgroundColor: 'rgb(70, 157, 204)' , borderColor:'rgb(70, 157, 204)' }}
                                                 onClick={() => this.handleRefreshIncorrect(tip)}
                                             >
                                                 <img src={refreshIcon} alt=''/>
@@ -764,7 +764,7 @@ class CupiTip extends Component {
                                             <button
                                                 type='button'
                                                 className='botonEjecutar btn btn-primary'
-                                                style={{ backgroundColor: 'rgb(70, 157, 204)' }}
+                                                style={{ backgroundColor: 'rgb(70, 157, 204)', borderColor:'rgb(70, 157, 204)'}}
                                                 disabled={!this.props.seCargoPyodide}
                                                 onClick={this.handleCompileMal}
                                             >
