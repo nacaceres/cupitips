@@ -259,6 +259,7 @@ class NavBar extends Component {
                     <button
                         type='button'
                         className='btn btn-primary'
+                        style={{ backgroundColor: 'rgb(70, 157, 204)' }}
                         data-toggle='collapse'
                         data-target='#collapseFilters'
                         aria-expanded='false'

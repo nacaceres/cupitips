@@ -79,7 +79,7 @@
 .social-icons li.social-Forosisis a {background-position: -167px  -50px;}
 .social-icons ul{margin-left:-5px;}  /* -x -y   */  /* -x -y   */  /* -x -y   */  /* -x -y   */  /* -x -y   */  /* -x -y   */  /* -x -y   */  /* -x -y   */  /* -x -y   */  /* -x -y   */  /* -x -y   */ /* -x -y   */  /* -x -y   */
 
-.social-icons ul.SENECODE li a {padding-left: 0px;margin-left:0px;background-color: #009c95; }  /* -x -y   */
+.social-icons ul.SENECODE li a {padding-left: 0px;margin-left:0px;background-color: rgb(70, 157, 204); }  /* -x -y   */
 .social-icons ul.SENECODE li a:hover {background-color: #b1e6fa; }
 
 
@@ -92,7 +92,7 @@ body {
 }
 
 a {
-  color: #009c95;
+  color: rgb(70, 157, 204)
 }
 
 .ui.menu.fixed
