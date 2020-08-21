@@ -167,208 +167,223 @@ class CupiTip extends Component {
         if (codigo.includes("while ")){
             ciclo = true;
             var condicion = codigo.split('while ')[1].split(':')[0];
+            if(condicion === "False" || condicion === " False" || condicion === "False " || condicion === " False " ){
+                ciclo = false;
+            }
+            else if (condicion !== "True" && condicion !== " True" && condicion !== "True " && condicion !== " True " && condicion !== "!False" && condicion !== " !False" && condicion !== "!False " && condicion !== " !False "  && condicion !== "1" && condicion !== " 1" && condicion !== "1 "&& condicion !== " 1 "){
             //console.log(condicion);
-            var partes = undefined;
-            if (condicion.includes('and') ){
-                var p1 = condicion.split('and')[0];
-                var p2 = condicion.split('and')[1];
-                var parts1;
-                var parts2;
-                if (p1.includes('!') && !p1.includes('=')&& !p1.includes('>')&& !p1.includes('<')){
-                    parts1 = p1.split('!')[1];
+                var partes = undefined;
+                if (condicion.includes('and') ){
+                    var p1 = condicion.split('and')[0];
+                    var p2 = condicion.split('and')[1];
+                    var parts1;
+                    var parts2;
+                    if (p1.includes('!') && !p1.includes('=')&& !p1.includes('>')&& !p1.includes('<')){
+                        parts1 = p1.split('!')[1];
+                    }
+                    else if (!p1.includes('!') && !p1.includes('=')&& !p1.includes('>')&& !p1.includes('<')){
+                        var a = [];
+                        a[0] = p1;
+                        parts1 = a;
+                    }
+                    else{
+                        if (p1.includes('=')){
+                            if (p1.includes('>')){
+                                parts1 = p1.split('>=');
+                            }
+                            else if (p1.includes('<')){
+                                parts1 = p1.split('<=');
+                            }
+                            else if (p1.includes('!')){
+                                parts1 = p1.split('!=');
+                            }
+                            else if (p1.includes('==')){
+                                parts1 = p1.split('==');
+                            }
+                        }
+                        else{
+                            if (p1.includes('>')){
+                                parts1 = p1.split('>');
+                            }
+                            else if (p1.includes('<')){
+                                parts1 = p1.split('<');
+                            }
+                        }
+                    }
+                    if (p2.includes('!') && !p2.includes('=')&& !p2.includes('>')&& !p2.includes('<')){
+                        parts2 = p2.split('!')[1];
+                    }
+                    else if (!p2.includes('!') && !p2.includes('=')&& !p2.includes('>')&& !p2.includes('<')){
+                        var b = [];
+                        b[0] = p2;
+                        parts2 = b;
+                    }
+                    else{
+                        if (p2.includes('=')){
+                            if (p2.includes('>')){
+                                parts2 = p2.split('>=');
+                            }
+                            else if (p2.includes('<')){
+                                parts2 = p2.split('<=');
+                            }
+                            else if (p2.includes('!')){
+                                parts2 = p2.split('!=');
+                            }
+                            else if (p1.includes('==')){
+                                parts2 = p2.split('==');
+                            }
+                        }
+                        else{
+                            if (p2.includes('>')){
+                                parts2 = p2.split('>');
+                            }
+                            else if (p2.includes('<')){
+                                parts2 = p2.split('<');
+                            }
+                        }
+                    }
+                    partes = parts1.concat(parts2);
                 }
-                else if (!p1.includes('!') && !p1.includes('=')&& !p1.includes('>')&& !p1.includes('<')){
-                    var a = [];
-                    a[0] = p1;
-                    parts1 = a;
+                else if ( condicion.includes('or')){
+                    var d1 = condicion.split('or')[0];
+                    var d2 = condicion.split('or')[1];
+                    var partes1;
+                    var partes2;
+                    if (d1.includes('!') && !d1.includes('=')&& !d1.includes('>')&& !d1.includes('<')){
+                        partes1 = d1.split('!')[1];
+                    }
+                    else if (!d1.includes('!') && !d1.includes('=')&& !d1.includes('>')&& !d1.includes('<')){
+                        var c = [];
+                        c[0] = p1;
+                        partes1 = c;
+                    }
+                    else{
+                        if (d1.includes('=')){
+                            if (d1.includes('>')){
+                                partes1 = d1.split('>=');
+                            }
+                            else if (d1.includes('<')){
+                                partes1 = d1.split('<=');
+                            }
+                            else if (d1.includes('!')){
+                                partes1 = d1.split('!=');
+                            }
+                            else if (d1.includes('==')){
+                                partes1 = d1.split('==');
+                            }
+                        }
+                        else{
+                            if (d1.includes('>')){
+                                partes1 = d1.split('>');
+                            }
+                            else if (d1.includes('<')){
+                                partes1 = d1.split('<');
+                            }
+                        }
+                    }
+                    if (d2.includes('!') && !d2.includes('=')&& !d2.includes('>')&& !d2.includes('<')){
+                        partes2 = p2.split('!')[1];
+                    }
+                    else if (!d2.includes('!') && !d2.includes('=')&& !d2.includes('>')&& !d2.includes('<')){
+                        var d = [];
+                        d[0] = p2;
+                        partes2 = d;
+                    }
+                    else{
+                        if (d2.includes('=')){
+                            if (d2.includes('>')){
+                                partes2 = d2.split('>=');
+                            }
+                            else if (d2.includes('<')){
+                                partes2 = d2.split('<=');
+                            }
+                            else if (d2.includes('!')){
+                                partes2 = d2.split('!=');
+                            }
+                            else if (d2.includes('==')){
+                                partes2 = d2.split('==');
+                            }
+                        }
+                        else{
+                            if (d2.includes('>')){
+                                partes2 = d2.split('>');
+                            }
+                            else if (d2.includes('<')){
+                                partes2 = d2.split('<');
+                            }
+                        }
+                    }
+                    partes = partes1.concat(partes2);
                 }
                 else{
-                    if (p1.includes('=')){
-                        if (p1.includes('>')){
-                            parts1 = p1.split('>=');
+                    //console.log(partes);
+                    if (condicion.includes('!') && !condicion.includes('=')&& !condicion.includes('>')&& !condicion.includes('<')){
+                        partes = p1.split('!')[1];
+                    }
+                    else if (!condicion.includes('!') && !condicion.includes('=')&& !condicion.includes('>')&& !condicion.includes('<')){
+                        var z = [];
+                        z[0] = condicion;
+                        partes = z;
+                    }
+                    else if (condicion.includes('=')){
+                        if (condicion.includes('>')){
+                            partes = condicion.split('>=');
                         }
-                        else if (p1.includes('<')){
-                            parts1 = p1.split('<=');
+                        else if (condicion.includes('<')){
+                            partes = condicion.split('<=');
                         }
-                        else if (p1.includes('!')){
-                            parts1 = p1.split('!=');
+                        else if (condicion.includes('!')){
+                            partes = condicion.split('!=');
                         }
-                        else if (p1.includes('==')){
-                            parts1 = p1.split('==');
+                        else if (condicion.includes('==')){
+                            partes = condicion.split('==');
                         }
                     }
                     else{
-                        if (p1.includes('>')){
-                            parts1 = p1.split('>');
+                        if (condicion.includes('>')){
+                            partes = condicion.split('>');
                         }
-                        else if (p1.includes('<')){
-                            parts1 = p1.split('<');
-                        }
-                    }
-                }
-                if (p2.includes('!') && !p2.includes('=')&& !p2.includes('>')&& !p2.includes('<')){
-                    parts2 = p2.split('!')[1];
-                }
-                else if (!p2.includes('!') && !p2.includes('=')&& !p2.includes('>')&& !p2.includes('<')){
-                    var b = [];
-                    b[0] = p2;
-                    parts2 = b;
-                }
-                else{
-                    if (p2.includes('=')){
-                        if (p2.includes('>')){
-                            parts2 = p2.split('>=');
-                        }
-                        else if (p2.includes('<')){
-                            parts2 = p2.split('<=');
-                        }
-                        else if (p2.includes('!')){
-                            parts2 = p2.split('!=');
-                        }
-                        else if (p1.includes('==')){
-                            parts2 = p2.split('==');
-                        }
-                    }
-                    else{
-                        if (p2.includes('>')){
-                            parts2 = p2.split('>');
-                        }
-                        else if (p2.includes('<')){
-                            parts2 = p2.split('<');
+                        else if (condicion.includes('<')){
+                            partes = condicion.split('<');
                         }
                     }
                 }
-                partes = parts1.concat(parts2);
-            }
-            else if ( condicion.includes('or')){
-                var d1 = condicion.split('or')[0];
-                var d2 = condicion.split('or')[1];
-                var partes1;
-                var partes2;
-                if (d1.includes('!') && !d1.includes('=')&& !d1.includes('>')&& !d1.includes('<')){
-                    partes1 = d1.split('!')[1];
-                }
-                else if (!d1.includes('!') && !d1.includes('=')&& !d1.includes('>')&& !d1.includes('<')){
-                    var c = [];
-                    c[0] = p1;
-                    partes1 = c;
-                }
-                else{
-                    if (d1.includes('=')){
-                        if (d1.includes('>')){
-                            partes1 = d1.split('>=');
-                        }
-                        else if (d1.includes('<')){
-                            partes1 = d1.split('<=');
-                        }
-                        else if (d1.includes('!')){
-                            partes1 = d1.split('!=');
-                        }
-                        else if (d1.includes('==')){
-                            partes1 = d1.split('==');
-                        }
-                    }
-                    else{
-                        if (d1.includes('>')){
-                            partes1 = d1.split('>');
-                        }
-                        else if (d1.includes('<')){
-                            partes1 = d1.split('<');
-                        }
-                    }
-                }
-                if (d2.includes('!') && !d2.includes('=')&& !d2.includes('>')&& !d2.includes('<')){
-                    partes2 = p2.split('!')[1];
-                }
-                else if (!d2.includes('!') && !d2.includes('=')&& !d2.includes('>')&& !d2.includes('<')){
-                    var d = [];
-                    d[0] = p2;
-                    partes2 = d;
-                }
-                else{
-                    if (d2.includes('=')){
-                        if (d2.includes('>')){
-                            partes2 = d2.split('>=');
-                        }
-                        else if (d2.includes('<')){
-                            partes2 = d2.split('<=');
-                        }
-                        else if (d2.includes('!')){
-                            partes2 = d2.split('!=');
-                        }
-                        else if (d2.includes('==')){
-                            partes2 = d2.split('==');
-                        }
-                    }
-                    else{
-                        if (d2.includes('>')){
-                            partes2 = d2.split('>');
-                        }
-                        else if (d2.includes('<')){
-                            partes2 = d2.split('<');
-                        }
-                    }
-                }
-                partes = partes1.concat(partes2);
-            }
-            else{
-                if (condicion.includes('=')){
-                    if (condicion.includes('>')){
-                        partes = condicion.split('>=');
-                    }
-                    else if (condicion.includes('<')){
-                        partes = condicion.split('<=');
-                    }
-                    else if (condicion.includes('!')){
-                        partes = condicion.split('!=');
-                    }
-                    else if (condicion.includes('==')){
-                        partes = condicion.split('==');
-                    }
-                }
-                else{
-                    if (condicion.includes('>')){
-                        partes = condicion.split('>');
-                    }
-                    else if (condicion.includes('<')){
-                        partes = condicion.split('<');
-                    }
-                }
-            }
             
-            // console.log(partes); 
-            var selec = undefined;
-            for (let p = 0;  p< partes.length; p++) {
-                var v1 = partes[p].replace(" ","") +" =";
-                var v2 = partes[p].replace(" ","") +"=";
-                if (codigo.includes(v1) ||  codigo.includes(v2)){
-                    selec = partes[p].replace(" ","");
+                console.log(partes); 
+                var selec = undefined;
+                for (let p = 0;  p< partes.length; p++) {
+                    var v1 = partes[p].replace(" ","") +" =";
+                    var v2 = partes[p].replace(" ","") +"=";
+                    if (codigo.includes(v1) ||  codigo.includes(v2)){
+                        selec = partes[p].replace(" ","");
                     //console.log(partes[p].replace(" ",""));
-                }
-                var ins = codigo.split('return')[0].split('    ');
-                //console.log(ins);
-                for (let l = 0;  l< ins.length; l++) { 
+                    }
+                    var ins = codigo.split('return')[0].split('    ');
+                    //console.log(ins);
+                    for (let l = 0;  l< ins.length; l++) { 
                 
-                    if (l !== 0 ) {
-                        var line1 = selec + "+=";
-                        var line2 = selec + " +=";
-                        var line3 = selec + "=" + selec + "+";
-                        var line4 = selec + " = " + selec + " +";
-                        var line5 = selec + " = True";
-                        var line6 = selec + " =True";
-                        var line7 = selec + "= True";
-                        var line8 = selec + "=True";
-                        var line9 = selec + " = False";
-                        var line10 = selec + " =False";
-                        var line11 = selec + "= False";
-                        var line12 = selec + "=False";
-                        //console.log(ins[l]);
-                        if (ins[l].includes(line1) || ins[l].includes(line2) || ins[l].includes(line3) || ins[l].includes(line4) || ins[l].includes(line5) || ins[l].includes(line6) || ins[l].includes(line7) || ins[l].includes(line8) || ins[l].includes(line9) || ins[l].includes(line10) || ins[l].includes(line11) || ins[l].includes(line12) ){
-                            ciclo = false;
+                        if (l !== 0 ) {
+                            var line1 = selec + "+=";
+                            var line2 = selec + " +=";
+                            var line3 = selec + "=" + selec + "+";
+                            var line4 = selec + " = " + selec + " +";
+                            var line5 = selec + " = True";
+                            var line6 = selec + " =True";
+                            var line7 = selec + "= True";
+                            var line8 = selec + "=True";
+                            var line9 = selec + " = False";
+                            var line10 = selec + " =False";
+                            var line11 = selec + "= False";
+                            var line12 = selec + "=False";
+                            //console.log(ins[l]);
+                            if (ins[l].includes(line1) || ins[l].includes(line2) || ins[l].includes(line3) || ins[l].includes(line4) || ins[l].includes(line5) || ins[l].includes(line6) || ins[l].includes(line7) || ins[l].includes(line8) || ins[l].includes(line9) || ins[l].includes(line10) || ins[l].includes(line11) || ins[l].includes(line12) ){
+                                ciclo = false;
+                            }
                         }
                     }
                 }
-            }   
+            
+            }
             
         }
         return ciclo;
