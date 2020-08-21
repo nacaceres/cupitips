@@ -48,7 +48,7 @@ class CupiTip extends Component {
 
     handleCorrectoChange = (editor) => {
         this.setState({
-            current_correcto: editor.getValue(),
+            current_correcto: editor.getValue().replace('\t','    '),
             editorBien: editor,
         });
     };
