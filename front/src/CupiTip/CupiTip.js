@@ -167,7 +167,7 @@ class CupiTip extends Component {
         if (codigo.includes("while ")){
             ciclo = true;
             var condicion = codigo.split('while ')[1].split(':')[0];
-            if(condicion === "False" || condicion === " False" || condicion === "False " || condicion === " False " ){
+            if(condicion === "False" || condicion === " False" || condicion === "False " || condicion === " False "|| condicion === "0" || condicion === " 0" || condicion === "0 " || condicion === " 0 " ){
                 ciclo = false;
             }
             else if (condicion !== "True" && condicion !== " True" && condicion !== "True " && condicion !== " True " && condicion !== "!False" && condicion !== " !False" && condicion !== "!False " && condicion !== " !False "  && condicion !== "1" && condicion !== " 1" && condicion !== "1 "&& condicion !== " 1 "){
@@ -452,13 +452,13 @@ class CupiTip extends Component {
         // w.postMessage(data);
 
 
-        var cic = this.verificacionCicloInfinito(this.state.current_correcto);
+        var cic = this.verificacionCicloInfinito(this.state.current_correcto.replace("\t","    "));
         //console.log(cic);
         if (!cic) {
             try {   
 
                 window.pyodide
-                    .runPythonAsync(this.state.current_correcto)
+                    .runPythonAsync(this.state.current_correcto.replace("\t","    "))
                     .then((output) => {
                         
                         var resp = output;
