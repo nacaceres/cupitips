@@ -3,7 +3,7 @@ let router = express.Router();
 var ObjectId = require("mongodb").ObjectID;
 const MongoClient = require("mongodb").MongoClient;
 // Connection URL
-const url = process.env.DBPATH;
+const url = "";
 // Database Name
 const dbName = "cupitips";
 
