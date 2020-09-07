@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+/* eslint-disable linebreak-style */
 /**
  * Module dependencies.
  */
@@ -7,17 +7,35 @@
 var app = require("../app");
 var debug = require("debug")("back:server");
 var http = require("http");
+
+var https = require("https");
+
+var fs = require("fs");
+var options = {
+  key: fs.readFileSync("./cert-key.pem"),
+  cert: fs.readFileSync("./cert.pem"),
+};
+
 /**
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || "3001");
-app.set("port", port);
+app.set("port", 3002);
+/**
+ * Create HTTPS server.
+ */
+
+https
+  .createServer(app, options, function (req, res) {
+    res.end("secure!");
+  })
+  .listen(3002);
 
 /**
  * Create HTTP server.
  */
-
+app.set("port", port);
 var server = http.createServer(app, function (req, res) {
   res.writeHead(301, { Location: "https://" + req.headers["host"] + req.url });
   res.end();
