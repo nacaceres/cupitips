@@ -27,7 +27,7 @@ app.set("port", 3002);
  */
 
 https
-  .createServer(app, options, function (req, res) {
+  .createServer(options, app, function (req, res) {
     res.end("secure!");
   })
   .listen(3002);
@@ -36,7 +36,7 @@ https
  * Create HTTP server.
  */
 app.set("port", port);
-var server = http.createServer(app, function (req, res) {
+var server = http.createServer(function (req, res) {
   res.writeHead(301, { Location: "https://" + req.headers["host"] + req.url });
   res.end();
 });
