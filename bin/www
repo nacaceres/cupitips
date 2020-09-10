@@ -11,9 +11,24 @@ var http = require("http");
 var https = require("https");
 
 var fs = require("fs");
+var privateKey = fs.readFileSync(process.env.CERTKEY, 'utf-8');
+var certificate = fs.readFileSync(process.env.CERTFILE, 'utf-8');
+var cab = fs.readFileSync(process.env.INTCERTFILE, 'utf-8');
+var chainLines = cab.split("\n");
+var cert = [];
+var cabundle = [];
+chainLines.forEach(function(line) {
+  cert.push(line);
+  if (line.match(/-END CERTIFICATE-/)) {
+    cabundle.push(cert.join("\n"));
+    cert = [];
+  }
+});
+
 var options = {
-  key: fs.readFileSync(process.env.CERTKEY),
-  cert: fs.readFileSync(process.env.CERTFILE),
+  "key": privateKey,
+  "cert": certificate,
+  "ca": cab
 };
 
 /**
