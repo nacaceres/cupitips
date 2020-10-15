@@ -84,7 +84,7 @@ class NavBar extends Component {
     }
     return (
       <div className="nombreRw row">
-        <div className="col-sm-2 text-center my-auto nombreStr">Name:</div>
+        <div className="col-sm-2 text-center my-auto nombreStr">Nombre:</div>
         <div className="col-sm-10 text-left">
           <input
             type="text"
@@ -138,7 +138,7 @@ class NavBar extends Component {
       <div>
         <div className="row text-center my-auto">
           <div className="col-sm-12 likeslbl">
-            Nivel: {this.props.filtros.likes}
+            Complejidad: {this.props.filtros.likes}
           </div>
         </div>
         <div className="row">
