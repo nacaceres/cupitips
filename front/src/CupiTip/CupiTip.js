@@ -229,7 +229,7 @@ class CupiTip extends Component {
                             else if (p2.includes('!')){
                                 parts2 = p2.split('!=');
                             }
-                            else if (p1.includes('==')){
+                            else if (p2.includes('==')){
                                 parts2 = p2.split('==');
                             }
                         }
